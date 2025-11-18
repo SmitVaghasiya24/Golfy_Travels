@@ -662,7 +662,6 @@ export const updateRoom = async (req, res) => {
 
 
 
-
 // delete room
 export const deleteRoom = async (req, res) => {
     try {
