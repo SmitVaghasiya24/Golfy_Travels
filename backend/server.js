@@ -15,6 +15,9 @@ import tourRoutes from './routes/tourRoutes.js';
 import tourdestinationRoutes from './routes/tourdestinationRoutes.js';
 import hotelcategory from './routes/hotelcategoryRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
+import visaRoutes from './routes/visaRoutes.js';
+import searchRoutes from './routes/searchRoute.js';
+
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -45,6 +48,8 @@ app.use('/api', tourRoutes);
 app.use('/api', tourdestinationRoutes);
 app.use('/api', hotelcategory);
 app.use('/api', hotelRoutes);
+app.use('/api', visaRoutes);
+app.use('/api', searchRoutes);
 
 
 
