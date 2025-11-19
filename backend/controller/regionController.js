@@ -30,15 +30,56 @@ export const addRegion = async (req, res, next) => {
 // get all regions
 export const getRegions = async (req, res) => {
   try {
-    const [rows] = await db.execute(
+    const BASE_IMAGE_URL = "http://localhost:5000/uploads/destinations/";
+
+    const [regions] = await db.execute(
       "SELECT * FROM tbl_regions ORDER BY region_id ASC"
     );
 
-    res.json({ success: true, data: rows });
+    const [destinations] = await db.execute(
+      "SELECT id, region_id, country_name, slug, images FROM tbl_destinations ORDER BY country_name ASC"
+    );
+
+    const updatedDestinations = destinations.map(dest => {
+      let imageArray = [];
+
+      if (Array.isArray(dest.images)) {
+        imageArray = dest.images;
+      }
+      else if (typeof dest.images === "string" && dest.images.trim() !== "") {
+        try {
+          imageArray = JSON.parse(dest.images);
+        } catch {
+          imageArray = [];
+        }
+      }
+
+      else {
+        imageArray = [];
+      }
+
+      const fullImagePaths = imageArray.map(img => BASE_IMAGE_URL + img);
+
+      return {
+        ...dest,
+        images: fullImagePaths
+      };
+    });
+
+    const responseData = regions.map(region => ({
+      ...region,
+      destinations: updatedDestinations.filter(
+        country => country.region_id === region.region_id
+      )
+    }));
+
+    res.json({ success: true, data: responseData });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
 
 // update region
 export const updateRegion = async (req, res, next) => {

@@ -2,7 +2,6 @@ import db from "../config/db.js";
 import slugify from "slugify";
 import fs from "fs";
 import path from "path";
-import { log } from "console";
 
 
 // add tour

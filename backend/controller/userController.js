@@ -23,17 +23,23 @@ export const registerUser = async (req, res, next) => {
             [name, email, hashedPassword]
         );
 
+        const token = jwt.sign(
+            { email },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
+        );
+
         return res.status(201).json({
             success: true,
             message: "User registered successfully",
             name,
-            email
+            email,
+            token
         });
 
     } catch (err) {
         console.error("Error:", err);
 
-        // Duplicate email error (MySQL: ER_DUP_ENTRY)
         if (err.code === "ER_DUP_ENTRY") {
             return res.status(409).json({
                 success: false,
@@ -47,6 +53,7 @@ export const registerUser = async (req, res, next) => {
         });
     }
 };
+
 
 
 // login user

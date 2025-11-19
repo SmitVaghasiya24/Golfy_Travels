@@ -80,15 +80,26 @@ export const getAllDestinations = async (req, res, next) => {
 
         const destinations = rows.map((row) => {
             let imagesArray = [];
-            try {
-                imagesArray = JSON.parse(row.images || "[]");
-            } catch {
+
+            if (Array.isArray(row.images)) {
+                imagesArray = row.images;
+            }
+
+            else if (typeof row.images === "string" && row.images.trim() !== "") {
+                try {
+                    imagesArray = JSON.parse(row.images);
+                } catch {
+                    imagesArray = [];
+                }
+            }
+
+            else {
                 imagesArray = [];
             }
 
             return {
                 ...row,
-                images: imagesArray.map((img) => `${baseUrl}/${img}`),
+                images: imagesArray.map((img) => `${baseUrl}/${img}`)
             };
         });
 
@@ -108,6 +119,7 @@ export const getDestinationBySlug = async (req, res, next) => {
         const { slug } = req.params;
 
         const [resultSets] = await db.query("CALL sp_get_destination_by_slug(?)", [slug]);
+
         const rows = Array.isArray(resultSets) && Array.isArray(resultSets[0])
             ? resultSets[0]
             : resultSets;
@@ -123,9 +135,20 @@ export const getDestinationBySlug = async (req, res, next) => {
         const row = rows[0];
 
         let imagesArray = [];
-        try {
-            imagesArray = JSON.parse(row.images || "[]");
-        } catch {
+
+        if (Array.isArray(row.images)) {
+            imagesArray = row.images;
+        }
+
+        else if (typeof row.images === "string" && row.images.trim() !== "") {
+            try {
+                imagesArray = JSON.parse(row.images);
+            } catch {
+                imagesArray = [];
+            }
+        }
+
+        else {
             imagesArray = [];
         }
 
@@ -133,13 +156,14 @@ export const getDestinationBySlug = async (req, res, next) => {
             success: true,
             destination: {
                 ...row,
-                images: imagesArray.map((img) => `${baseUrl}/${img}`)
+                images: imagesArray.map(img => `${baseUrl}/${img}`)
             },
         });
     } catch (err) {
         next(err);
     }
 };
+
 
 // update destination
 export const updateDestination = async (req, res, next) => {
