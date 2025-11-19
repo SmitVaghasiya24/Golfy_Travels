@@ -28,7 +28,7 @@ function Topbar() {
 
     return (
         <>
-            <div className="wrapper bg-white py-4 px-4 md:px-8">
+            <div className=" wrapper bg-white py-4 ">
                 <div className="flex justify-between items-center w-full">
 
                     <div className="flex items-center gap-4 md:gap-10 w-full md:w-auto">
