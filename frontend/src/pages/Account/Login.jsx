@@ -6,71 +6,72 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPass, setShowPass] = useState(false);
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
 
+    const [showPass, setShowPass] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
-        if (!email || !password) {
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData.email || !formData.password) {
             toast.error("All fields are required");
             return;
         }
 
         try {
-            const response = await axios.post("http://localhost:5000/api/login", {
-                email,
-                password,
-            });
+            const res = await axios.post("http://localhost:5000/api/login", formData);
+            const { user, token, message } = res.data;
 
-            if (response.data.success) {
-                login(response.data);
-               toast.success(
-  <span className="flex items-center gap-2">
-    <span className="text-green-500 text-lg">✔</span>
-    Login successful!
-  </span>,
-  {
-    icon: null,
-  }
-);
-
-
-
-
-
-                navigate("/my-account");
-            } else {
-                toast.error(response.data.message);
+            if (!token || !user) {
+                toast.error("Invalid login response");
+                return;
             }
+
+            login({ user, token });
+
+            toast.success(message || "Login successful!");
+            navigate("/");
         } catch (err) {
-            console.log(err);
-            toast.error("Login failed. Try again.");
+            toast.error(err.response?.data?.message || "Login failed. Try again.");
         }
     };
 
     return (
         <div className="py-10">
-            <div className="border border-gray-300 p-7 rounded-md w-full max-w-lg shadow-sm">
-
+            <form
+                onSubmit={handleSubmit}
+                className="border border-gray-300 p-7 rounded-md w-full max-w-xl shadow-sm"
+            >
                 <h2 className="text-3xl font-semibold text-center mb-6">Sign In</h2>
 
                 <input
                     type="email"
+                    name="email"
                     placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full border border-gray-200 rounded-md px-4 py-3 mb-4 focus:outline-blue-400"
                 />
 
                 <div className="relative mb-4">
                     <input
                         type={showPass ? "text" : "password"}
+                        name="password"
                         placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={formData.password}
+                        onChange={handleChange}
                         className="w-full border border-gray-200 rounded-md px-4 py-3 pr-12 focus:outline-blue-400"
                     />
                     <span
@@ -82,9 +83,8 @@ function Login() {
                 </div>
 
                 <div className="flex items-center gap-5 mb-4">
-
                     <button
-                        onClick={handleLogin}
+                        type="submit"
                         className="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700"
                     >
                         LOG IN
@@ -94,14 +94,12 @@ function Login() {
                         <input type="checkbox" />
                         Remember me
                     </label>
-
                 </div>
 
                 <p className="text-blue-600 text-sm text-start cursor-pointer hover:underline">
                     Lost your password?
                 </p>
-
-            </div>
+            </form>
         </div>
     );
 }

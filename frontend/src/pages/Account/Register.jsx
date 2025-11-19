@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Register() {
     const [showPass, setShowPass] = useState(false);
@@ -15,7 +16,7 @@ function Register() {
 
     const handleRegister = async () => {
         if (!name || !email || !password) {
-            alert("All fields required");
+            toast.error("All fields are required");
             return;
         }
 
@@ -27,20 +28,33 @@ function Register() {
             });
 
             if (response.data.success) {
+                const { token, message } = response.data;
+
+                if (!token) {
+                    toast.error("Invalid response from server");
+                    return;
+                }
+
                 saveSignupData(response.data);
-                alert("Registration successful!");
+
+                toast.success(
+
+                    message || "Registration successful!"
+
+                );
+
                 navigate("/my-account");
             } else {
-                alert(response.data.message);
+                toast.error(response.data.message || "Registration failed");
             }
         } catch (err) {
             console.log(err);
-            alert("Registration failed");
+            toast.error(err.response?.data?.message || "Registration failed. Try again.");
         }
     };
 
     return (
-        <div className=" py-10 ">
+        <div className="py-10">
             <div className="border border-gray-300 p-7 rounded-md max-w-xlg w-full">
                 <h2 className="text-3xl font-semibold text-center mb-6">Register</h2>
 
@@ -77,7 +91,9 @@ function Register() {
                 </div>
 
                 <p className="text-gray-600 text-sm leading-6 mb-5">
-                    Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our
+                    Your personal data will be used to support your experience
+                    throughout this website, to manage access to your account, and
+                    for other purposes described in our
                     <span className="text-blue-600 cursor-pointer"> privacy policy.</span>
                 </p>
 
@@ -87,7 +103,6 @@ function Register() {
                 >
                     REGISTER
                 </button>
-
             </div>
         </div>
     );

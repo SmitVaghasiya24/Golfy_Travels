@@ -10,11 +10,18 @@ export const AuthProvider = ({ children }) => {
     return storedData ? JSON.parse(storedData) : null;
   });
 
-  const login = (data) => {
-    if (!data?.token) return;
-    localStorage.setItem("userData", JSON.stringify(data));
-    setUserData(data);
+  const login = ({ user, token }) => {
+    if (!token || !user) return;
+
+    const userData = {
+      ...user,
+      token
+    };
+
+    localStorage.setItem("userData", JSON.stringify(userData));
+    setUserData(userData);
   };
+
 
   const logout = () => {
     localStorage.removeItem("userData");
