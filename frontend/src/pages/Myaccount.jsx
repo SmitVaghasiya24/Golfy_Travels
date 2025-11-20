@@ -1,27 +1,30 @@
+import { Outlet } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import BreadcrumbHero from "../components/Breadcrumb";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Register from "./Account/Register";
 import Login from "./Account/Login";
+import Register from "./Account/Register";
+import AccountLayout from "./UserDashboard/AccountLayout";
 
-function Myaccount() {
+function MyAccountPage() {
+    const { userData, signupData } = useAuth();
+    const user = userData || signupData;
+
     return (
         <div>
             <BreadcrumbHero title="My Account" background="/breadcrumb.jpeg" />
 
-            <div className="wrapper py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
-
-                <div className=" justify-center self-start">
+            {!user   ? (
+                <div className="wrapper py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
                     <Login />
-                </div>
-
-                <div className=" justify-center self-start">
                     <Register />
                 </div>
-
-            </div>
-
+            ) : (
+                <AccountLayout>
+                    <Outlet />
+                </AccountLayout>
+            )}
         </div>
     );
 }
 
-export default Myaccount;
+export default MyAccountPage;

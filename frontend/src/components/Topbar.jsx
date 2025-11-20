@@ -3,10 +3,12 @@ import { FaSearch, FaUser, FaGlobe } from "react-icons/fa";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
 function Topbar() {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const { userData, signupData } = useAuth();
 
     const languages = [
         { code: "EN", label: "English", flag: "/language/eng.png" },
@@ -32,11 +34,13 @@ function Topbar() {
                 <div className="flex justify-between items-center w-full">
 
                     <div className="flex items-center gap-4 md:gap-10 w-full md:w-auto">
-                        <img
-                            src="/logo.svg"
-                            alt="logo"
-                            className="cursor-hide h-10 md:h-12 object-contain"
-                        />
+                        <Link to="/">
+                            <img
+                                src="/logo.svg"
+                                alt="logo"
+                                className="cursor-hide h-10 md:h-12 object-contain"
+                            />
+                        </Link>
 
                         <div className="hidden sm:block w-full md:w-[42vw]">
                             <div className="flex items-center bg-[#F0F0F0] rounded-full px-4 md:px-5 py-2.5 md:py-3 shadow-sm">
@@ -93,15 +97,22 @@ function Topbar() {
                             </AnimatePresence>
                         </div>
 
-                        <Link to="/my-account">
+                        <Link to={"/my-account"}>
                             <button className="cursor-hide relative overflow-hidden group text-white py-2 px-5 rounded-xl flex items-center bg-black gap-2 text-sm md:text-base">
+
                                 <span className="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+
                                 <span className="relative flex items-center gap-2 z-10">
                                     <FaUser />
-                                    <span className="font-medium hidden md:block">Login</span>
+
+                                    <span className="font-medium hidden md:block">
+                                        {userData || signupData ? "My Account" : "Login"}
+                                    </span>
                                 </span>
+
                             </button>
                         </Link>
+
                     </div>
                 </div>
 
@@ -117,7 +128,7 @@ function Topbar() {
                 </div>
             </div>
 
-            <div className="w-full h-[1px] bg-gray-200" />
+            <div className="w-full h-px bg-gray-200" />
         </>
     );
 }

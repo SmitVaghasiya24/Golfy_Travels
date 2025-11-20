@@ -42,7 +42,7 @@ function Login() {
             login({ user, token });
 
             toast.success(message || "Login successful!");
-            navigate("/");
+            navigate("/my-account");
         } catch (err) {
             toast.error(err.response?.data?.message || "Login failed. Try again.");
         }

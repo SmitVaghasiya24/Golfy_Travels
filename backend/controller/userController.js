@@ -24,10 +24,11 @@ export const registerUser = async (req, res, next) => {
         );
 
         const token = jwt.sign(
-            { email },
+            { email, name },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
         );
+
 
         return res.status(201).json({
             success: true,
@@ -278,5 +279,71 @@ export const getUserProfile = async (req, res, next) => {
     } catch (error) {
         next(error);
         res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+
+
+// update user profile
+export const updateUserProfile = async (req, res, next) => {
+    try {
+        const { user_id } = req.params;
+        const { name, current_password, new_password, confirm_password } = req.body;
+
+        if (!user_id) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+        const [rows] = await db.execute(
+            "SELECT * FROM tbl_users WHERE user_id = ?",
+            [user_id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const user = rows[0];
+
+        if (name && !new_password) {
+            await db.execute(
+                "UPDATE tbl_users SET name = ? WHERE user_id = ?",
+                [name, user_id]
+            );
+
+            return res.status(200).json({ message: "Name updated successfully" });
+        }
+
+        if (new_password || confirm_password || current_password) {
+
+            if (!current_password || !new_password || !confirm_password) {
+                return res.status(400).json({ message: "All password fields are required" });
+            }
+
+            const match = await bcrypt.compare(current_password, user.password);
+
+            if (!match) {
+                return res.status(400).json({ message: "Current password is incorrect" });
+            }
+
+            if (new_password !== confirm_password) {
+                return res.status(400).json({ message: "New passwords do not match" });
+            }
+
+            const hashedPassword = await bcrypt.hash(new_password, 10);
+
+            await db.execute(
+                "UPDATE tbl_users SET name = COALESCE(?, name), password = ? WHERE user_id = ?",
+                [name, hashedPassword, user_id]
+            );
+
+            return res.status(200).json({ message: "Password updated successfully" });
+        }
+
+        res.status(400).json({ message: "Nothing to update" });
+
+    } catch (error) {
+        next(error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };

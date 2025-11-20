@@ -38,7 +38,7 @@ export default function BreadcrumbHero({ title, background }) {
                                     to={path}
                                     className={`${index === pathParts.length - 1
                                         ? "text-white font-semibold"
-                                        : "text-white/80 hover:text-white"
+                                        : " hover:text-gray-100"
                                         } transition`}
                                 >
                                     {formatted}

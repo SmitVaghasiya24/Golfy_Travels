@@ -37,11 +37,7 @@ function Register() {
 
                 saveSignupData(response.data);
 
-                toast.success(
-
-                    message || "Registration successful!"
-
-                );
+                toast.success(message || "Registration successful!");
 
                 navigate("/my-account");
             } else {

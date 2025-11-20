@@ -17,6 +17,8 @@ import hotelcategory from './routes/hotelcategoryRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
 import visaRoutes from './routes/visaRoutes.js';
 import searchRoutes from './routes/searchRoute.js';
+import billingRoutes from './routes/addressRoutes.js';
+import whatsappnumRoutes from './routes/whatsappnumRoutes.js';
 
 
 import dotenv from 'dotenv';
@@ -50,6 +52,8 @@ app.use('/api', hotelcategory);
 app.use('/api', hotelRoutes);
 app.use('/api', visaRoutes);
 app.use('/api', searchRoutes);
+app.use('/api', billingRoutes);
+app.use('/api', whatsappnumRoutes);
 
 
 

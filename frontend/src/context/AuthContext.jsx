@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
 
     const cleanData = {
       id: decoded.id,
+      name:decoded.name,
       email: decoded.email,
       token: data.token,
     };
