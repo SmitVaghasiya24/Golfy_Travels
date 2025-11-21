@@ -69,7 +69,7 @@ function Topbar() {
                             >
                                 <FaGlobe className="text-lg" />
                                 <span className="font-medium cursor-hide hidden sm:block">EN</span>
-                                <MdArrowDropDown className="text-xl leading-none" />
+                                <MdArrowDropDown size={22} className="text-xl leading-none" />
                             </div>
 
                             <AnimatePresence>

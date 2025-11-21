@@ -1,9 +1,8 @@
 import express from 'express';
-import { addOrUpdateWhatsapp,getWhatsapp } from '../controller/whatsappnumController.js';
+import { addOrUpdateContact, getContactInfo } from '../controller/whatsappnumController.js';
 
 const router = express.Router();
 
-router.post("/whatsapp/number", addOrUpdateWhatsapp);
-router.get("/get_whatsapp_number", getWhatsapp);
-
+router.post("/add_contact", addOrUpdateContact);
+router.get("/get_contact_info", getContactInfo);
 export default router;

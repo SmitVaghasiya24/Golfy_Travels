@@ -14,6 +14,8 @@ import Download from "./pages/UserDashboard/Download";
 import Home from "./pages/Home";
 import BillingAdddress from "./pages/UserDashboard/Address/BillingAddress";
 import ShippingAddress from "./pages/UserDashboard/Address/ShippingAddress";
+import Navbar from "./components/Navbar";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
       <Toaster position="top-right" />
 
       <Topbar />
+      <Navbar />
       <CursorFollower />
 
       <Routes>
@@ -34,6 +37,7 @@ function App() {
           <Route path="addresses/shipping" element={<ShippingAddress />} />
           <Route path="account-details" element={<Accountdetails />} />
         </Route>
+        <Route path="/contact" element={<Contact />} />
 
 
 
