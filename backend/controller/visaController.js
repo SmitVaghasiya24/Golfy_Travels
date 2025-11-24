@@ -475,3 +475,27 @@ export const deleteVisaType = async (req, res) => {
         });
     }
 };
+
+
+
+export const getAllVisaTypes = async (req, res) => {
+    try {
+        const query = `SELECT * FROM tbl_visa_types`;  
+
+        const [rows] = await db.query(query);
+
+        return res.status(200).json({
+            success: true,
+            count: rows.length,
+            data: rows
+        });
+
+    } catch (error) {
+        console.error("Error fetching visa types:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message
+        });
+    }
+};

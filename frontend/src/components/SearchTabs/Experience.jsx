@@ -6,16 +6,20 @@ import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Link } from "react-router-dom";
+import { LuSparkles } from "react-icons/lu";
 
-export default function Tour() {
+
+export default function Experience() {
     const [destinations, setDestinations] = useState([]);
-    const [tourTypes, setTourTypes] = useState([]);
     const [selectedDestination, setSelectedDestination] = useState("");
-    const [selectedTourType, setSelectedTourType] = useState("");
 
     const [openDest, setOpenDest] = useState(false);
     const [open, setOpen] = useState(false);
-    const [openTour, setOpenTour] = useState(false);
+
+    const [experiences, setExperiences] = useState([]);
+    const [expSearch, setExpSearch] = useState("");
+    const [openExp, setOpenExp] = useState(false);
+    const [selectedExp, setSelectedExp] = useState("");
 
 
     const [range, setRange] = useState([
@@ -31,10 +35,14 @@ export default function Tour() {
             .then((res) => setDestinations(res.data.destinations));
     }, []);
 
+
+
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_tour_types")
-            .then((res) => setTourTypes(res.data.data));
+        axios.get("http://localhost:5000/api/get_experience")
+            .then(res => setExperiences(res.data.data))
+            .catch(err => console.log(err));
     }, []);
+
 
     return (
         <div className="bg-white rounded-xl shadow-lg px-6 pt-12 pb-7 flex flex-col relative z-50 -mt-8">
@@ -54,7 +62,7 @@ export default function Tour() {
                         </p>
                     </div>
 
-                    
+                    {/* dropdown */}
                     <AnimatePresence>
                         {openDest && (
                             <motion.ul
@@ -62,7 +70,7 @@ export default function Tour() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className=" scrollbar-thin absolute top-full left-0 right-0 bg-white shadow-md rounded-lg mt-2 z-50 max-h-60 overflow-auto"
+                                className="scrollbar-thin absolute top-full left-0 right-0 bg-white shadow-md rounded-lg mt-2 z-50 max-h-60 overflow-auto"
                             >
                                 {destinations.map((d) => (
                                     <li
@@ -81,7 +89,71 @@ export default function Tour() {
                     </AnimatePresence>
                 </div>
 
-                {/* calendar */}
+                {/* experinece */}
+                <div
+                    className="relative border rounded-lg px-5 py-4 h-16 border-gray-300 flex items-center gap-3 cursor-pointer"
+                    onClick={() => setOpenExp(!openExp)}
+                >
+                    <LuSparkles size={22} className="text-gray-500" />
+
+                    <div className="flex flex-col leading-tight">
+                        <p className="text-gray-500 text-sm">Select</p>
+                        <p className="font-semibold">
+                            {selectedExp || "Experience"}
+                        </p>
+                    </div>
+
+                    <AnimatePresence>
+                        {openExp && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                className="absolute w-full bg-white shadow-md rounded-lg top-full mt-2 z-50 max-h-60 overflow-auto 
+        scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+                            >
+                                {/* search input */}
+                                <div className="px-3 pb-2 sticky top-0 bg-white">
+                                    <div className="relative">
+                                        <FiSearch
+                                            size={18}
+                                            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Search experience..."
+                                            className="w-full border-b border-gray-300 p-2 pl-10 text-sm focus:outline-none"
+                                            value={expSearch}
+                                            onChange={(e) => setExpSearch(e.target.value)}
+                                            onClick={(e) => e.stopPropagation()}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* list */}
+                                {experiences
+                                    .filter((exp) =>
+                                        exp.name.toLowerCase().includes(expSearch.toLowerCase())
+                                    )
+                                    .map((exp) => (
+                                        <li
+                                            key={exp.id}
+                                            onClick={() => {
+                                                setSelectedExp(exp.name);
+                                                setOpenExp(false);
+                                            }}
+                                            className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                                        >
+                                            {exp.name}
+                                        </li>
+                                    ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+
+                {/* date calendar */}
                 <div className="relative">
                     <div
                         className="border border-gray-300 rounded-lg px-5 py-4 h-16 flex items-center gap-3 cursor-pointer"
@@ -138,52 +210,7 @@ export default function Tour() {
 
                 </div>
 
-                {/* tour type */}
-                <div
-                    className="relative border rounded-lg px-5 py-4 h-16 border-gray-300 flex items-center gap-3 cursor-pointer"
-                    onClick={() => setOpenTour(!openTour)}
-                >
-                    <FiList size={22} className="text-gray-500" />
-
-                    <div className="flex flex-col">
-                        <p className="text-gray-500 text-sm">Select</p>
-                        <p className="font-semibold">
-                            {selectedTourType || "Tour Type"}
-                        </p>
-                    </div>
-
-                    <AnimatePresence>
-                        {openTour && (
-                            <motion.ul
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.2 }}
-                                className="absolute top-full left-0 right-0 bg-white shadow-md rounded-lg mt-2 z-50 max-h-60 overflow-auto"
-                            >
-                                {tourTypes.length === 0 && (
-                                    <li className="px-4 py-3 text-gray-500">Loading...</li>
-                                )}
-
-                                {tourTypes.map((t) => (
-                                    <li
-                                        key={t.id}
-                                        onClick={() => {
-                                            setSelectedTourType(t.name);
-                                            setOpenTour(false);
-                                        }}
-                                        className="px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                                    >
-                                        {t.name}
-                                    </li>
-                                ))}
-                            </motion.ul>
-                        )}
-                    </AnimatePresence>
-                </div>
-
-
-                {/* search button */}
+                {/* search butotn */}
                 <button className="bg-[#1881FE] text-white flex items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16">
                     <FiSearch size={20} /> SEARCH
                 </button>
@@ -202,7 +229,6 @@ export default function Tour() {
                     Custom Itinerary
                 </Link>
             </p>
-
         </div>
     );
 }

@@ -6,7 +6,13 @@
 .container {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 35px 0 0;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-right: 35px;
+  }
 }
 
 
@@ -27,4 +33,41 @@ body {
   transform: translate(-50%, -50%);
   transition: 0.09s linear;
   z-index: 9999;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #c2c9d4;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+.mySwiper .swiper-pagination {
+  bottom: 0px !important;
+}
+
+.mySwiper {
+  padding-bottom: 45px !important;
+}
+
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+  width: max-content;
 }

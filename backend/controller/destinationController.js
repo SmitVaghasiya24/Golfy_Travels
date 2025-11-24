@@ -6,7 +6,7 @@ import path from "path";
 // add destination
 export const addDestination = async (req, res, next) => {
     try {
-        const { region_id, country_name, tours, departures, guests_travelled } = req.body;
+        const { region_id, country_name, tours, departures, guests_travelled, created_by } = req.body;
 
         if (!region_id || !country_name) {
             return res.status(400).json({
@@ -37,7 +37,7 @@ export const addDestination = async (req, res, next) => {
         const imagesJson = JSON.stringify(imageFiles);
 
         await db.query(
-            "CALL sp_insert_destination(?, ?, ?, ?, ?, ?, ?, ?)",
+            "CALL sp_insert_destination(?, ?, ?, ?, ?, ?, ?, ?,?)",
             [
                 region_id,
                 country_name,
@@ -46,7 +46,8 @@ export const addDestination = async (req, res, next) => {
                 tours || 0,
                 departures || 0,
                 guests_travelled || 0,
-                "inactive"
+                "inactive",
+                created_by || null
             ]
         );
 

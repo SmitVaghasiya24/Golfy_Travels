@@ -1,7 +1,7 @@
 import express from "express";
 import {
     insertVisaCountry, getAllVisaCountries, getVisaCountryBySlug, updateVisaCountry, deleteVisaCountry,
-    insertVisaType, updateVisaType, getVisaTypesByCountry, deleteVisaType
+    insertVisaType, updateVisaType, getVisaTypesByCountry, deleteVisaType, getAllVisaTypes
 } from "../controller/visaController.js";
 import getMulterUploader from '../middleware/upload.js'
 
@@ -19,6 +19,7 @@ router.post("/insert_visa_type", insertVisaType);
 router.get("/get_visa_type/:country_id", getVisaTypesByCountry);
 router.put("/update_visa_type/:id", updateVisaType);
 router.delete("/delete_visa_type/:id", deleteVisaType);
+router.get("/get_all_visa_types", getAllVisaTypes);
 
 
 

@@ -30,7 +30,7 @@ export const addBlog = async (req, res, next) => {
         const blogStatus = status || "draft";
         const blogPublishedDate = published_date || null;
 
-        await db.query("CALL sp_add_blog(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+        await db.query("CALL sp_insert_blog(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
             title,
             finalSlug,
             content,

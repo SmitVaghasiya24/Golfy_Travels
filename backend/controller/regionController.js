@@ -37,7 +37,7 @@ export const getRegions = async (req, res) => {
     );
 
     const [destinations] = await db.execute(
-      "SELECT id, region_id, country_name, slug, images FROM tbl_destinations ORDER BY country_name ASC"
+      "SELECT * FROM tbl_destinations ORDER BY country_name ASC"
     );
 
     const updatedDestinations = destinations.map(dest => {

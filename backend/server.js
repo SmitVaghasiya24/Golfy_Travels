@@ -19,6 +19,8 @@ import visaRoutes from './routes/visaRoutes.js';
 import searchRoutes from './routes/searchRoute.js';
 import billingRoutes from './routes/addressRoutes.js';
 import whatsappnumRoutes from './routes/whatsappnumRoutes.js';
+import discountRoutes from './routes/discountRoutes.js';
+import companyRoutes from './routes/companyRoutes.js';
 
 
 import dotenv from 'dotenv';
@@ -54,6 +56,8 @@ app.use('/api', visaRoutes);
 app.use('/api', searchRoutes);
 app.use('/api', billingRoutes);
 app.use('/api', whatsappnumRoutes);
+app.use('/api', discountRoutes);
+app.use('/api', companyRoutes);
 
 
 
