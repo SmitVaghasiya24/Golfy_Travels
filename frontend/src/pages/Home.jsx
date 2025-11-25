@@ -8,6 +8,8 @@ import Ceo from "./Ceo";
 import TravelPackage from "../components/TravelPackage";
 import Blog from "./Blog";
 import Review from "./Review";
+import Faq from "../components/Faq";
+import AllExperience from "../components/AllExperience";
 
 function Home() {
   return (
@@ -56,9 +58,9 @@ function Home() {
             </h2>
 
             <div className="w-32 sm:w-40 md:w-52 lg:w-[75%] mt-4 mx-auto flex items-center">
-              <div className="w-0 h-0 border-t-[4px] border-b-[4px] border-l-[8px] border-transparent border-l-gray-300"></div>
+              <div className="w-0 h-0 border-t-4 border-b-4 border-l-8 border-transparent border-l-gray-300"></div>
               <div className="flex-1 h-[1.5px] bg-gray-200"></div>
-              <div className="w-0 h-0 border-t-[4px] border-b-[4px] border-r-[8px] border-transparent border-r-gray-300"></div>
+              <div className="w-0 h-0 border-t-4 border-b-4 border-r-8 border-transparent border-r-gray-300"></div>
             </div>
 
 
@@ -126,7 +128,11 @@ function Home() {
 
       <Blog />
 
-    <Review/>
+      <Review />
+
+      <Faq />
+
+      <AllExperience />
 
     </>
   );

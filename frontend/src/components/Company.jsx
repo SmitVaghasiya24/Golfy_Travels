@@ -23,8 +23,7 @@ function Company() {
 
     return (
         <div className="px-10 mt-20">
-            <p className="text-xl md:text-2xl font-semibold text-center">Those Company You Can Easily Trust!</p>
-
+            <p className="text-xl md:text-2xl font-semibold text-center">Those Company You Can Easily Trust!</p>   
 
             <div className="container mx-auto overflow-hidden">
 

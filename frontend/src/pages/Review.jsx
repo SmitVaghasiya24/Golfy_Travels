@@ -29,7 +29,7 @@ function Review() {
     ];
 
     return (
-        <div className="py-16 bg-[#f5f7ff]">
+        <div className="px-2 sm:px-0 py-16 bg-[#f5f7ff]">
             <div className="text-center mb-10">
                 <h2 className="text-4xl font-bold">Hear It from Travelers</h2>
                 <p className="max-w-2xl mx-auto text-gray-600 mt-2">
@@ -102,9 +102,9 @@ function Review() {
                     })}
                 </Swiper>
 
-                <div className="flex items-center justify-center gap-8 mt-10">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-10">
 
-                    <div className="w-[150px] flex flex-col items-start gap-2">
+                    <div className="w-[150px] flex flex-col items-start gap-2 text-center md:text-left">
                         <img
                             src="/tripadvisor-logo.svg"
                             alt="tripadvisor"
@@ -118,6 +118,7 @@ function Review() {
                                 {[1, 2, 3, 4].map((i) => (
                                     <span key={i} className="w-3 h-3 rounded-full bg-[#36c26f]"></span>
                                 ))}
+
                                 <span className="relative w-3 h-3 rounded-full border-2 border-[#36c26f] overflow-hidden">
                                     <span className="absolute left-0 top-0 w-1 h-full bg-[#36c26f]"></span>
                                 </span>
@@ -125,47 +126,44 @@ function Review() {
                         </div>
                     </div>
 
-
-                    <div className="flex flex-col items-center relative">
-
-                        <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-400"></div>
-
-                        <div className="w-px h-12 bg-gray-400"></div>
-
-                        <div className="w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-400"></div>
-
+                    <div className="flex flex-col items-center">
+                        <div className="w-0 h-0 border-l-4 border-r-4 border-t-6 border-transparent border-t-gray-300"></div>
+                        <div className="h-14 w-[1.5px] bg-gray-300"></div>
+                        <div className="w-0 h-0 border-l-4 border-r-4 border-b-6 border-transparent border-b-gray-300"></div>
                     </div>
 
+                    <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
 
-
-
-                    <div className="flex items-center gap-3">
                         <div className="text-3xl font-bold">4.5</div>
 
                         <div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 justify-center md:justify-start">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#36c26f">
                                     <path d="M12 .587l3.668 7.57 8.332 1.151-6.064 5.842 1.48 8.287-7.416-3.897-7.416 3.897 1.48-8.287-6.064-5.842 8.332-1.151z" />
                                 </svg>
                                 <p className="font-semibold">Trustpilot</p>
                             </div>
 
-                            <div className="flex gap-1 mt-1">
-                                {[1, 2, 3, 4, 5].map((i) => (
-                                    <div
-                                        key={i}
-                                        className="bg-[#00B67A] px-1 py-0 text-white text-sm font-medium"
-                                    >
-                                        ★
-                                    </div>
-                                ))}
-                            </div>
+                            <div className="flex items-center gap-2 mt-1 justify-center md:justify-start">
+                                <div className="flex gap-1">
+                                    {[1, 2, 3, 4, 5].map((i) => (
+                                        <div
+                                            key={i}
+                                            className="bg-[#00B67A] px-1 py-0 text-white text-sm font-medium"
+                                        >
+                                            ★
+                                        </div>
+                                    ))}
+                                </div>
 
-                            <p className="text-sm text-gray-500 mt-1">Reviews</p>
+                                <p className="text-sm text-gray-500">Reviews</p>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
+
 
             </div>
         </div>

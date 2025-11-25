@@ -33,8 +33,9 @@ function Blog() {
     }
 
     return (
-        <div className="py-10">
+        <div className="px-4 sm:px-5 py-10">
             <div className="container mx-auto">
+
                 <h1 className="text-4xl text-center font-bold mb-6">Travel Inspirations</h1>
                 <p className="text-center mx-auto max-w-xl text-md mb-10 text-[#525252]">
                     A curated list of inspiration the most tour & travel based on different destinations.
@@ -58,8 +59,8 @@ function Blog() {
                             prevEl: ".custom-prev",
                         }}
                         breakpoints={{
-                            0: { slidesPerView: 1.1 },
-                            640: { slidesPerView: 1.3 },
+                            0: { slidesPerView: 1 },
+                            640: { slidesPerView: 1 },
                             1024: { slidesPerView: 2 },
                         }}
                     >
@@ -71,51 +72,33 @@ function Blog() {
 
                             return (
                                 <SwiperSlide key={blog.blog_id}>
-                                    <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden flex flex-col lg:flex-row h-full">
+                                    <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden 
+                                        flex flex-col md:flex-row h-full">
 
-                                        {/* left image */}
-                                        <div className="w-full lg:w-1/2 h-[260px] lg:h-[420px] overflow-hidden rounded-2xl">
+                                        <div className="w-full md:w-1/2 h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden">
                                             <img
                                                 src={blog.thumbnail}
                                                 alt={blog.title}
-                                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+                                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                                             />
                                         </div>
 
-
-                                        {/* right content */}
-                                        <div className="w-full lg:w-1/2 p-6 flex flex-col space-y-7 justify-center">
+                                        <div className="w-full md:w-1/2 p-4 sm:p-6 flex flex-col space-y-6 md:space-y-7 justify-center">
 
                                             <div className="flex items-center gap-2 font-semibold text-gray-600 text-sm">
                                                 <FiMapPin size={16} />
                                                 <span>{blog.location}</span>
                                             </div>
 
-                                            <h2 className="relative text-2xl font-semibold leading-tight w-fit group mx-auto">
+                                            <h2 className="relative text-xl sm:text-2xl font-semibold leading-tight w-fit group mx-auto md:mx-0">
                                                 {blog.title}
-
-                                                <span
-                                                    className="
-                                                      absolute left-1/2 -translate-x-1/2
-                                                      bottom-0
-                                                      h-0.5 w-0 bg-black
-                                                      transition-all duration-300
-                                                      group-hover:w-full
-                                                    "
-                                                ></span>
+                                                <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-0.5 w-0 bg-black 
+                                                    transition-all duration-300 group-hover:w-full"></span>
                                             </h2>
-
-
 
                                             <div className="flex items-center gap-2 text-gray-500 text-sm">
                                                 <BsCalendarDate size={16} />
-                                                <span>
-                                                    {new Date(blog.published_date).toLocaleDateString("en-US", {
-                                                        day: "2-digit",
-                                                        month: "short",
-                                                        year: "numeric"
-                                                    })}
-                                                </span>
+                                                <span>{formattedDate}</span>
                                             </div>
 
                                             {/* line */}
@@ -126,47 +109,38 @@ function Blog() {
                                             </div>
 
                                             <p className="text-gray-600 text-sm leading-relaxed">
-                                                {blog.content.slice(0, 140)}...
+                                                {blog.content.slice(0, 120)}...
                                             </p>
 
                                         </div>
-
                                     </div>
                                 </SwiperSlide>
-
                             );
                         })}
                     </Swiper>
 
-                    {/* arrows */}
-
-                    <button className="custom-prev border rounded-full z-50 absolute -left-6 top-1/2 -translate-y-1/2">
+                    {/* arrow */}
+                    <button className="custom-prev border rounded-full z-50 absolute -left-6 top-1/2 -translate-y-1/2 hidden md:block">
                         <LuChevronLeft className="text-black text-4xl opacity-80 hover:opacity-100 transition" />
                     </button>
 
-                    <button className="custom-next border rounded-full z-50 absolute -right-6 top-1/2 -translate-y-1/2">
+                    <button className="custom-next border rounded-full z-50 absolute -right-6 top-1/2 -translate-y-1/2 hidden md:block">
                         <LuChevronRight className="text-black text-4xl opacity-80 hover:opacity-100 transition" />
                     </button>
-
 
                 </div>
 
                 <div className="flex justify-center mt-16">
-                    <button className="relative group overflow-hidden border border-gray-300 rounded-lg px-5 py-3  bg-white  font-mediumtransition-all duration-300">
+                    <button className="relative group overflow-hidden border border-gray-300 rounded-lg px-5 py-3 bg-white font-medium transition-all duration-300">
 
-                        <span
-                            className="absolute inset-0 bg-blue-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"
-                        ></span>
+                        <span className="absolute inset-0 bg-blue-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></span>
 
-                        <span
-                            className="relative z-10 flex cursor-pointer font-semibold items-center gap-2 text-black group-hover:text-white transition-colors duration-300"
-                        >
+                        <span className="relative z-10 flex cursor-pointer font-semibold items-center gap-2 text-black group-hover:text-white transition-colors duration-300">
                             View All Inspiration <MdArrowOutward />
                         </span>
 
                     </button>
                 </div>
-
 
             </div>
         </div>
