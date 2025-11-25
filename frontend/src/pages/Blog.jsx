@@ -6,6 +6,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { FiMapPin } from "react-icons/fi";
 import { BsCalendarDate } from "react-icons/bs";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { MdArrowOutward } from "react-icons/md";
 
 function Blog() {
     const [blogs, setBlogs] = useState([]);
@@ -33,9 +35,9 @@ function Blog() {
     return (
         <div className="py-10">
             <div className="container mx-auto">
-                <h1 className="text-3xl text-center font-bold mb-6">Travel Inspirations</h1>
+                <h1 className="text-4xl text-center font-bold mb-6">Travel Inspirations</h1>
                 <p className="text-center mx-auto max-w-xl text-md mb-10 text-[#525252]">
-                    A curated list of inspiration based on amazing destinations.
+                    A curated list of inspiration the most tour & travel based on different destinations.
                 </p>
 
                 <div className="relative">
@@ -45,9 +47,9 @@ function Blog() {
                         slidesPerView={2}
                         loop={true}
                         grabCursor={true}
-                        speed={4000}
+                        speed={1000}
                         autoplay={{
-                            delay: 2000,
+                            delay: 3000,
                             disableOnInteraction: false,
                             pauseOnMouseEnter: true,
                         }}
@@ -69,33 +71,43 @@ function Blog() {
 
                             return (
                                 <SwiperSlide key={blog.blog_id}>
-                                    <div className="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden flex flex-col lg:flex-row h-full">
+                                    <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden flex flex-col lg:flex-row h-full">
 
-                                        {/* LEFT IMAGE */}
-                                        <div className="w-full lg:w-1/2 h-[260px] lg:h-[400px]">
+                                        {/* left image */}
+                                        <div className="w-full lg:w-1/2 h-[260px] lg:h-[420px] overflow-hidden rounded-2xl">
                                             <img
                                                 src={blog.thumbnail}
                                                 alt={blog.title}
-                                                className="w-full border-none rounded-2xl h-full object-cover"
+                                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
                                             />
                                         </div>
 
-                                        {/* RIGHT CONTENT */}
+
+                                        {/* right content */}
                                         <div className="w-full lg:w-1/2 p-6 flex flex-col space-y-7 justify-center">
 
-                                            {/* Location */}
-                                            <div className="flex items-center gap-2 text-gray-600 text-sm mb-3">
+                                            <div className="flex items-center gap-2 font-semibold text-gray-600 text-sm">
                                                 <FiMapPin size={16} />
                                                 <span>{blog.location}</span>
                                             </div>
 
-                                            {/* Title */}
-                                            <h2 className="text-2xl font-semibold mb-3 leading-tight">
+                                            <h2 className="relative text-2xl font-semibold leading-tight w-fit group mx-auto">
                                                 {blog.title}
+
+                                                <span
+                                                    className="
+                                                      absolute left-1/2 -translate-x-1/2
+                                                      bottom-0
+                                                      h-0.5 w-0 bg-black
+                                                      transition-all duration-300
+                                                      group-hover:w-full
+                                                    "
+                                                ></span>
                                             </h2>
 
-                                            {/* Date */}
-                                            <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
+
+
+                                            <div className="flex items-center gap-2 text-gray-500 text-sm">
                                                 <BsCalendarDate size={16} />
                                                 <span>
                                                     {new Date(blog.published_date).toLocaleDateString("en-US", {
@@ -106,7 +118,13 @@ function Blog() {
                                                 </span>
                                             </div>
 
-                                            {/* Description */}
+                                            {/* line */}
+                                            <div className="w-full flex items-center">
+                                                <div className="w-0 h-0 border-t-4 border-b-4 border-l-8 border-transparent border-l-gray-300"></div>
+                                                <div className="flex-1 h-[1.5px] bg-gray-200"></div>
+                                                <div className="w-0 h-0 border-t-4 border-b-4 border-r-8 border-transparent border-r-gray-300"></div>
+                                            </div>
+
                                             <p className="text-gray-600 text-sm leading-relaxed">
                                                 {blog.content.slice(0, 140)}...
                                             </p>
@@ -120,15 +138,36 @@ function Blog() {
                         })}
                     </Swiper>
 
-                    {/* Custom Arrows */}
-                    <button className="custom-prev absolute -left-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow">
-                        <span className="text-xl">❮</span>
+                    {/* arrows */}
+
+                    <button className="custom-prev border rounded-full z-50 absolute -left-6 top-1/2 -translate-y-1/2">
+                        <LuChevronLeft className="text-black text-4xl opacity-80 hover:opacity-100 transition" />
                     </button>
 
-                    <button className="custom-next absolute -right-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow">
-                        <span className="text-xl">❯</span>
+                    <button className="custom-next border rounded-full z-50 absolute -right-6 top-1/2 -translate-y-1/2">
+                        <LuChevronRight className="text-black text-4xl opacity-80 hover:opacity-100 transition" />
+                    </button>
+
+
+                </div>
+
+                <div className="flex justify-center mt-16">
+                    <button className="relative group overflow-hidden border border-gray-300 rounded-lg px-5 py-3  bg-white  font-mediumtransition-all duration-300">
+
+                        <span
+                            className="absolute inset-0 bg-blue-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"
+                        ></span>
+
+                        <span
+                            className="relative z-10 flex cursor-pointer font-semibold items-center gap-2 text-black group-hover:text-white transition-colors duration-300"
+                        >
+                            View All Inspiration <MdArrowOutward />
+                        </span>
+
                     </button>
                 </div>
+
+
             </div>
         </div>
     );

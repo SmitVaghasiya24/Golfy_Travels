@@ -65,7 +65,7 @@ function Destination() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className={`px-6 py-2 rounded-full border border-gray-200 text-sm whitespace-nowrap 
-                        ${activeRegion === region.region_id
+                               ${activeRegion === region.region_id
                                         ? "bg-[#1881FE] text-white"
                                         : "bg-gray-100 text-gray-700"
                                     }`}

@@ -7,6 +7,7 @@ import Company from "../components/Company";
 import Ceo from "./Ceo";
 import TravelPackage from "../components/TravelPackage";
 import Blog from "./Blog";
+import Review from "./Review";
 
 function Home() {
   return (
@@ -54,7 +55,14 @@ function Home() {
               We’re Providing Best Service Ever!
             </h2>
 
-            <div className="w-full border-t border-gray-300 mt-6 mb-10"></div>
+            <div className="w-32 sm:w-40 md:w-52 lg:w-[75%] mt-4 mx-auto flex items-center">
+              <div className="w-0 h-0 border-t-[4px] border-b-[4px] border-l-[8px] border-transparent border-l-gray-300"></div>
+              <div className="flex-1 h-[1.5px] bg-gray-200"></div>
+              <div className="w-0 h-0 border-t-[4px] border-b-[4px] border-r-[8px] border-transparent border-r-gray-300"></div>
+            </div>
+
+
+            <div className="w-full mt-6 mb-10"></div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
@@ -100,7 +108,7 @@ function Home() {
             </div>
 
             <div className="flex justify-center mt-12">
-              <button className="bg-[#1881FE] text-white py-3 px-10 rounded-full text-lg font-semibold hover:bg-blue-700 transition">
+              <button className="bg-[#1881FE] text-white py-3 px-10 rounded-full text-lg font-semibold ">
                 Flat 30% Discounts All Packages
                 <span className="ml-3">Check Offer ↗</span>
               </button>
@@ -116,8 +124,9 @@ function Home() {
       <Ceo />
 
 
-    <Blog/>
+      <Blog />
 
+    <Review/>
 
     </>
   );
