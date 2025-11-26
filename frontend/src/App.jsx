@@ -16,6 +16,7 @@ import BillingAdddress from "./pages/UserDashboard/Address/BillingAddress";
 import ShippingAddress from "./pages/UserDashboard/Address/ShippingAddress";
 import Navbar from "./components/Navbar";
 import Contact from "./pages/Contact";
+import DestinationDetails from "./pages/DestinationDetails";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="account-details" element={<Accountdetails />} />
         </Route>
         <Route path="/contact" element={<Contact />} />
+        <Route path="/destination/:slug" element={<DestinationDetails />} />
 
 
 

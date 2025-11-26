@@ -88,7 +88,6 @@ function Footer() {
                         <FaLinkedinIn className="hover:text-blue-600 cursor-pointer transition" size={20} />
                     </div>
 
-                    {/* Play Store */}
                     <img
                         src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
                         className="w-40 pt-2 cursor-pointer"
@@ -136,16 +135,31 @@ function Footer() {
 
             </div>
 
-            <div className="border-t border-gray-700 mt-16 pt-6 text-center text-gray-500 text-sm">
-                <p>© 2025 GoFly. All Rights Reserved.</p>
+            <div className="container mx-auto px-4">
+                <div className=" border-t border-gray-700 mt-16 pt-6 text-gray-500 text-sm flex flex-col md:flex-row items-center md:items-between justify-between gap-4 "
+                >
+                    <p className="text-center md:text-left">
+                        © 2025 GoFly. All Rights Reserved.
+                    </p>
 
-                <div className="flex justify-center gap-6 mt-4 opacity-90">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Mastercard-logo.png/90px-Mastercard-logo.png" className="h-6" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" className="h-6" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-6" />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Google_Pay_Logo_%282021%29.svg" className="h-6" />
+                    <div className="flex justify-center md:justify-end gap-6 opacity-90">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Mastercard-logo.png/90px-Mastercard-logo.png"
+                            className="h-6"
+                        />
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                            className="h-6"
+                        />
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                            className="h-6"
+                        />
+                    </div>
+
                 </div>
             </div>
+
         </footer>
 
     );

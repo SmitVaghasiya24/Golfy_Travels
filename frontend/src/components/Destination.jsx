@@ -8,6 +8,8 @@ import "swiper/css/autoplay";
 
 import { Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 
 function Destination() {
     const [regions, setRegions] = useState([]);
@@ -110,41 +112,42 @@ function Destination() {
                         >
                             {destinations.map((item) => (
                                 <SwiperSlide key={item.id} className="!h-[280px]">
-                                    <div className="cursor-pointer rounded-xl overflow-hidden group h-full">
+                                    <Link to={`/destination/${item.slug}`}>
+                                        <div className="cursor-pointer rounded-xl overflow-hidden group h-full">
 
-                                        <div
-                                            className="overflow-hidden rounded-xl transition-all duration-500 
-                                       h-[220px] group-hover:h-[155px]"
-                                        >
-                                            <img
-                                                src={item.images[0]}
-                                                alt={item.country_name}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            <div
+                                                className="overflow-hidden rounded-xl transition-all duration-500 
+                                                 h-[220px] group-hover:h-[155px]"
+                                            >
+                                                <img
+                                                    src={item.images[0]}
+                                                    alt={item.country_name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+
+                                            <div className="mt-2 flex items-center justify-center gap-2 px-2">
+                                                <FiMapPin className="text-black text-lg" />
+                                                <h3 className="font-bold text-base md:text-lg text-center">
+                                                    {item.country_name}
+                                                </h3>
+                                            </div>
+
+                                            <div className="
+          text-center text-gray-600 text-sm 
+          max-h-0 opacity-0 overflow-hidden 
+          group-hover:max-h-40 group-hover:opacity-100 
+          transition-all duration-500
+        ">
+                                                <p>{item.tours} tours | {item.departures} departure</p>
+                                                <p>{item.guests_travelled.toLocaleString()} guest travelled.</p>
+                                            </div>
+
                                         </div>
-
-                                        <div className="mt-2 flex items-center justify-center gap-2 px-2">
-                                            <FiMapPin className="text-black text-lg" />
-                                            <h3 className="font-bold text-base md:text-lg text-center">
-                                                {item.country_name}
-                                            </h3>
-                                        </div>
-
-                                        <div
-                                            className="
-                                         text-center text-gray-600 text-sm 
-                                         max-h-0 opacity-0 overflow-hidden 
-                                         group-hover:max-h-40 group-hover:opacity-100 
-                                         transition-all duration-500
-                                       "
-                                        >
-                                            <p>{item.tours} tours | {item.departures} departure</p>
-                                            <p>{item.guests_travelled.toLocaleString()} guest travelled.</p>
-                                        </div>
-
-                                    </div>
+                                    </Link>
                                 </SwiperSlide>
                             ))}
+
                         </Swiper>
                     )}
 

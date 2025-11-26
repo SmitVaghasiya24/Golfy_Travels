@@ -3,7 +3,7 @@ import axios from "axios";
 import { FiChevronDown } from "react-icons/fi";
 import { motion } from "framer-motion";
 
-function Faq() {
+function Faq({ type = "home", title, subtitle }) {
     const [faqs, setFaqs] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -11,14 +11,21 @@ function Faq() {
         const fetchFaqs = async () => {
             try {
                 const res = await axios.get("http://localhost:5000/api/faq");
-                setFaqs(res.data.FAQs);
+
+                let data = res.data.FAQs;
+
+                if (type === "destination") {
+                    data = data.slice(2, 6);
+                }
+
+                setFaqs(data);
             } catch (error) {
                 console.log("Error fetching FAQs:", error);
             }
         };
 
         fetchFaqs();
-    }, []);
+    }, [type]);
 
     const toggleFAQ = (index) => {
         setActiveIndex(index === activeIndex ? null : index);
@@ -48,9 +55,9 @@ function Faq() {
 
     return (
         <div className="py-16 max-w-4xl mx-auto px-4">
-            <h2 className="text-4xl font-bold text-center mb-2">General Questions</h2>
+            <h2 className="text-4xl font-bold text-center mb-2">{title}</h2>
             <p className="text-gray-600 text-center max-w-xl mx-auto mb-10">
-                We're committed to offering more than just products—we provide exceptional experiences.
+                {subtitle}
             </p>
 
             {faqs.length > 0 && (
