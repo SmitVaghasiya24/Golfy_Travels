@@ -2,6 +2,7 @@ import db from "../config/db.js";
 import slugify from "slugify";
 import fs from "fs";
 import path from "path";
+import { error } from "console";
 
 
 // add tour
@@ -81,7 +82,7 @@ export const addTour = async (req, res, next) => {
 // get all tours
 export const getAllTours = async (req, res) => {
     try {
-        let { page = 1, limit = 5 } = req.query;
+        let { page = 1, limit = 8 } = req.query;
         page = parseInt(page);
         limit = parseInt(limit);
         const offset = (page - 1) * limit;
@@ -109,7 +110,7 @@ export const getAllTours = async (req, res) => {
             message: "Something went wrong"
         });
         console.log(error);
-        
+
     }
 };
 
@@ -147,7 +148,7 @@ export const getTourBySlug = async (req, res) => {
 
 
 // update tour
-export const updateTour = async (req, res) => {
+export const updateTour = async (req, res, next) => {
     try {
         const { tour_id } = req.params;
 
@@ -242,6 +243,7 @@ export const updateTour = async (req, res) => {
         });
 
     } catch (error) {
+        next(error)
         res.status(500).json({
             success: false,
             message: "Something went wrong"

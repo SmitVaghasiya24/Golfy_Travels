@@ -3,7 +3,7 @@ import db from "../config/db.js";
 // add destination
 export const addTourDestinations = async (req, res, next) => {
     try {
-        const { tour_id, destinations } = req.body;
+        const { tour_id, destinations, status, created_by } = req.body;
 
         if (!tour_id) {
             return res.status(400).json({
@@ -21,9 +21,11 @@ export const addTourDestinations = async (req, res, next) => {
 
         const destinationString = destinations.join(",");
 
-        await db.query("CALL sp_insert_tour_destinations(?, ?)", [
+        await db.query("CALL sp_insert_tour_destinations(?, ?,?, ?)", [
             tour_id,
-            destinationString
+            destinationString,
+            status || "inactive",
+            created_by || null
         ]);
 
         res.status(201).json({
@@ -142,7 +144,7 @@ export const addTourExperiences = async (req, res) => {
 
         await db.query("CALL sp_insert_tour_experiences(?, ?)", [
             tour_id,
-            experienceString
+            experienceString,
         ]);
 
         return res.status(201).json({

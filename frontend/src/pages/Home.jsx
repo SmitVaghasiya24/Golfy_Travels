@@ -10,6 +10,8 @@ import Blog from "./Blog";
 import Review from "./Review";
 import Faq from "../components/Faq";
 import AllExperience from "../components/AllExperience";
+import Tour from '../components/Tour';
+import Footer from '../components/Footer';
 
 function Home() {
   return (
@@ -46,7 +48,6 @@ function Home() {
       <DiscoutBanners />
 
       <Destination />
-
 
       <div className="mt-20">
         <div className="container mx-auto px-4 md:px-10">
@@ -121,10 +122,30 @@ function Home() {
         </div>
       </div>
 
-      <Company />
-      <TravelPackage />
+      <Tour
+        mode="popular"
+        title="Popular Travel Packages"
+        subTitle="A curated list of the most popular travel packages based on different destinations."
+      />
+
       <Ceo />
 
+      <Tour
+        mode="last minute"
+        title="Last Minute Deals!"
+        subTitle="A curated list of the most popular travel packages based on different destinations."
+      />
+
+      <TravelPackage />
+
+      <Company />
+
+
+      <Tour
+        mode="one day"
+        title="One Day Trips"
+        subTitle="A curated list of the most popular travel packages based on different destinations."
+      />
 
       <Blog />
 
@@ -133,6 +154,8 @@ function Home() {
       <Faq />
 
       <AllExperience />
+
+      <Footer />
 
     </>
   );
