@@ -17,6 +17,12 @@ import ShippingAddress from "./pages/UserDashboard/Address/ShippingAddress";
 import Navbar from "./components/Navbar";
 import Contact from "./pages/Contact";
 import DestinationDetails from "./pages/DestinationDetails";
+import Error from "./pages/page/Error";
+import AboutGolfy from "./pages/page/AboutGolfy";
+import Faqs from "./pages/page/Faqs";
+import TravelInspiration from "./pages/page/Inspiration";
+import TravelInspirationDetails from "./pages/page/InspirationDetails";
+
 
 function App() {
   return (
@@ -40,6 +46,11 @@ function App() {
         </Route>
         <Route path="/contact" element={<Contact />} />
         <Route path="/destination/:slug" element={<DestinationDetails />} />
+        <Route path="/pages/404" element={<Error />} />
+        <Route path="/pages/about" element={<AboutGolfy />} />
+        <Route path="/pages/faq" element={<Faqs />} />
+        <Route path="/pages/travel-inspiration" element={<TravelInspiration />} />
+        <Route path="/pages/travel-inspiration/:slug" element={<TravelInspirationDetails />} />
 
 
 

@@ -8,10 +8,12 @@ import { FiMapPin } from "react-icons/fi";
 import { BsCalendarDate } from "react-icons/bs";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { MdArrowOutward } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function Blog() {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -90,11 +92,22 @@ function Blog() {
                                                 <span>{blog.location}</span>
                                             </div>
 
-                                            <h2 className="relative text-xl sm:text-2xl font-semibold leading-tight w-fit group mx-auto md:mx-0">
-                                                {blog.title}
-                                                <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-0.5 w-0 bg-black 
-                                                    transition-all duration-300 group-hover:w-full"></span>
-                                            </h2>
+                                            <div className="group">
+                                                <h2
+                                                    onClick={() => navigate(`/pages/travel-inspiration/${blog.slug}`)}
+                                                    className="relative text-xl sm:text-2xl font-semibold leading-tight inline-block">
+                                                    {blog.title}
+
+                                                    <span
+                                                        className="
+                                                            absolute left-0 -bottom-1
+                                                            h-0.5 w-0 bg-black
+                                                            transition-all duration-300 
+                                                            group-hover:w-full
+                                                        "
+                                                    ></span>
+                                                </h2>
+                                            </div>
 
                                             <div className="flex items-center gap-2 text-gray-500 text-sm">
                                                 <BsCalendarDate size={16} />

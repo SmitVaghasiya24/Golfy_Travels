@@ -4,6 +4,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import NavItems from "./NavItems";
 
 export default function Navbar() {
     const [whatsapp, setWhatsapp] = useState("");
@@ -50,26 +51,8 @@ export default function Navbar() {
                     <RxHamburgerMenu size={24} onClick={() => setOpenMenu(!openMenu)} />
                 </div>
 
-                <ul className="hidden lg:flex font-semibold items-center gap-7 text-[15px]">
-                    {menuItems.slice(0, 5).map((item, i) => (
-                        <li
-                            key={i}
-                            onClick={() => window.location.href = item.path}
-                            className={`flex items-center cursor-pointer hover:text-blue-500 py-1 rounded
-                                ${current === item.path ? " text-blue-500" : ""}`}
-                        >
-                            {item.name} <IoMdArrowDropdown size={20} />
-                        </li>
-                    ))}
+               <NavItems/>
 
-                    <li
-                        onClick={() => window.location.href = "/contact"}
-                        className={`cursor-pointer hover:text-blue-500 px-3 py-1 rounded
-                            ${current === "/contact" ? " text-blue-500" : ""}`}
-                    >
-                        Contact
-                    </li>
-                </ul>
 
                 <div className="relative" ref={dropdownRef}>
                     <div

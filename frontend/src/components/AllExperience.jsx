@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useInView } from "framer-motion";
+import { FaFlagCheckered, FaGlobeAmericas } from "react-icons/fa";
+import { MdEmojiEmotions } from "react-icons/md";
+import { FaRedoAlt } from "react-icons/fa";
+
 
 const useCounter = (end, isInView, duration = 1500) => {
     const [count, setCount] = useState(0);
@@ -8,7 +12,7 @@ const useCounter = (end, isInView, duration = 1500) => {
         if (!isInView) return;
 
         let current = 0;
-        const increment = end / (duration / 20);
+        const increment = end / (duration / 30);
 
         const timer = setInterval(() => {
             current += increment;
@@ -17,7 +21,7 @@ const useCounter = (end, isInView, duration = 1500) => {
                 clearInterval(timer);
             }
             setCount(Math.floor(current));
-        }, 20);
+        }, 30);
 
         return () => clearInterval(timer);
     }, [isInView]);
@@ -27,10 +31,10 @@ const useCounter = (end, isInView, duration = 1500) => {
 
 function Experience() {
     const stats = [
-        { icon: "👤", value: 26, label: "Tour Completed" },
-        { icon: "🧳", value: 12, label: "Travel Experience" },
-        { icon: "😎", value: 20, label: "Happy Traveler" },
-        { icon: "🧒", value: 98, label: "Retention Rate", percent: true },
+        { icon: <FaFlagCheckered />, value: 26, label: "Tour Completed" },
+        { icon: <FaGlobeAmericas />, value: 12, label: "Travel Experience" },
+        { icon: <MdEmojiEmotions />, value: 20, label: "Happy Traveler" },
+        { icon: <FaRedoAlt />, value: 98, label: "Retention Rate", percent: true },
     ];
 
     const refs = useRef(stats.map(() => React.createRef()));
@@ -64,6 +68,7 @@ function Experience() {
                                 <p className="text-black font-semibold">{item.label}</p>
                             </div>
 
+                            {/* line */}
                             {index !== stats.length - 1 && (
                                 <div className="hidden lg:block absolute -right-5 top-1/2 -translate-y-1/2">
                                     <div className="flex flex-col items-center">

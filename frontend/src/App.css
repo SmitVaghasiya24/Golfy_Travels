@@ -71,3 +71,48 @@ body {
   animation: scroll 30s linear infinite;
   width: max-content;
 }
+
+
+@keyframes slideUpShake {
+  0% {
+    transform: translateY(20px) rotate(0deg);
+  }
+
+  40% {
+    transform: translateY(-4px) rotate(1deg);
+  }
+
+  70% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.group:hover .icon-anim {
+  animation: slideUpShake 0.5s ease-out;
+}
+
+
+
+.hover-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 0%;
+  background: currentColor;
+  transition: width 0.35s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}

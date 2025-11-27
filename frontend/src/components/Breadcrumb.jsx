@@ -12,9 +12,11 @@ export default function BreadcrumbHero({ title, background }) {
             <div className="absolute inset-0 bg-black/40"></div>
 
             <div className="relative text-center text-white z-10">
-                <h1 className="text-5xl font-bold mb-7">{title}</h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight max-w-4xl mx-auto font-bold mb-7 text-center">
+                    {title}
+                </h1>
 
-                <nav className="text-md  flex items-center justify-center gap-2">
+                <nav className="text-md px-1 flex items-center justify-center gap-2">
                     <Link
                         to="/"
                         className="cursor-hide text-white hover:text-white font-medium transition"
@@ -31,21 +33,27 @@ export default function BreadcrumbHero({ title, background }) {
                             .join(" ");
 
                         return (
-                            <span key={path} className="flex items-center gap-2">
-                                <span className="text-white">•</span>
+                            <span
+                                key={path}
+                                className="flex items-center gap-2 text-white text-sm sm:text-base"
+                            >
+                                <span className="flex items-center justify-center leading-none">•</span>
 
+                                {/* Link */}
                                 <Link
                                     to={path}
-                                    className={`${index === pathParts.length - 1
-                                        ? "text-white font-semibold"
-                                        : " hover:text-gray-100"
-                                        } transition`}
+                                    className={`transition 
+                                     ${index === pathParts.length - 1
+                                            ? "text-white font-semibold"
+                                            : "text-white hover:text-gray-100"}
+                                    `}
                                 >
                                     {formatted}
                                 </Link>
                             </span>
                         );
                     })}
+
                 </nav>
             </div>
         </div>

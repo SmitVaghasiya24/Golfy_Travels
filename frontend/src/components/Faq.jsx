@@ -14,8 +14,14 @@ function Faq({ type = "home", title, subtitle }) {
 
                 let data = res.data.FAQs;
 
+                if (type === "home") {
+                    data = data.slice(5, 10);
+                }
                 if (type === "destination") {
                     data = data.slice(2, 6);
+                }
+                if (type === "faq") {
+                    data = data.slice(0, 5);
                 }
 
                 setFaqs(data);

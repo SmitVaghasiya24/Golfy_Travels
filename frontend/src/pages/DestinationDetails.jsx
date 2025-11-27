@@ -672,7 +672,6 @@ function DestinationDetails() {
                 </div>
             </div>
 
-
             <div className="relative mt-25 mb-10 w-full">
 
                 <div className="container mx-auto">
@@ -745,10 +744,6 @@ function DestinationDetails() {
             />
 
             <Footer />
-
-
-
-
 
         </div>
     );

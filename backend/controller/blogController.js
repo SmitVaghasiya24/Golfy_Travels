@@ -57,7 +57,7 @@ export const addBlog = async (req, res, next) => {
 // get all blogs
 export const getAllBlogs = async (req, res, next) => {
     try {
-        let { page = 1, limit = 10 } = req.query;
+        let { page = 1, limit = 6 } = req.query;
         page = parseInt(page);
         limit = parseInt(limit);
         const offset = (page - 1) * limit;
@@ -239,7 +239,7 @@ export const deleteBlog = async (req, res, next) => {
             );
 
             if (fs.existsSync(imagePath)) {
-                fs.unlink(imagePath, () => {});
+                fs.unlink(imagePath, () => { });
             }
         }
 

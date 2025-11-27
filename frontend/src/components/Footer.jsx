@@ -27,10 +27,11 @@ function Footer() {
         <footer className="bg-[#0c0c0c] text-white pt-16 pb-10">
 
             <div className="w-full">
+
                 <div
                     className="wrapper mx-auto px-5 sm:px-0 
                       grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 
-                      gap-10 pb-8 border-b border-gray-700"
+                      gap-16 pb-8"
                 >
                     <div className="flex items-center gap-4">
                         <FiMessageCircle size={36} className="text-blue-400" />
@@ -68,7 +69,19 @@ function Footer() {
                         </div>
                     </div>
                 </div>
+
+                <div className="wrapper flex items-center justify-center mt-2">
+
+                    <div className="w-0 h-0 border-t-4 border-b-4 border-l-8 border-transparent border-l-gray-700"></div>
+
+                    <div className="h-0.5 w-full max-w-full bg-gray-700"></div>
+
+                    <div className="w-0 h-0 border-t-4 border-b-4 border-r-8 border-transparent border-r-gray-700"></div>
+
+                </div>
+
             </div>
+
 
             <div className="wrapper mx-auto mt-5 px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 
                gap-16 pt-10">
@@ -135,30 +148,38 @@ function Footer() {
 
             </div>
 
-            <div className="container mx-auto px-4">
-                <div className=" border-t border-gray-700 mt-16 pt-6 text-gray-500 text-sm flex flex-col md:flex-row items-center md:items-between justify-between gap-4 "
-                >
-                    <p className="text-center md:text-left">
-                        © 2025 GoFly. All Rights Reserved.
-                    </p>
+            <div className="w-full mt-16">
 
-                    <div className="flex justify-center md:justify-end gap-6 opacity-90">
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Mastercard-logo.png/90px-Mastercard-logo.png"
-                            className="h-6"
-                        />
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                            className="h-6"
-                        />
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
-                            className="h-6"
-                        />
+                <div className="w-full border-t border-gray-700"></div>
+
+                <div className="container">
+                    <div className=" mx-auto px-4 md:px-0 py-6">
+                        <div className="text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+
+                            <p className="text-center md:text-left">
+                                © 2025 GoFly. All Rights Reserved.
+                            </p>
+
+                            <div className="flex justify-center md:justify-end gap-6 opacity-90">
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Mastercard-logo.png/90px-Mastercard-logo.png"
+                                    className="h-6"
+                                />
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                                    className="h-6"
+                                />
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                                    className="h-6"
+                                />
+                            </div>
+
+                        </div>
                     </div>
-
                 </div>
             </div>
+
 
         </footer>
 

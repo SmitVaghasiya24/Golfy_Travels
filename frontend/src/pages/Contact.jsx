@@ -5,7 +5,7 @@ import { FiChevronDown } from "react-icons/fi";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
-
+import Footer from "../components/Footer";
 
 function Contact() {
     const [open, setOpen] = useState(false);
@@ -274,6 +274,7 @@ function Contact() {
                     referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
             </div>
+            <Footer/>
         </div>
     );
 }
