@@ -12,6 +12,8 @@ import Review from "../../components/Review";
 import Faq from "../../components/Faq";
 import AllExperience from '../../components/AllExperience';
 import Footer from '../../components/Footer';
+import { useLazyLoad } from "../../hooks/useLazyLoad";
+
 
 
 const timelineData = [
@@ -91,6 +93,7 @@ function AboutGolfy() {
     const [activeYear, setActiveYear] = useState(timelineData[0]);
     const [dotIndex, setDotIndex] = useState(0);
     const [openVideo, setOpenVideo] = useState(false);
+    const [ref, isVisible] = useLazyLoad();
 
 
     return (
@@ -283,33 +286,33 @@ function AboutGolfy() {
 
             <Company />
 
-            <div className="relative my-25 w-full">
+            <div className="relative my-25 w-full" ref={ref}>
 
                 <div className="container mx-auto">
                     <img
                         src="/destination/bg-video.webp"
                         alt="video thumbnail"
-                        className=" w-full h-[220px] sm:h-[280px] md:h-[340px] lg:h-[500px] object-cover rounded-2xl"
+                        loading="lazy"
+                        className={`
+                            w-full h-[220px] sm:h-[280px] md:h-[340px] lg:h-[500px]
+                            object-cover rounded-2xl transition-all duration-700
+                            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+                        `}
                     />
-
                 </div>
-
 
                 <button
                     onClick={() => setOpenVideo(true)}
                     className="
-                      absolute inset-0 m-auto
-                      w-12 h-12 md:w-20 md:h-20
-                      flex items-center justify-center
-                      bg-blue-600 bg-opacity-80
-                      text-white rounded-full
-                       backdrop-blur-sm
-                     hover:bg-blue-700 transition
-                       live-btn
-                    "
+                        absolute inset-0 m-auto
+                         w-12 h-12 md:w-20 md:h-20
+                        flex items-center justify-center
+                         bg-blue-600 bg-opacity-80
+                         text-white rounded-full
+                         backdrop-blur-sm
+                         hover:bg-blue-700 transition live-btn
+                     "
                 >
-
-
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -321,6 +324,7 @@ function AboutGolfy() {
                 </button>
 
             </div>
+
 
             {openVideo && (
                 <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-9999">
