@@ -8,12 +8,13 @@ import "swiper/css/autoplay";
 
 import { Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-function Destination() {
+function Destination({ type }) {
     const [regions, setRegions] = useState([]);
     const [activeRegion, setActiveRegion] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadRegions = async () => {
@@ -54,9 +55,6 @@ function Destination() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7 }}
             >
-                <h2 className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold">
-                    Featured Destinations
-                </h2>
 
                 <div className="w-full mt-7 pb-3 overflow-x-auto">
                     <div className="flex gap-4 justify-center min-w-fit mx-auto">
@@ -79,8 +77,6 @@ function Destination() {
                 </div>
             </motion.div>
 
-
-
             <div className="cursor-hide px-4 md:px-10 mt-16">
                 <div className="container mx-auto">
 
@@ -91,33 +87,21 @@ function Destination() {
                     )}
 
                     {destinations.length > 0 && (
-                        <Swiper
-                            slidesPerView={4}
-                            spaceBetween={20}
-                            autoplay={{
-                                delay: 2000,
-                                disableOnInteraction: false,
-                            }}
-                            speed={1500}
-                            pagination={{ clickable: true }}
-                            breakpoints={{
-                                0: { slidesPerView: 1 },
-                                480: { slidesPerView: 1.2 },
-                                640: { slidesPerView: 2 },
-                                900: { slidesPerView: 3 },
-                                1200: { slidesPerView: 4 },
-                            }}
-                            modules={[Autoplay, Pagination]}
-                            className="mySwiper mt-10 pb-10"
-                        >
-                            {destinations.map((item) => (
-                                <SwiperSlide key={item.id} className="!h-[280px]">
-                                    <Link to={`/destination/${item.slug}`}>
-                                        <div className="cursor-pointer rounded-xl overflow-hidden group h-full">
+                        type === "destination" ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 my-10">
+                                {destinations.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        onClick={() => navigate(`/destination/${item.slug}`)}
+                                        className="rounded-xl overflow-hidden group cursor-pointer bg-white"
+                                    >
+
+
+                                        <div className="h-70 flex flex-col">
 
                                             <div
-                                                className="overflow-hidden rounded-xl transition-all duration-500 
-                                                 h-[220px] group-hover:h-[155px]"
+                                                className="overflow-hidden rounded-xl h-[220px] 
+                                                    group-hover:h-[155px] transition-all duration-500"
                                             >
                                                 <img
                                                     src={item.images[0]}
@@ -133,22 +117,89 @@ function Destination() {
                                                 </h3>
                                             </div>
 
-                                            <div className="
-          text-center text-gray-600 text-sm 
-          max-h-0 opacity-0 overflow-hidden 
-          group-hover:max-h-40 group-hover:opacity-100 
-          transition-all duration-500
-        ">
+                                            <div
+                                                className="
+                                                text-center text-gray-600 text-sm 
+                                                max-h-0 opacity-0 overflow-hidden
+                                                group-hover:max-h-40 group-hover:opacity-100
+                                                transition-all duration-500
+                                            "
+                                            >
                                                 <p>{item.tours} tours | {item.departures} departure</p>
                                                 <p>{item.guests_travelled.toLocaleString()} guest travelled.</p>
                                             </div>
-
                                         </div>
-                                    </Link>
-                                </SwiperSlide>
-                            ))}
 
-                        </Swiper>
+                                    </div>
+                                ))}
+                            </div>
+
+
+                        ) :
+                            <div>
+                                <h2 className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold">
+                                    Featured Destinations
+                                </h2>
+
+                                <Swiper
+                                    slidesPerView={4}
+                                    spaceBetween={20}
+                                    autoplay={{
+                                        delay: 2000,
+                                        disableOnInteraction: false,
+                                    }}
+                                    speed={1500}
+                                    pagination={{ clickable: true }}
+                                    breakpoints={{
+                                        0: { slidesPerView: 1 },
+                                        480: { slidesPerView: 1.2 },
+                                        640: { slidesPerView: 2 },
+                                        900: { slidesPerView: 3 },
+                                        1200: { slidesPerView: 4 },
+                                    }}
+                                    modules={[Autoplay, Pagination]}
+                                    className="mySwiper mt-10 pb-10"
+                                >
+                                    {destinations.map((item) => (
+                                        <SwiperSlide key={item.id} className="h-[280px]!">
+                                            <Link to={`/destination/${item.slug}`}>
+                                                <div className="cursor-pointer rounded-xl overflow-hidden group h-full">
+
+                                                    <div
+                                                        className="overflow-hidden rounded-xl transition-all duration-500 
+                                                    h-[220px] group-hover:h-[155px]"
+                                                    >
+                                                        <img
+                                                            src={item.images[0]}
+                                                            alt={item.country_name}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+
+                                                    <div className="mt-2 flex items-center justify-center gap-2 px-2">
+                                                        <FiMapPin className="text-black text-lg" />
+                                                        <h3 className="font-bold text-base md:text-lg text-center">
+                                                            {item.country_name}
+                                                        </h3>
+                                                    </div>
+
+                                                    <div className="
+                                                text-center text-gray-600 text-sm 
+                                                max-h-0 opacity-0 overflow-hidden 
+                                                group-hover:max-h-40 group-hover:opacity-100 
+                                                transition-all duration-500
+                                                ">
+                                                        <p>{item.tours} tours | {item.departures} departure</p>
+                                                        <p>{item.guests_travelled.toLocaleString()} guest travelled.</p>
+                                                    </div>
+
+                                                </div>
+                                            </Link>
+                                        </SwiperSlide>
+                                    ))}
+
+                                </Swiper>
+                            </div>
                     )}
 
                 </div>

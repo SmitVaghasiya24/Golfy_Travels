@@ -22,6 +22,9 @@ import AboutGolfy from "./pages/page/AboutGolfy";
 import Faqs from "./pages/page/Faqs";
 import TravelInspiration from "./pages/page/Inspiration";
 import TravelInspirationDetails from "./pages/page/InspirationDetails";
+import Guide from "./pages/page/Guide";
+import GuideDetails from "./pages/page/GuideDetails";
+import Destinations from "./pages/page/Destinations";
 
 
 function App() {
@@ -51,6 +54,9 @@ function App() {
         <Route path="/pages/faq" element={<Faqs />} />
         <Route path="/pages/travel-inspiration" element={<TravelInspiration />} />
         <Route path="/pages/travel-inspiration/:slug" element={<TravelInspirationDetails />} />
+        <Route path="/pages/guider" element={<Guide />} />
+        <Route path="/pages/guider/:slug" element={<GuideDetails />} />
+        <Route path="/pages/destinations" element={<Destinations />} />
 
 
 

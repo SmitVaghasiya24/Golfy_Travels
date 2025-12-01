@@ -69,7 +69,7 @@ function InspirationDetails() {
     return (
         <div>
             <BreadcrumbHero
-                title={blog ? blog.title : "Loading..."}
+                title={blog ? blog.title : "Blog Title"}
                 background="/breadcrumb.jpeg"
             />
 

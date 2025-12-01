@@ -68,8 +68,35 @@ function DestinationDetails() {
     }, [slug]);
 
     if (!destination) {
-        return <p className="p-5">Loading...</p>;
+        return (
+            <div className="flex flex-col items-center justify-center h-64 gap-4">
+
+                <div className="flex gap-3">
+                    <span className="w-3 h-3 bg-blue-500 rounded-full animate-[float_0.9s_ease-in-out_infinite]"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full animate-[float_0.9s_ease-in-out_infinite_0.15s]"></span>
+                    <span className="w-3 h-3 bg-blue-500 rounded-full animate-[float_0.9s_ease-in-out_infinite_0.3s]"></span>
+                </div>
+
+                <p className="text-gray-500 text-base">Loading...</p>
+
+                <style>
+                    {`
+                @keyframes float {
+                    0%, 100% {
+                        transform: translateY(0);
+                    }
+                    50% {
+                        transform: translateY(-7px);
+                    }
+                }
+                `}
+                </style>
+
+            </div>
+        );
     }
+
+
 
     return (
         <div className="">

@@ -136,7 +136,7 @@ export default function NavItems() {
                     <div className="flex flex-col gap-5">
                         {[
                             { name: "About GoFly", link: "/pages/about" },
-                            { name: "Destination", link: "/pages/destination" },
+                            { name: "Destination", link: "/pages/destinations" },
                             { name: "Experience", link: "/pages/experience" },
                             { name: "Hotel", link: "/pages/hotel" },
                             { name: "Travel Inspiration", link: "/pages/travel-inspiration" },
