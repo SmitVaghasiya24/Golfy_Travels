@@ -77,68 +77,54 @@ function VisaDetails() {
                 </div>
             </div>
 
-            <div className="container">
-                <div className="max-w-[700px] mt-16">
-                    <h2 className="text-3xl font-semibold mb-6">
-                        Documents Requirement
-                    </h2>
+            <div className="container ">
+                <div className="max-w-[700px] px-4 md:px-0 mt-16">
+                    <section className="mb-16">
+                        <h2 className="text-3xl font-semibold mb-6">Documents Requirement</h2>
 
-                    <div className=" bg-white border rounded-2xl border-gray-200 p-4 ">
+                        <div className="bg-white border rounded-2xl border-gray-200 p-4">
+                            <ul className="space-y-4 text-gray-800 leading-relaxed">
+                                <li>Valid Passport (Minimum 6 months validity beyond your travel dates).</li>
+                                <li>Previous Passports (if applicable).</li>
+                                <li>Photocopies of Passport Bio-Data Page & past visas (if any).</li>
+                                <li>Proof of Sufficient Funds (bank statements, salary slips).</li>
+                                <li>Travel Insurance (mandatory for Schengen & some other visas).</li>
+                                <li>Must cover medical emergencies, repatriation & COVID-related expenses.</li>
+                            </ul>
+                        </div>
+                    </section>
 
-                        <ul className="space-y-4 text-gray-800 leading-relaxed">
-                            <li>Valid Passport (Minimum 6 months validity beyond your travel dates).</li>
-                            <li>Previous Passports (if applicable).</li>
-                            <li>Photocopies of Passport Bio-Data Page & past visas (if any).</li>
-                            <li>Proof of Sufficient Funds (bank statements, salary slips).</li>
-                            <li>Travel Insurance (mandatory for Schengen & some other visas).</li>
-                            <li>Must cover medical emergencies, repatriation & COVID-related expenses.</li>
-                        </ul>
 
-                    </div>
-                </div>
+                    <section className="mb-16">
+                        <h2 className="text-3xl font-semibold mb-6">Additional Requirement</h2>
 
-            </div>
+                        <div className="bg-white border rounded-2xl border-gray-200 p-4">
+                            <ul className="space-y-4 text-gray-800 leading-relaxed">
+                                <li>Copies of previous visas (Schengen, US, UK, Canada, etc.).</li>
+                                <li>Proof of international travel history (stamps in old passports).</li>
+                                <li>A cover letter explaining the purpose of travel.</li>
+                                <li>Bank Statements & ID Proof of the sponsor.</li>
+                                <li>Police Clearance Certificate (PCC) (for some countries).</li>
+                            </ul>
+                        </div>
+                    </section>
 
-            <div className="container">
-                <div className="max-w-[700px] mt-16">
-                    <h2 className="text-3xl font-semibold mb-6">
-                        Additional Requirement
-                    </h2>
 
-                    <div className=" bg-white border rounded-2xl border-gray-200 p-4 ">
+                    <section className="mb-16">
+                        <h2 className="text-3xl font-semibold mb-6">Conditional Requirement</h2>
 
-                        <ul className="space-y-4 text-gray-800 leading-relaxed">
-                            <li>Copies of previous visas (Schengen, US, UK, Canada, etc.).</li>
-                            <li>Proof of international travel history (stamps in old passports).</li>
-                            <li>A cover letter explaining the purpose of travel.</li>
-                            <li>Bank Statements & ID Proof of the sponsor.</li>
-                            <li>Police Clearance Certificate (PCC) (for some countries).</li>
-                        </ul>
+                        <div className="bg-white border rounded-2xl border-gray-200 p-4">
+                            <ul className="space-y-4 text-gray-800 leading-relaxed">
+                                <li>Birth Certificate of the child.</li>
+                                <li>Consent Letter from the non-traveling parent (if only one parent is traveling).</li>
+                                <li>Proof of Guardianship (if applicable).</li>
+                                <li>Family ties proof to ensure return to home country.</li>
+                            </ul>
+                        </div>
+                    </section>
 
-                    </div>
-                </div>
+                </div></div>
 
-            </div>
-
-            <div className="container">
-                <div className="max-w-[700px] mt-16">
-                    <h2 className="text-3xl font-semibold mb-6">
-                        Conditional Requirement
-                    </h2>
-
-                    <div className=" bg-white border rounded-2xl border-gray-200 p-4 ">
-
-                        <ul className="space-y-4 text-gray-800 leading-relaxed">
-                            <li>Birth Certificate of the child.</li>
-                            <li>Consent Letter from the non-traveling parent (if only one parent is traveling).</li>
-                            <li>Proof of Guardianship (if applicable).</li>
-                            <li>Family ties proof to ensure return to home country.</li>
-                        </ul>
-
-                    </div>
-                </div>
-
-            </div>
 
             <div className="container">
 
