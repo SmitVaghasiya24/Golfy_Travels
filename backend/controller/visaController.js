@@ -56,9 +56,7 @@ export const insertVisaCountry = async (req, res) => {
             created_by || null,
         ]);
 
-        // -----------------------------------------
-        // RETURN inserted data in response
-        // -----------------------------------------
+
         return res.status(201).json({
             success: true,
             message: "Visa country added successfully",

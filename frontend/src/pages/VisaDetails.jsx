@@ -123,61 +123,60 @@ function VisaDetails() {
                         </div>
                     </section>
 
-                </div></div>
+                </div>
+            </div>
 
 
-            <div className="container">
+            <div className="container ">
 
-                <div
-                    className="
-      bg-[#F2F2FF] rounded-3xl p-10 
-      max-w-[700px] mt-16
-    "
-                >
+                <div className="px-4 md:px-0">
+                    <div className="bg-[#F2F2FF] rounded-3xl p-4 max-w-[700px] mt-16">
 
-                    <h2 className="text-3xl font-semibold flex items-center gap-3 mb-6">
-                        <img src="/visa/icon/reject.png" alt="reject icon" className="w-7 h-7" />
-                        Visa Rejection Reasons
-                    </h2>
+                        <h2 className="text-xl lg:text-3xl font-semibold flex items-center gap-3 mb-6">
+                            <img src="/visa/icon/reject.png" alt="reject icon" className="w-7 h-7" />
+                            Visa Rejection Reasons
+                        </h2>
 
-                    <div className="flex flex-col lg:flex-row items-start justify-between gap-10">
+                        <div className="flex flex-col lg:flex-row items-start justify-between gap-10">
 
-                        <div className=" w-full">
-                            <h3 className="text-xl font-semibold mb-4">
-                                Common Reasons for Rejection:
-                            </h3>
+                            <div className="w-full">
+                                <h3 className="text-xl font-semibold mb-4 lg:whitespace-nowrap">
+                                    Common Reasons for Rejection:
+                                </h3>
 
-                            <ul className="space-y-4 text-gray-800 leading-relaxed">
-                                <li>Insufficient financial proof.</li>
-                                <li>Lack of strong ties to home country.</li>
-                                <li>Incomplete or false documentation.</li>
-                                <li>Suspicious travel history or security concerns.</li>
-                            </ul>
+                                <ul className="space-y-4 text-gray-800 leading-relaxed">
+                                    <li>Insufficient financial proof.</li>
+                                    <li>Lack of strong ties to home country.</li>
+                                    <li>Incomplete or false documentation.</li>
+                                    <li>Suspicious travel history or security concerns.</li>
+                                </ul>
+                            </div>
+
+                            <div className="flex justify-center lg:justify-end w-full">
+                                <img
+                                    src="/visa/img/visa.png"
+                                    alt="Visa Rejected"
+                                    className="w-50 md:w-[220px] lg:w-[250px]"
+                                />
+                            </div>
+
                         </div>
-
-                        <div className=" flex justify-center lg:justify-end">
-                            <img
-                                src="/visa/img/visa.png"
-                                alt="Visa Rejected"
-                                className="w-[260px] lg:w-[340px]"
-                            />
-                        </div>
-
                     </div>
-
                 </div>
 
             </div>
 
+
             <div className="container ">
 
-                <div className="max-w-[700px] mt-16">
+                <div className="max-w-[700px] px-4 md:px-0 mt-16">
+
                     <h2 className="text-3xl font-semibold flex items-center gap-3 mb-6">
-                        <img src="/visa/icon/warning.png" alt="reject icon" className="w-7 h-7" />
+                        <img src="/visa/icon/warning.png" alt="warning icon" className="w-7 h-7" />
                         Important Note
                     </h2>
 
-                    <div className="bg-[#E6F6A9] rounded-3xl p-8">
+                    <div className="bg-[#E6F6A9] rounded-3xl p-6 md:p-8">
 
                         <ul className="space-y-4 text-gray-800 leading-relaxed">
                             <li>Not all applicants need to submit these additional documents.</li>
@@ -186,10 +185,10 @@ function VisaDetails() {
                         </ul>
 
                     </div>
+
                 </div>
 
             </div>
-
 
 
 
