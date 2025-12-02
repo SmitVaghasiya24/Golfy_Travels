@@ -34,13 +34,13 @@ function Topbar() {
                 <div className="flex justify-between items-center w-full">
 
                     <div className="flex items-center gap-4 md:gap-10 w-full md:w-auto">
-                        <Link to="/">
+                        <a href="/">
                             <img
                                 src="/logo.svg"
                                 alt="logo"
                                 className="cursor-hide h-10 md:h-12 object-contain"
                             />
-                        </Link>
+                        </a>
 
                         <div className="hidden sm:block w-full md:w-[42vw]">
                             <div className="flex items-center bg-[#F0F0F0] rounded-full px-4 md:px-5 py-2.5 md:py-3 shadow-sm">

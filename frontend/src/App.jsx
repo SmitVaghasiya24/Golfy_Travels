@@ -25,6 +25,8 @@ import TravelInspirationDetails from "./pages/page/InspirationDetails";
 import Guide from "./pages/page/Guide";
 import GuideDetails from "./pages/page/GuideDetails";
 import Destinations from "./pages/page/Destinations";
+import Visa from "./pages/Visa";
+import VisaDetails from "./pages/VisaDetails";
 
 
 function App() {
@@ -57,6 +59,8 @@ function App() {
         <Route path="/pages/guider" element={<Guide />} />
         <Route path="/pages/guider/:slug" element={<GuideDetails />} />
         <Route path="/pages/destinations" element={<Destinations />} />
+        <Route path="/visa" element={<Visa />} />
+        <Route path="/visa/:slug" element={<VisaDetails />} />
 
 
 

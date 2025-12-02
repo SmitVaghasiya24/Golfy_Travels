@@ -263,21 +263,18 @@ function AboutGolfy() {
                             We specialize in crafting personalized journeys that suit every traveler’s dream.
                         </p>
                     </div>
-
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6 lg:px-0">
                         {features.map((item, index) => (
                             <div
                                 key={index}
                                 className={`${item.bg} rounded-3xl p-8 min-h-[200px] flex flex-col justify-between group transition-all duration-300`}
                             >
-                                <div className="text-black mb-4 transform transition-all icon-anim">
+                                <div className="text-black mb-4 transform transition-all icon-anim inline-block">
                                     {item.icon}
                                 </div>
 
                                 <h3 className="text-xl font-semibold text-black">{item.title}</h3>
                             </div>
-
-
                         ))}
                     </div>
 

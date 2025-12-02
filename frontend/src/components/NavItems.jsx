@@ -137,11 +137,11 @@ export default function NavItems() {
                         {[
                             { name: "About GoFly", link: "/pages/about" },
                             { name: "Destination", link: "/pages/destinations" },
-                            { name: "Experience", link: "/pages/experience" },
+                            // { name: "Experience", link: "/pages/experience" },
                             { name: "Hotel", link: "/pages/hotel" },
                             { name: "Travel Inspiration", link: "/pages/travel-inspiration" },
                             { name: "Guider", link: "/pages/guider" },
-                            { name: "Shop", link: "/pages/shop" },
+                            // { name: "Shop", link: "/pages/shop" },
                             { name: "FAQ", link: "/pages/faq" },
                             { name: "404", link: "/pages/404" },
                         ].map((item, i) => (

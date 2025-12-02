@@ -50,7 +50,7 @@ function Home() {
 
       <Destination />
 
-    <Services/>
+      <Services />
 
       <Tour
         mode="popular"
@@ -86,7 +86,6 @@ function Home() {
         title="General Questions"
         subtitle="We're committed to offering more than just products—we provide exceptional experiences."
       />
-
 
       <AllExperience />
 
