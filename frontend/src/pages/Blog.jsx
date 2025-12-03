@@ -95,17 +95,17 @@ function Blog() {
                                             <div className="group">
                                                 <h2
                                                     onClick={() => navigate(`/pages/travel-inspiration/${blog.slug}`)}
-                                                    className="relative text-xl sm:text-2xl font-semibold leading-tight inline-block">
+                                                    className="underline-right relative text-xl sm:text-2xl font-semibold leading-tight inline-block">
                                                     {blog.title}
 
-                                                    <span
+                                                    {/* <span
                                                         className="
                                                             absolute left-0 -bottom-1
                                                             h-0.5 w-0 bg-black
                                                             transition-all duration-300 
                                                             group-hover:w-full
                                                         "
-                                                    ></span>
+                                                    ></span> */}
                                                 </h2>
                                             </div>
 

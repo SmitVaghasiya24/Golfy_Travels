@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import InspirationRight from "./InspirationRight";
 import { GiTempleGate, GiGreekTemple, GiWaveSurfer, GiPalmTree, GiMountainCave, GiIsland, GiBoatFishing } from "react-icons/gi"
 import { FaFacebookF, FaTimes, FaLinkedinIn, FaInstagram } from "react-icons/fa";
+import Footer from "../../components/Footer";
 
 function InspirationDetails() {
     const navigate = useNavigate();
@@ -68,6 +69,7 @@ function InspirationDetails() {
 
     return (
         <div>
+
             <BreadcrumbHero
                 title={blog ? blog.title : "Blog Title"}
                 background="/breadcrumb.jpeg"
@@ -380,7 +382,7 @@ function InspirationDetails() {
 
             </section>
 
-
+            <Footer />
         </div>
     );
 }

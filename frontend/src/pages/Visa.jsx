@@ -54,7 +54,7 @@ function Visa() {
                                 >
                                     <h3
                                         onClick={() => navigate(`/visa/${item.slug}`)
-}
+                                        }
                                         className="underline-right inline-block font-bold text-xl transition-all duration-300 group-hover:text-white cursor-pointer"
                                     >
                                         {item.country}
