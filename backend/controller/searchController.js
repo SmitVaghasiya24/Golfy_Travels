@@ -167,6 +167,10 @@ export const getToursWithFilters = async (req, res, next) => {
         let { title, min_price, max_price, region, tour_type, destination, experience } = req.query;
         let { sort } = req.query;
 
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 6;
+        const offset = (page - 1) * limit;
+
         const filters = [];
         const values = [];
 
@@ -186,8 +190,9 @@ export const getToursWithFilters = async (req, res, next) => {
         }
 
         if (region) {
-            filters.push(`r.name = ?`);
-            values.push(region);
+            const regionArr = region.split(",");
+            filters.push(`r.name IN (${regionArr.map(() => "?").join(",")})`);
+            values.push(...regionArr);
         }
 
         if (tour_type) {
@@ -206,6 +211,28 @@ export const getToursWithFilters = async (req, res, next) => {
             filters.push(`e.name IN (${eArr.map(() => "?").join(",")})`);
             values.push(...eArr);
         }
+
+        let baseQuery = `
+        FROM tbl_tours t
+        LEFT JOIN tbl_tour_types tt ON t.tour_type_id = tt.id
+        LEFT JOIN tbl_regions r ON t.region_id = r.region_id
+        LEFT JOIN tbl_tour_destinations td ON t.tour_id = td.tour_id
+        LEFT JOIN tbl_destinations d ON td.destination_id = d.id
+        LEFT JOIN tbl_tour_experiences te ON t.tour_id = te.tour_id
+        LEFT JOIN tbl_experiences e ON te.experience_id = e.id
+        `;
+
+        if (filters.length > 0) {
+            baseQuery += " WHERE " + filters.join(" AND ");
+        }
+
+        const countQuery = `
+            SELECT COUNT(DISTINCT t.tour_id) AS total
+            ${baseQuery}
+        `;
+        const [countRows] = await db.query(countQuery, values);
+        const totalFiltered = countRows[0].total;
+        const totalPages = Math.ceil(totalFiltered / limit);
 
         let query = `
         SELECT 
@@ -230,21 +257,10 @@ export const getToursWithFilters = async (req, res, next) => {
             d.country_name AS destination_name,
             e.name AS experience_name
 
-        FROM tbl_tours t
-        
-           LEFT JOIN tbl_tour_types tt ON t.tour_type_id = tt.id
-           LEFT JOIN tbl_regions r ON t.region_id = r.region_id
-           LEFT JOIN tbl_tour_destinations td ON t.tour_id = td.tour_id
-           LEFT JOIN tbl_destinations d ON td.destination_id = d.id
-           LEFT JOIN tbl_tour_experiences te ON t.tour_id = te.tour_id
-           LEFT JOIN tbl_experiences e ON te.experience_id = e.id
+        ${baseQuery}
+
+        ORDER BY t.created_at DESC
         `;
-
-        if (filters.length > 0) {
-            query += " WHERE " + filters.join(" AND ");
-        }
-
-        query += " ORDER BY t.created_at DESC";
 
         const [rows] = await db.query(query, values);
 
@@ -270,7 +286,6 @@ export const getToursWithFilters = async (req, res, next) => {
                     is_featured: row.is_featured,
                     created_at: row.created_at,
                     updated_at: row.updated_at,
-
                     destinations: [],
                     experiences: []
                 };
@@ -278,28 +293,38 @@ export const getToursWithFilters = async (req, res, next) => {
 
             if (row.destination_name &&
                 !toursMap[row.tour_id].destinations.includes(row.destination_name)) {
-
                 toursMap[row.tour_id].destinations.push(row.destination_name);
             }
 
             if (row.experience_name &&
                 !toursMap[row.tour_id].experiences.includes(row.experience_name)) {
-
                 toursMap[row.tour_id].experiences.push(row.experience_name);
             }
         });
 
-        const tours = Object.values(toursMap).sort((a, b) => {
-            if (sort === "price_low") return a.price - b.price;
-            if (sort === "price_high") return b.price - a.price;
+        let tours = Object.values(toursMap).map(tour => ({
+            ...tour,
+            countries: tour.destinations.join(", ")
+        }));
+
+        tours = tours.sort((a, b) => {
+            if (sort === "price_low") return Number(a.price) - Number(b.price);
+            if (sort === "price_high") return Number(b.price) - Number(a.price);
             if (sort === "latest") return new Date(b.created_at) - new Date(a.created_at);
+            if (sort === "featured") return b.is_featured - a.is_featured;
             return 0;
         });
 
+        const paginatedTours = tours.slice(offset, offset + limit);
+
         return res.status(200).json({
             success: true,
-            count: tours.length,
-            tours,
+            page,
+            limit,
+            totalFiltered,
+            totalPages,
+            count: paginatedTours.length,
+            tours: paginatedTours
         });
 
     } catch (err) {

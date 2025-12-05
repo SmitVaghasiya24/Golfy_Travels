@@ -70,7 +70,6 @@ function Home() {
 
       <Company />
 
-
       <Tour
         mode="one day"
         title="One Day Trips"

@@ -13,7 +13,7 @@ function MyAccountPage() {
         <div>
             <BreadcrumbHero title="My Account" background="/breadcrumb.jpeg" />
 
-            {!user   ? (
+            {!user ? (
                 <div className="wrapper py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
                     <Login />
                     <Register />

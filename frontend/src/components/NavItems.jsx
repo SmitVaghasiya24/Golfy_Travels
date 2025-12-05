@@ -95,11 +95,15 @@ export default function NavItems() {
 
             {/* travel package */}
             <li
-                onClick={() => (window.location.href = "/travel-package")}
+                onClick={() => {
+                    window.location.href = `${window.location.origin}/tour`;
+                }}
                 className={`cursor-pointer hover:text-blue-500 
-            ${current === "/travel-package" ? "text-blue-500" : ""}
-        `}
+                    ${current === "/tour" ? "text-blue-500" : ""}
+                `}
             >
+
+
                 Travel Package
             </li>
 
@@ -172,7 +176,7 @@ export default function NavItems() {
                 Contact
             </li>
 
-        </ul>
+        </ul >
 
     );
 }

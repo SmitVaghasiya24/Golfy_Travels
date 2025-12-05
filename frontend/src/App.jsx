@@ -27,6 +27,7 @@ import GuideDetails from "./pages/page/GuideDetails";
 import Destinations from "./pages/page/Destinations";
 import Visa from "./pages/Visa";
 import VisaDetails from "./pages/VisaDetails";
+import Tour from './pages/Tour/Tour';
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
         <Route path="/pages/destinations" element={<Destinations />} />
         <Route path="/visa" element={<Visa />} />
         <Route path="/visa/:slug" element={<VisaDetails />} />
+        <Route path="/tour" element={<Tour />} />
 
 
 

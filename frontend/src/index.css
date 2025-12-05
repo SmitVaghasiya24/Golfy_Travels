@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+/* Custom slider thumb class */
+.slider-thumb::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid #3b82f6;
+  border-radius: 50%;
+  transform: translateY(-30%);
+}
+
+/* Firefox */
+.slider-thumb::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 2px solid #3b82f6;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
