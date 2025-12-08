@@ -133,3 +133,18 @@ body {
   --d: 100%;
   --p: 100%;
 }
+
+
+.swiper-pagination {
+  position: relative !important;
+  margin-top: 20px;
+}
+
+.swiper-pagination-bullet {
+  background: #3b82f6; /* blue */
+  opacity: 0.4;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}

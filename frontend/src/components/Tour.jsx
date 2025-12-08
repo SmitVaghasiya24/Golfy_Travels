@@ -9,6 +9,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useNavigate } from "react-router-dom";
 
 function Tour({
   title = "Travel Packages",
@@ -17,6 +18,7 @@ function Tour({
 }) {
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -68,7 +70,7 @@ function Tour({
           >
             {tours.map((tour) => (
               <SwiperSlide key={tour.tour_id}>
-                <TourCard tour={tour} />
+                <TourCard tour={tour} navigate={navigate} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -78,7 +80,7 @@ function Tour({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {tours.slice(0, 6).map((tour) => (
               <div key={tour.tour_id} className="rounded-3xl p-2">
-                <TourCard tour={tour} />
+                <TourCard tour={tour} navigate={navigate} />
               </div>
             ))}
           </div>
@@ -88,7 +90,7 @@ function Tour({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {tours.slice(3, 6).map((tour) => (
               <div key={tour.tour_id} className="rounded-3xl p-2">
-                <TourCard tour={tour} />
+                <TourCard tour={tour} navigate={navigate} />
               </div>
             ))}
           </div>
@@ -101,10 +103,14 @@ function Tour({
 
 export default Tour;
 
-function TourCard({ tour }) {
+function TourCard({ tour, navigate }) {
   return (
     <div className="rounded-3xl p-2 border-gray-200 bg-white shadow-sm">
-      <div className="relative h-60 w-full overflow-hidden rounded-xl">
+      <div
+
+        onClick={() => { navigate(`/tour/${tour.slug}`); }}
+
+        className="relative h-60 w-full overflow-hidden rounded-xl">
         <img
           src={tour.thumbnail}
           alt={tour.title}
@@ -181,6 +187,6 @@ function TourCard({ tour }) {
           <p className="flex items-center gap-1"><span>➕</span> Inclusion</p>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

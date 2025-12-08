@@ -350,7 +350,7 @@ function AboutGolfy() {
 
             <Faq
                 type="home"
-                title="Questions & Answer"
+                title="Questions & Answer"  align="center"
                 subtitle="We're committed to offering more than just products—we provide exceptional experiences."
             />
 

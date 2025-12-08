@@ -23,6 +23,9 @@ import discountRoutes from './routes/discountRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import guideRoutes from './routes/guideRoutes.js';
 import visaApplicationRoutes from './routes/visaapplicationRoute.js';
+import cartRoutes from './routes/cartRoutes.js';
+import placeOrderRoutes from './routes/placeOrderRoutes.js';
+
 
 
 import dotenv from 'dotenv';
@@ -62,6 +65,8 @@ app.use('/api', discountRoutes);
 app.use('/api', companyRoutes);
 app.use('/api', guideRoutes);
 app.use('/api', visaApplicationRoutes);
+app.use('/api', cartRoutes);
+app.use('/api', placeOrderRoutes);
 
 
 

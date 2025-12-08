@@ -145,7 +145,7 @@ export default function NavItems() {
                             { name: "Hotel", link: "/pages/hotel" },
                             { name: "Travel Inspiration", link: "/pages/travel-inspiration" },
                             { name: "Guider", link: "/pages/guider" },
-                            // { name: "Shop", link: "/pages/shop" },
+                            { name: "cart", link: "/pages/cart" },
                             { name: "FAQ", link: "/pages/faq" },
                             { name: "404", link: "/pages/404" },
                         ].map((item, i) => (

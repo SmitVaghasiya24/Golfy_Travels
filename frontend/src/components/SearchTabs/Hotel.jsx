@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar } from "react-date-range";
 import "react-date-range/dist/theme/default.css";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Hotel() {
@@ -23,6 +23,7 @@ export default function Hotel() {
   const [openGuest, setOpenGuest] = useState(false);
 
   const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -364,7 +365,9 @@ export default function Hotel() {
         </div>
 
         {/* search button */}
-        <button className="bg-[#1881FE] text-white flex items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16">
+        <button
+          onClick={() => navigate(`/pages/hotel`)}
+          className="bg-[#1881FE] text-white cursor-pointer flex items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16">
           <FiSearch size={20} /> SEARCH
         </button>
       </div>
@@ -375,7 +378,7 @@ export default function Hotel() {
           to="/contact"
           className="text-blue-600 cursor-pointer relative inline-block
                    after:content-[''] after:absolute after:left-0 after:bottom-0
-                   after:w-0 after:h-[2px] after:bg-blue-600
+                   after:w-0 after:h-0.5 after:bg-blue-600
                    after:transition-all after:duration-600
                    hover:after:w-full"
         >

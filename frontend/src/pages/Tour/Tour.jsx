@@ -4,6 +4,9 @@ import { FiMapPin } from "react-icons/fi";
 import { MdArrowOutward, MdArrowBack, MdArrowForward } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import Filter from "./Filter";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 
 function Tour() {
     const [tours, setTours] = useState([]);
@@ -11,6 +14,11 @@ function Tour() {
     const [totalPages, setTotalPages] = useState(1);
     const [sortOption, setSortOption] = useState("latest");
     const [openSort, setOpenSort] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [paramsLoaded, setParamsLoaded] = useState(false);
+
+
 
 
     const [filters, setFilters] = useState({
@@ -18,11 +26,14 @@ function Tour() {
         destination: [],
         min_price: 0,
         max_price: 2000,
+        tour_type: "",
+        experience: [],
     });
 
 
-
     useEffect(() => {
+        if (!paramsLoaded) return; 
+
         const fetchTours = async () => {
             let url = `http://localhost:5000/api/tours/filter?page=${page}&limit=6&sort=${sortOption}`;
 
@@ -38,7 +49,11 @@ function Tour() {
             if (filters.max_price !== undefined)
                 url += `&max_price=${filters.max_price}`;
 
-            // console.log("API URL:", url);
+            if (filters.tour_type)
+                url += `&tour_type=${filters.tour_type}`;
+
+            if (filters.experience.length > 0)
+                url += `&experience=${filters.experience.join(",")}`;
 
             try {
                 const res = await fetch(url);
@@ -54,9 +69,7 @@ function Tour() {
         };
 
         fetchTours();
-
-    }, [page, sortOption, filters]);
-
+    }, [page, sortOption, filters, paramsLoaded]);
 
 
 
@@ -78,8 +91,27 @@ function Tour() {
             destination: [],
             min_price: 0,
             max_price: 2000,
+            tour_type: "",
+            experience: [],
         });
     };
+
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+
+        const destination = params.get("destination");
+        const tour_type = params.get("tour_type");
+
+        if (destination || tour_type) {
+            setFilters(prev => ({
+                ...prev,
+                destination: destination ? [destination] : [],
+                tour_type: tour_type || "",
+            }));
+        }
+        setParamsLoaded(true);
+    }, [location.search]);
 
 
 
@@ -172,7 +204,10 @@ function Tour() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {tours.map(tour => (
                             <div key={tour.tour_id} className="rounded-3xl p-2 border border-gray-200 bg-white shadow-sm">
-                                <div className="relative h-56 w-full overflow-hidden rounded-xl">
+                                <div
+                                    onClick={() => navigate(`/tour/${tour.slug}`)}
+
+                                    className="relative h-56 w-full overflow-hidden rounded-xl">
                                     <img
                                         src={tour.thumbnail}
                                         alt={tour.title}
@@ -184,7 +219,8 @@ function Tour() {
                                 </div>
 
                                 <div className="p-6">
-                                    <h3 className="text-xl font-semibold">{tour.title}</h3>
+                                    <h3
+                                        className="text-xl font-semibold">{tour.title}</h3>
 
                                     <div className="flex font-semibold items-center gap-2 text-gray-600 text-sm mt-2">
                                         <FiMapPin />

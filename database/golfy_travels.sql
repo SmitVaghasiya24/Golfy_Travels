@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `golfy_travel` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `golfy_travel`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: golfy_travel
@@ -116,7 +114,7 @@ CREATE TABLE `tbl_blogs` (
   KEY `tag_id` (`tag_id`),
   CONSTRAINT `tbl_blogs_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `tbl_categories` (`category_id`) ON DELETE SET NULL,
   CONSTRAINT `tbl_blogs_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tbl_tags` (`tag_id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,8 +123,48 @@ CREATE TABLE `tbl_blogs` (
 
 LOCK TABLES `tbl_blogs` WRITE;
 /*!40000 ALTER TABLE `tbl_blogs` DISABLE KEYS */;
-INSERT INTO `tbl_blogs` VALUES (2,'Explore Culture, Art, & Timeless Landmarks.','explore-culture-art-and-timeless-landmarks','Summer is here, and it’s time to soak up the sun on some of the world’s most stunning beaches! Whether you’re looking to relax on golden sands, dive into crystal-clear waters, or try exciting water sports, these 10 beaches offer something for every type of traveler. From remote island paradises to iconic coastal destinations.','http://localhost:5000/uploads/blog/1763382202199.jpg','smit','Brazil',1,1,'2025-11-05','draft',1,NULL,NULL,'2025-11-12 09:50:07','2025-11-17 12:23:22');
+INSERT INTO `tbl_blogs` VALUES (2,'Explore Culture, Art, & Timeless Landmarks.','explore-culture-art-and-timeless-landmarks','Summer is here, and it’s time to soak up the sun on some of the world’s most stunning beaches! Whether you’re looking to relax on golden sands, dive into crystal-clear waters, or try exciting water sports, these 10 beaches offer something for every type of traveler. From remote island paradises to iconic coastal destinations.','http://localhost:5000/uploads/blog/1763976495466.webp','smit','Brazil',1,1,'2025-11-05','draft',2,NULL,NULL,'2025-11-12 09:50:07','2025-11-27 13:06:09'),(3,'Visa 101: Everything You Need to Know Before Applying.','visa-101-everything-you-need-to-know-before-applying','Summer is here, and it’s time to soak up the sun on some of the world’s most stunning beaches! Whether you’re looking to relax on golden sands, dive into crystal-clear waters, or try exciting water sports, these 10 beaches offer something for every type of traveler. From remote island paradises to iconic coastal destinations.','http://localhost:5000/uploads/blog/1763976759141.webp','smit','Brazil',2,2,'2025-08-13','draft',0,NULL,NULL,'2025-11-24 09:31:20','2025-11-24 09:32:39'),(4,'Step-by-Step Guide to a Hassle-Free Visa Application.','step-by-step-guide-to-a-hassle-free-visa-application','Summer is here, and it’s time to soak up the sun on some of the world’s most stunning beaches! Whether you’re looking to relax on golden sands, dive into crystal-clear waters, or try exciting water sports, these 10 beaches offer something for every type of traveler. From remote island paradises to iconic coastal destinations.','http://localhost:5000/uploads/blog/1763976833631.webp','smit','Brazil',2,2,'2025-10-09','draft',0,NULL,NULL,'2025-11-24 09:33:53','2025-11-24 09:33:53');
 /*!40000 ALTER TABLE `tbl_blogs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_cart`
+--
+
+DROP TABLE IF EXISTS `tbl_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_cart` (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `item_type` enum('hotel','tour') NOT NULL,
+  `item_id` int NOT NULL,
+  `booking_date` date NOT NULL,
+  `adults` int DEFAULT '1',
+  `children` int DEFAULT '0',
+  `quantity` int DEFAULT '1',
+  `addons` json DEFAULT NULL,
+  `base_price` decimal(10,2) NOT NULL,
+  `final_price` decimal(10,2) NOT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cart_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `tbl_cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_cart`
+--
+
+LOCK TABLES `tbl_cart` WRITE;
+/*!40000 ALTER TABLE `tbl_cart` DISABLE KEYS */;
+INSERT INTO `tbl_cart` VALUES (3,2,'hotel',2,'2025-12-14',1,1,1,'[{\"qty\": 1, \"name\": \"Breakfast\", \"price\": 100}]',160.00,260.00,'active',NULL,NULL,'2025-12-06 09:20:22','2025-12-06 09:20:22'),(5,2,'tour',10,'2025-12-06',1,0,1,'[]',599.00,599.00,'active',NULL,NULL,'2025-12-06 10:15:55','2025-12-06 10:15:55'),(8,2,'hotel',2,'2025-12-13',2,0,1,'[]',160.00,160.00,'active',NULL,NULL,'2025-12-06 10:34:12','2025-12-06 10:34:12'),(9,2,'hotel',4,'2025-12-13',2,0,1,'[]',300.00,300.00,'active',NULL,NULL,'2025-12-06 10:34:17','2025-12-06 10:34:17');
+/*!40000 ALTER TABLE `tbl_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -183,7 +221,7 @@ CREATE TABLE `tbl_comments` (
   KEY `fk_comments_blog` (`blog_id`),
   CONSTRAINT `fk_comments_blog` FOREIGN KEY (`blog_id`) REFERENCES `tbl_blogs` (`blog_id`) ON DELETE CASCADE,
   CONSTRAINT `tbl_comments_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `tbl_blogs` (`blog_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +230,7 @@ CREATE TABLE `tbl_comments` (
 
 LOCK TABLES `tbl_comments` WRITE;
 /*!40000 ALTER TABLE `tbl_comments` DISABLE KEYS */;
-INSERT INTO `tbl_comments` VALUES (4,2,'raj','raj@yahoo.com','This is test Comment.','active',NULL,NULL,'2025-11-12 09:55:58','2025-11-17 12:36:03');
+INSERT INTO `tbl_comments` VALUES (4,2,'raj','raj@yahoo.com','This is test Comment.','active',NULL,NULL,'2025-11-12 09:55:58','2025-11-17 12:36:03'),(5,2,'Smit','smit@example.com','test comment.','active',NULL,NULL,'2025-11-27 13:06:09','2025-11-27 13:06:09');
 /*!40000 ALTER TABLE `tbl_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -356,7 +394,7 @@ CREATE TABLE `tbl_destinations` (
   UNIQUE KEY `slug` (`slug`),
   KEY `region_id` (`region_id`),
   CONSTRAINT `tbl_destinations_ibfk_1` FOREIGN KEY (`region_id`) REFERENCES `tbl_regions` (`region_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,7 +403,7 @@ CREATE TABLE `tbl_destinations` (
 
 LOCK TABLES `tbl_destinations` WRITE;
 /*!40000 ALTER TABLE `tbl_destinations` DISABLE KEYS */;
-INSERT INTO `tbl_destinations` VALUES (2,1,'Senegal','senegal','[\"1763025905355.webp\", \"1763025905357.webp\"]',1,297,12550,'inactive',NULL,NULL,'2025-11-13 09:24:12','2025-11-13 09:25:05'),(3,1,'Ghana','ghana','[\"1763385216951.webp\", \"1763385216952.webp\"]',1,191,11458,'active',NULL,NULL,'2025-11-13 09:27:12','2025-11-17 13:13:36'),(4,1,'Egypt','egypt','[\"1763800212660.webp\"]',1,397,15777,'inactive',NULL,NULL,'2025-11-22 08:30:12','2025-11-22 08:30:12'),(5,1,'Kenya','kenya','[\"1763800253085.webp\"]',1,195,14950,'inactive',NULL,NULL,'2025-11-22 08:30:53','2025-11-22 08:30:53'),(6,1,'Morocco','morocco','[\"1763800290452.webp\"]',1,205,12000,'inactive',NULL,NULL,'2025-11-22 08:31:30','2025-11-22 08:31:30'),(7,1,'Zimbabwe','zimbabwe','[\"1763801450002.webp\"]',1,199,16859,'inactive',NULL,NULL,'2025-11-22 08:50:50','2025-11-22 08:50:50'),(8,2,'Singapore','singapore','[\"1763802814946.webp\"]',2,256,12549,'inactive',NULL,NULL,'2025-11-22 09:13:34','2025-11-22 09:13:34'),(9,3,'Portugal','portugal','[\"1763802897786.webp\"]',1,185,13255,'inactive',NULL,NULL,'2025-11-22 09:14:57','2025-11-22 09:14:57'),(10,4,'Jordan','jordan','[\"1763802970604.webp\"]',1,185,13479,'inactive',NULL,NULL,'2025-11-22 09:16:10','2025-11-22 09:16:10'),(11,5,'United Stated','united-stated','[\"1763803029770.webp\"]',1,249,15479,'inactive',NULL,NULL,'2025-11-22 09:17:09','2025-11-22 09:17:09'),(12,6,'New Zeland','new-zeland','[\"1763803091210.webp\"]',1,249,11497,'inactive',NULL,NULL,'2025-11-22 09:18:11','2025-11-22 09:18:11');
+INSERT INTO `tbl_destinations` VALUES (2,1,'Senegal','senegal','[\"1763025905355.webp\", \"1763025905357.webp\"]',1,297,12550,'inactive',NULL,NULL,'2025-11-13 09:24:12','2025-11-13 09:25:05'),(3,1,'Ghana','ghana','[\"1763385216951.webp\", \"1763385216952.webp\"]',1,191,11458,'active',NULL,NULL,'2025-11-13 09:27:12','2025-11-17 13:13:36'),(4,1,'Egypt','egypt','[\"1763800212660.webp\"]',1,397,15777,'inactive',NULL,NULL,'2025-11-22 08:30:12','2025-11-22 08:30:12'),(5,1,'Kenya','kenya','[\"1763800253085.webp\"]',1,195,14950,'inactive',NULL,NULL,'2025-11-22 08:30:53','2025-11-22 08:30:53'),(6,1,'Morocco','morocco','[\"1763800290452.webp\"]',1,205,12000,'inactive',NULL,NULL,'2025-11-22 08:31:30','2025-11-22 08:31:30'),(7,1,'Zimbabwe','zimbabwe','[\"1763801450002.webp\"]',1,199,16859,'inactive',NULL,NULL,'2025-11-22 08:50:50','2025-11-22 08:50:50'),(8,2,'Singapore','singapore','[\"1763802814946.webp\"]',2,256,12549,'inactive',NULL,NULL,'2025-11-22 09:13:34','2025-11-22 09:13:34'),(9,3,'Portugal','portugal','[\"1763802897786.webp\"]',1,185,13255,'inactive',NULL,NULL,'2025-11-22 09:14:57','2025-11-22 09:14:57'),(10,4,'Jordan','jordan','[\"1763802970604.webp\"]',1,185,13479,'inactive',NULL,NULL,'2025-11-22 09:16:10','2025-11-22 09:16:10'),(11,5,'United Stated','united-stated','[\"1763803029770.webp\"]',1,249,15479,'inactive',NULL,NULL,'2025-11-22 09:17:09','2025-11-22 09:17:09'),(12,6,'New Zeland','new-zeland','[\"1763803091210.webp\"]',1,249,11497,'inactive',NULL,NULL,'2025-11-22 09:18:11','2025-11-22 09:18:11'),(13,5,'Jamaica','jamaica','[\"1764074822052.webp\"]',1,229,11429,'inactive',NULL,NULL,'2025-11-25 12:47:02','2025-11-25 12:47:02'),(14,2,'Thailand','thailand','[\"1764077159577.webp\"]',1,359,13489,'inactive',NULL,NULL,'2025-11-25 13:25:59','2025-11-25 13:25:59'),(15,3,'United Kondom','united-kondom','[\"1764077434712.webp\"]',1,349,13489,'inactive',NULL,NULL,'2025-11-25 13:30:34','2025-11-25 13:30:34');
 /*!40000 ALTER TABLE `tbl_destinations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -457,7 +495,7 @@ CREATE TABLE `tbl_experiences` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,7 +504,7 @@ CREATE TABLE `tbl_experiences` (
 
 LOCK TABLES `tbl_experiences` WRITE;
 /*!40000 ALTER TABLE `tbl_experiences` DISABLE KEYS */;
-INSERT INTO `tbl_experiences` VALUES (1,'Stories in Every Step','inactive',NULL,NULL,'2025-11-13 07:53:12','2025-11-13 07:53:12'),(2,'Unforgatabble journeys','inactive',NULL,NULL,'2025-11-13 07:58:10','2025-11-13 07:58:10'),(5,'Wander & Discover','inactive',NULL,NULL,'2025-11-13 09:51:47','2025-11-13 09:51:47');
+INSERT INTO `tbl_experiences` VALUES (1,'Stories in Every Step','inactive',NULL,NULL,'2025-11-13 07:53:12','2025-11-13 07:53:12'),(2,'Unforgatabble journeys','inactive',NULL,NULL,'2025-11-13 07:58:10','2025-11-13 07:58:10'),(5,'Wander & Discover','inactive',NULL,NULL,'2025-11-13 09:51:47','2025-11-13 09:51:47'),(6,'Hiking & Trekking','inactive',NULL,NULL,'2025-11-25 11:32:00','2025-11-25 11:32:00'),(7,'Surfing & Waterfalls','inactive',NULL,NULL,'2025-11-25 11:32:27','2025-11-25 11:32:27'),(8,'Mountain Rock Climbing','inactive',NULL,NULL,'2025-11-25 11:33:00','2025-11-25 11:33:00');
 /*!40000 ALTER TABLE `tbl_experiences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,7 +525,7 @@ CREATE TABLE `tbl_faqs` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -496,7 +534,7 @@ CREATE TABLE `tbl_faqs` (
 
 LOCK TABLES `tbl_faqs` WRITE;
 /*!40000 ALTER TABLE `tbl_faqs` DISABLE KEYS */;
-INSERT INTO `tbl_faqs` VALUES (1,'What Services Does Your Travwl Agency Provide','A travel agency typically provides a wide range of services to ensure a smooth and enjoyable travel experience. As like-Hotel booking, Flight Booking, Visa & Customized Travel Packcge etc.','inactive',NULL,NULL,'2025-11-11 04:32:14','2025-11-11 04:50:12');
+INSERT INTO `tbl_faqs` VALUES (1,'What Services Does Your Travwl Agency Provide?','A travel agency typically provides a wide range of services to ensure a smooth and enjoyable travel experience. As like-Hotel booking, Flight Booking, Visa & Customized Travel Packcge etc.','inactive',NULL,NULL,'2025-11-11 04:32:14','2025-11-25 07:33:57'),(3,'Do You Offer Customized Travel Packcge?','Absolutely! We offer fully customized travel packages based on your interests, budget, and schedule. Whether you\'re planning a solo adventure, a family vacation, a romantic getaway, or a group tour, our team will tailor every detail to create a personalized travel experience just for you.','inactive',NULL,NULL,'2025-11-25 07:30:35','2025-11-25 07:34:39'),(4,'How do I book a tour or vacation package?','Booking a tour or vacation package is easy! Simply browse our website to explore destinations and packages. Once you\'ve found the perfect option, click “Book Now” and follow the steps to complete your reservation. If you need help, our travel experts are just a call or message away to assist you with the booking process.','inactive',NULL,NULL,'2025-11-25 07:31:39','2025-11-25 07:31:39'),(5,'Do You Provide Visa Assistance?','Yes, we do! Our team offers complete visa assistance services to help you navigate the application process smoothly. From providing guidance on required documents to scheduling appointments and submitting applications, we\'re here to support you every step of the way.','inactive',NULL,NULL,'2025-11-25 07:32:26','2025-11-25 07:32:26'),(6,'Do You Provide travel insurance options?','Yes, we do! We offer travel insurance options to ensure peace of mind during your trip. Our insurance plans cover trip cancellations, medical emergencies, lost luggage, and more. You can choose to add travel insurance during the booking process or contact our team for personalized assistance.','inactive',NULL,NULL,'2025-11-25 07:33:02','2025-11-25 07:33:02'),(7,'Do I need a visa for my destination?','Visa requirements depend on your nationality, destination, purpose, and duration of travel. Some countries offer visa-free entry, while others require pre-approved visas or provide visa-on-arrival.','inactive',NULL,NULL,'2025-11-27 06:06:02','2025-11-27 06:06:02'),(8,'What documents are required for visa processing?','Required documents may vary by destination, but generally include a valid passport, recent photographs, completed visa application form, travel itinerary, proof of accommodation, financial statements, and sometimes a letter of invitation or employment letter. We recommend checking with the specific embassy or consulate for the most accurate and updated list.','inactive',NULL,NULL,'2025-11-27 06:06:34','2025-11-27 06:06:34'),(9,'How long does visa approval take?','Visa processing times can vary greatly depending on the country, type of visa, your nationality, and current application volumes. It may take anywhere from a few days to several weeks. We recommend applying well in advance and checking the official embassy or consulate website for estimated processing times.','inactive',NULL,NULL,'2025-11-27 06:07:12','2025-11-27 06:07:12'),(10,'Can you assist with passport renewals?','Yes, we can guide you through the passport renewal process. While we don\'t issue passports ourselves, we provide information, documentation checklists, and support to help ensure your application is complete and correctly submitted to the relevant authority.','inactive',NULL,NULL,'2025-11-27 06:07:54','2025-11-27 06:07:54'),(11,'What happens if my visa is rejected?','If your visa is rejected, we will help you understand the reason for the denial and guide you on the next steps. This may include correcting documentation, providing additional information, or reapplying. Our team is here to support you through the process.','inactive',NULL,NULL,'2025-11-27 06:08:25','2025-11-27 06:08:25');
 /*!40000 ALTER TABLE `tbl_faqs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -529,6 +567,45 @@ LOCK TABLES `tbl_forgot_password` WRITE;
 /*!40000 ALTER TABLE `tbl_forgot_password` DISABLE KEYS */;
 INSERT INTO `tbl_forgot_password` VALUES (1,1,'a5b19d8fe3db70e8888a7d08fe38346d7c247716f1bef14c4a7efca206e084e0','2025-11-10 17:03:43',0,'2025-11-10 16:33:42','2025-11-10 16:33:42'),(2,1,'7a369a54878023e3595120baf470768cf6e23e60fbf3c6a717e5592dc54beea7','2025-11-10 17:04:48',0,'2025-11-10 16:34:47','2025-11-10 16:34:47'),(3,1,'e75fd36ad6314998000ea59e640f392f899ca481792b99ee50f2882168009ec0','2025-11-10 17:05:52',0,'2025-11-10 16:35:52','2025-11-10 16:35:52'),(4,1,'cd06e56b6b30ba2408f038140d6f116c85fd075e095d4c198035b1eac7e77668','2025-11-10 17:09:49',1,'2025-11-10 16:39:49','2025-11-10 16:46:35');
 /*!40000 ALTER TABLE `tbl_forgot_password` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_guides`
+--
+
+DROP TABLE IF EXISTS `tbl_guides`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_guides` (
+  `guide_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `experience_years` int DEFAULT NULL,
+  `profile_img` varchar(255) DEFAULT NULL,
+  `language_1` varchar(50) DEFAULT NULL,
+  `language_2` varchar(50) DEFAULT NULL,
+  `language_3` varchar(50) DEFAULT NULL,
+  `whatsapp` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`guide_id`),
+  UNIQUE KEY `slug` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_guides`
+--
+
+LOCK TABLES `tbl_guides` WRITE;
+/*!40000 ALTER TABLE `tbl_guides` DISABLE KEYS */;
+INSERT INTO `tbl_guides` VALUES (1,'Oliver Liam','oliver-liam','Skydiving Expert',10,'http://localhost:5000/uploads/guide/1764317061439.webp','English','Spanish','Portogize','345 533 865','info@example.com','active',NULL,NULL,'2025-11-28 08:04:21','2025-11-28 08:04:21'),(2,'Mrs. Emelia Jong','mrs-emelia-jong','Skydiving Expert',12,'http://localhost:5000/uploads/guide/1764317747328.webp','English','Spanish','Portogize','345 533 865','info@example.com','active',NULL,NULL,'2025-11-28 08:15:47','2025-11-28 08:15:47'),(3,'Alexander Benjamin','alexander-benjamin','Skydiving Expert',13,'http://localhost:5000/uploads/guide/1764317800461.webp','English','Spanish','Portogize','345 533 865','info@example.com','active',NULL,NULL,'2025-11-28 08:16:40','2025-11-28 08:16:40'),(4,'Samuel Henry','samuel-henry','Skydiving Expert',10,'http://localhost:5000/uploads/guide/1764317838721.webp','English','Spanish','Portogize','345 533 865','info@example.com','active',NULL,NULL,'2025-11-28 08:17:18','2025-11-28 08:17:18'),(5,'David Reynolds','david-reynolds','Skydiving Expert',11,'http://localhost:5000/uploads/guide/1764317936209.webp','English','Spanish','Portogize','345 533 865','info@example.com','active',NULL,NULL,'2025-11-28 08:18:56','2025-11-28 08:18:56'),(6,'James Carter','james-carter','Skydiving Expert',11,'http://localhost:5000/uploads/guide/1764320377516.webp','English','Spanish','Portogize','345 533 865','info@example.com','active',NULL,NULL,'2025-11-28 08:19:19','2025-11-28 08:59:37');
+/*!40000 ALTER TABLE `tbl_guides` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -765,6 +842,79 @@ INSERT INTO `tbl_hotels` VALUES (2,'Le Méridien Dhaka','le-meridien-dhaka','Ban
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tbl_order_items`
+--
+
+DROP TABLE IF EXISTS `tbl_order_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_order_items` (
+  `order_item_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `item_type` enum('hotel','tour') NOT NULL,
+  `item_id` int NOT NULL,
+  `booking_date` date DEFAULT NULL,
+  `adults` int DEFAULT '1',
+  `children` int DEFAULT '0',
+  `quantity` int DEFAULT '1',
+  `addons` json DEFAULT NULL,
+  `final_price` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`order_item_id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `tbl_order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `tbl_orders` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_order_items`
+--
+
+LOCK TABLES `tbl_order_items` WRITE;
+/*!40000 ALTER TABLE `tbl_order_items` DISABLE KEYS */;
+INSERT INTO `tbl_order_items` VALUES (1,2,'hotel',2,'2025-12-14',1,1,1,'[{\"qty\": 1, \"name\": \"Breakfast\", \"price\": 100}]',260.00,'2025-12-07 17:11:21');
+/*!40000 ALTER TABLE `tbl_order_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_orders`
+--
+
+DROP TABLE IF EXISTS `tbl_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_orders` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL,
+  `tax` decimal(10,2) DEFAULT '0.00',
+  `service_fee` decimal(10,2) DEFAULT '0.00',
+  `discount` decimal(10,2) DEFAULT '0.00',
+  `total_amount` decimal(10,2) NOT NULL,
+  `payment_status` enum('pending','paid','failed') DEFAULT 'pending',
+  `payment_method` enum('cod','razorpay','stripe','paypal') DEFAULT 'razorpay',
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`order_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `tbl_orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tbl_users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_orders`
+--
+
+LOCK TABLES `tbl_orders` WRITE;
+/*!40000 ALTER TABLE `tbl_orders` DISABLE KEYS */;
+INSERT INTO `tbl_orders` VALUES (1,1,160.00,0.00,0.00,NULL,260.00,'pending','cod','active',NULL,NULL,'2025-12-07 17:10:32','2025-12-07 17:10:32'),(2,1,160.00,0.00,0.00,NULL,260.00,'pending','cod','active',NULL,NULL,'2025-12-07 17:11:21','2025-12-07 17:11:21');
+/*!40000 ALTER TABLE `tbl_orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tbl_regions`
 --
 
@@ -791,7 +941,7 @@ CREATE TABLE `tbl_regions` (
 
 LOCK TABLES `tbl_regions` WRITE;
 /*!40000 ALTER TABLE `tbl_regions` DISABLE KEYS */;
-INSERT INTO `tbl_regions` VALUES (1,'Africa',7,'inactive',NULL,NULL,'2025-11-12 06:04:49','2025-11-22 08:50:50'),(2,'Asia',1,'inactive',NULL,NULL,'2025-11-12 08:14:12','2025-11-22 09:13:34'),(3,'Europe',1,'inactive',NULL,NULL,'2025-11-12 10:13:06','2025-11-22 09:14:57'),(4,'Middle East',1,'inactive',NULL,NULL,'2025-11-12 10:13:20','2025-11-22 09:16:10'),(5,'North America',1,'inactive',NULL,NULL,'2025-11-12 10:13:53','2025-11-22 09:17:09'),(6,'Oceneia',1,'inactive',NULL,NULL,'2025-11-12 10:14:05','2025-11-22 09:18:11');
+INSERT INTO `tbl_regions` VALUES (1,'Africa',7,'inactive',NULL,NULL,'2025-11-12 06:04:49','2025-11-22 08:50:50'),(2,'Asia',2,'inactive',NULL,NULL,'2025-11-12 08:14:12','2025-11-25 13:25:59'),(3,'Europe',2,'inactive',NULL,NULL,'2025-11-12 10:13:06','2025-11-25 13:30:34'),(4,'Middle East',1,'inactive',NULL,NULL,'2025-11-12 10:13:20','2025-11-22 09:16:10'),(5,'North America',2,'inactive',NULL,NULL,'2025-11-12 10:13:53','2025-11-25 12:47:02'),(6,'Oceneia',1,'inactive',NULL,NULL,'2025-11-12 10:14:05','2025-11-22 09:18:11');
 /*!40000 ALTER TABLE `tbl_regions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -851,7 +1001,7 @@ CREATE TABLE `tbl_tags` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`tag_id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -860,7 +1010,7 @@ CREATE TABLE `tbl_tags` (
 
 LOCK TABLES `tbl_tags` WRITE;
 /*!40000 ALTER TABLE `tbl_tags` DISABLE KEYS */;
-INSERT INTO `tbl_tags` VALUES (1,'Cultural','cultural','inactive',NULL,NULL,'2025-11-11 09:10:07','2025-11-11 09:32:18'),(2,'Activities','activities','inactive',NULL,NULL,'2025-11-11 09:10:50','2025-11-11 09:10:50');
+INSERT INTO `tbl_tags` VALUES (1,'Cultural','cultural','inactive',NULL,NULL,'2025-11-11 09:10:07','2025-11-11 09:32:18'),(2,'Activities','activities','inactive',NULL,NULL,'2025-11-11 09:10:50','2025-11-11 09:10:50'),(3,'Adventure','adventure','inactive',NULL,NULL,'2025-11-27 11:28:31','2025-11-27 11:28:31'),(4,'Wildlife','wildlife','inactive',NULL,NULL,'2025-11-27 11:28:42','2025-11-27 11:28:42'),(5,'Historical','historical','inactive',NULL,NULL,'2025-11-27 11:28:54','2025-11-27 11:28:54');
 /*!40000 ALTER TABLE `tbl_tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -885,7 +1035,7 @@ CREATE TABLE `tbl_tour_destinations` (
   KEY `destination_id` (`destination_id`),
   CONSTRAINT `tbl_tour_destinations_ibfk_1` FOREIGN KEY (`tour_id`) REFERENCES `tbl_tours` (`tour_id`) ON DELETE CASCADE,
   CONSTRAINT `tbl_tour_destinations_ibfk_2` FOREIGN KEY (`destination_id`) REFERENCES `tbl_destinations` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -894,7 +1044,7 @@ CREATE TABLE `tbl_tour_destinations` (
 
 LOCK TABLES `tbl_tour_destinations` WRITE;
 /*!40000 ALTER TABLE `tbl_tour_destinations` DISABLE KEYS */;
-INSERT INTO `tbl_tour_destinations` VALUES (8,2,3,'inactive',NULL,NULL,'2025-11-14 08:49:45','2025-11-14 08:49:45'),(10,2,2,'inactive',NULL,NULL,'2025-11-14 12:00:56','2025-11-14 12:00:56');
+INSERT INTO `tbl_tour_destinations` VALUES (10,2,2,'inactive',NULL,NULL,'2025-11-14 12:00:56','2025-11-14 12:00:56'),(12,3,3,'inactive',NULL,NULL,'2025-11-25 11:41:37','2025-11-25 11:41:37'),(13,4,5,'inactive',NULL,NULL,'2025-11-25 11:56:42','2025-11-25 11:56:42'),(14,5,6,'inactive',NULL,NULL,'2025-11-25 12:34:08','2025-11-25 12:34:08'),(15,6,7,'inactive',NULL,NULL,'2025-11-25 12:35:17','2025-11-25 12:35:17'),(16,7,10,'inactive',NULL,NULL,'2025-11-25 12:41:28','2025-11-25 12:41:28'),(17,8,13,'inactive',NULL,NULL,'2025-11-25 12:47:28','2025-11-25 12:47:28'),(18,9,14,'inactive',NULL,NULL,'2025-11-25 13:28:02','2025-11-25 13:28:02'),(19,10,15,'inactive',NULL,NULL,'2025-11-25 13:31:40','2025-11-25 13:31:40');
 /*!40000 ALTER TABLE `tbl_tour_destinations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -915,7 +1065,7 @@ CREATE TABLE `tbl_tour_experiences` (
   KEY `experience_id` (`experience_id`),
   CONSTRAINT `tbl_tour_experiences_ibfk_1` FOREIGN KEY (`tour_id`) REFERENCES `tbl_tours` (`tour_id`) ON DELETE CASCADE,
   CONSTRAINT `tbl_tour_experiences_ibfk_2` FOREIGN KEY (`experience_id`) REFERENCES `tbl_experiences` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -924,7 +1074,7 @@ CREATE TABLE `tbl_tour_experiences` (
 
 LOCK TABLES `tbl_tour_experiences` WRITE;
 /*!40000 ALTER TABLE `tbl_tour_experiences` DISABLE KEYS */;
-INSERT INTO `tbl_tour_experiences` VALUES (4,2,1,'2025-11-14 09:15:30'),(5,2,2,'2025-11-14 09:15:30');
+INSERT INTO `tbl_tour_experiences` VALUES (4,2,1,'2025-11-14 09:15:30'),(5,2,2,'2025-11-14 09:15:30'),(6,3,5,'2025-11-25 11:53:27'),(7,3,7,'2025-11-25 11:53:27'),(8,4,8,'2025-11-25 11:56:53'),(9,5,1,'2025-11-25 12:34:36'),(10,5,5,'2025-11-25 12:34:36'),(11,6,6,'2025-11-25 12:35:33'),(12,6,8,'2025-11-25 12:35:33'),(13,7,7,'2025-11-25 12:41:57'),(14,8,5,'2025-11-25 13:03:43'),(15,8,8,'2025-11-25 13:03:43'),(16,9,1,'2025-11-25 13:28:29'),(17,10,5,'2025-11-25 13:31:52');
 /*!40000 ALTER TABLE `tbl_tour_experiences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -989,7 +1139,7 @@ CREATE TABLE `tbl_tours` (
   KEY `fk_tours_type` (`tour_type_id`),
   CONSTRAINT `fk_tours_region` FOREIGN KEY (`region_id`) REFERENCES `tbl_regions` (`region_id`) ON DELETE SET NULL,
   CONSTRAINT `fk_tours_type` FOREIGN KEY (`tour_type_id`) REFERENCES `tbl_tour_types` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -998,7 +1148,7 @@ CREATE TABLE `tbl_tours` (
 
 LOCK TABLES `tbl_tours` WRITE;
 /*!40000 ALTER TABLE `tbl_tours` DISABLE KEYS */;
-INSERT INTO `tbl_tours` VALUES (2,'Kiwi Adventures Await','kiwi-adventures-await','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1763096821698.webp',1,5,4,780.00,449.00,4,0,1,'inactive',NULL,NULL,'2025-11-14 05:06:34','2025-11-14 05:07:01');
+INSERT INTO `tbl_tours` VALUES (2,'Kiwi Adventures Await','kiwi-adventures-await','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1763096821698.webp',1,5,4,780.00,449.00,4,0,1,'inactive',NULL,NULL,'2025-11-14 05:06:34','2025-11-14 05:07:01'),(3,'Cycling The Loire','cycling-the-loire','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764070165146.webp',1,2,1,699.00,0.00,2,0,1,'inactive',NULL,NULL,'2025-11-25 11:29:25','2025-11-25 11:29:25'),(4,'A Magical City Adventure','a-magical-city-adventure','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764071757041.webp',1,2,1,449.00,0.00,3,0,1,'inactive',NULL,NULL,'2025-11-25 11:55:57','2025-11-25 11:55:57'),(5,'Egypt & Nile Cruise Adventure','egypt-and-nile-cruise-adventure','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764073730171.webp',1,5,6,499.00,599.00,3,0,1,'inactive',NULL,NULL,'2025-11-25 12:28:50','2025-11-25 12:28:50'),(6,'Bali Paradise Tour','bali-paradise-tour','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764073784400.webp',1,5,6,499.00,599.00,2,0,0,'inactive',NULL,NULL,'2025-11-25 12:29:44','2025-11-25 12:29:44'),(7,'The Grand French Escape','the-grand-french-escape','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764074445504.webp',4,2,1,452.00,0.00,4,0,0,'inactive',NULL,NULL,'2025-11-25 12:32:06','2025-11-25 12:40:45'),(8,'The French Alps Adventure','the-french-alps-adventure','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764074732935.webp',5,8,7,581.00,0.00,3,0,0,'inactive',NULL,NULL,'2025-11-25 12:45:32','2025-11-25 12:45:32'),(9,'Phuket & Krabi Island','phuket-and-krabi-island','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764077234123.webp',2,5,6,580.00,0.00,3,0,0,'inactive',NULL,NULL,'2025-11-25 13:27:14','2025-11-25 13:27:14'),(10,'Norway Northern Lights','norway-northern-lights','Paris, the City of Lights, and the surrounding Île-de-France region offer a perfect blend of history, culture, luxury, and romance. Whether you’re exploring iconic landmarks, indulging in French cuisine, or enjoying the charming countryside, this region has something for every traveler.','http://localhost:5000/uploads/tours/1764077488214.webp',3,5,6,599.00,0.00,1,0,0,'inactive',NULL,NULL,'2025-11-25 13:31:28','2025-11-25 13:31:28');
 /*!40000 ALTER TABLE `tbl_tours` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1035,6 +1185,48 @@ LOCK TABLES `tbl_users` WRITE;
 /*!40000 ALTER TABLE `tbl_users` DISABLE KEYS */;
 INSERT INTO `tbl_users` VALUES (1,NULL,'smit','smit1@example.com','$2b$10$T1X2AiZX68EoZD9P9yVTVOvDGj0nEO2CKBk3y9jdgepofWf9HK782','http://localhost:5000/uploads/profile_images/1762848333372.jpg','local','inactive',NULL,NULL,'2025-11-10 10:40:11','2025-11-20 04:12:33'),(2,NULL,'Smit','smit@example.com','$2b$10$kWO7ywUFXNuVtUP9ScVc1.eVc9DmbkUSv0hrgRbQmFpU5LqeNrQoe','http://localhost:5000/uploads/profile_images/1762848233983.jpg','local','inactive',NULL,NULL,'2025-11-10 12:31:04','2025-11-20 04:26:45'),(3,NULL,'Smit Vaghasiya','smit2@example.com','$2b$10$/Z0La082gsDfepZI4yAQKeSmejmkqbVwrZOGlYVcwhyYQZ6eKHsim',NULL,'local','inactive',NULL,NULL,'2025-11-10 12:34:13','2025-11-10 12:34:13'),(4,NULL,'Raj Patel','raj@example.com','$2b$10$5I0qp7dzTSlkv0YNszZBee8iwaws.shML35oqieVSCChyeHubktVC',NULL,'local','inactive',NULL,NULL,'2025-11-17 11:30:06','2025-11-17 11:30:06'),(5,NULL,'Totam sit dolores cu','hyrijyny@mailinator.com','$2b$10$qTekmJkE70eHAJJvd7eaV.rDkuT/wZHq1acTXFHaltt1VBVoCjdoa',NULL,'local','inactive',NULL,NULL,'2025-11-19 12:30:03','2025-11-19 12:30:03'),(6,NULL,'Tempora ipsum volup','wosutelak@mailinator.com','$2b$10$mrfayrNpikg4PqktNJQ4Aek88i8a7CT0vSiHBajwWVNPDNSHdxYia',NULL,'local','inactive',NULL,NULL,'2025-11-19 13:13:39','2025-11-19 13:13:39'),(9,NULL,'Recusandae Incidunt','hype@mailinator.com','$2b$10$QnIynj5UWuGtI2UHTSnms.IF9bLdl1aNaZUw9N7I4zeohkAsTkpEy',NULL,'local','inactive',NULL,NULL,'2025-11-19 13:14:57','2025-11-19 13:14:57'),(10,NULL,'In voluptatem maxime','bosop@mailinator.com','$2b$10$EoJokkZ2xiaIvsiqXtbpQOa/swYNKnbwKdlLopqNZcBa1tdR6j4lO',NULL,'local','inactive',NULL,NULL,'2025-11-19 16:41:15','2025-11-19 16:41:15'),(11,NULL,'Corporis laboriosam','bahec@mailinator.com','$2b$10$sObmzdCwfQaNSsowwhEI4eA9I8unHZJIMOXYGXDVwztfpaaIe9fBS',NULL,'local','inactive',NULL,NULL,'2025-11-19 16:50:25','2025-11-19 16:50:25'),(12,NULL,'Eligendi quam consec','waqofew@mailinator.com','$2b$10$cLMC/BmLAx0egDgSG/t4ae0AluqYXbdainfeT7K/IrdKrTDM7WQ8i',NULL,'local','inactive',NULL,NULL,'2025-11-19 16:53:53','2025-11-19 16:53:53'),(13,NULL,'Dicta reprehenderit','fycyhi@mailinator.com','$2b$10$JMJ5ojdJiF0./M32J.Iqi.92pqok.5kYJKAVJFqxG7FzDtuAgaZGW',NULL,'local','inactive',NULL,NULL,'2025-11-19 16:56:47','2025-11-19 16:56:47'),(14,NULL,'Fugiat proident do','varejan@mailinator.com','$2b$10$24jcLGvL6H09T6AyYXyIG.JcJB0XXVO0QDmoxoBZAyLmEOlezvA72',NULL,'local','inactive',NULL,NULL,'2025-11-19 17:00:24','2025-11-19 17:00:24'),(15,NULL,'Placeat rerum quia ','galaraqud@mailinator.com','$2b$10$xx1jM2i8T7xCNEXYfneDDedv0YbciqjnzobK9oY4KzXaBSesPUBFq',NULL,'local','inactive',NULL,NULL,'2025-11-19 17:05:05','2025-11-19 17:05:05'),(16,NULL,'Omnis aliqua Rerum ','jadolalypi@mailinator.com','$2b$10$0LI5XQUbrGBFHxAUhbs5cuVK3ReLVpJSdKp6cGVu2JICkaobOs9Fq',NULL,'local','inactive',NULL,NULL,'2025-11-20 03:07:12','2025-11-20 03:07:12');
 /*!40000 ALTER TABLE `tbl_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_visa_applications`
+--
+
+DROP TABLE IF EXISTS `tbl_visa_applications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_visa_applications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `country_id` int NOT NULL,
+  `type_id` int NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `age` int DEFAULT NULL,
+  `notes` text,
+  `file` varchar(255) DEFAULT NULL,
+  `visa_criteria` varchar(255) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `country_id` (`country_id`),
+  KEY `type_id` (`type_id`),
+  CONSTRAINT `tbl_visa_applications_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `tbl_visa_countries` (`visa_id`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_visa_applications_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `tbl_visa_types` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_visa_applications`
+--
+
+LOCK TABLES `tbl_visa_applications` WRITE;
+/*!40000 ALTER TABLE `tbl_visa_applications` DISABLE KEYS */;
+INSERT INTO `tbl_visa_applications` VALUES (1,3,7,'raj','1990-02-10','8954865894','raj@gmail.com',25,'test',NULL,NULL,'active',NULL,NULL,'2025-12-03 07:58:02','2025-12-03 07:58:02'),(2,3,12,'Christen Combs','2025-10-06','+1 (578) 177-8363','joxivuh@mailinator.com',56,'Sunt maxime magna al','http://localhost:5000/uploads/visa_application/1764751758844.jpg','Exercitation pariatu','active',1,NULL,'2025-12-03 08:49:18','2025-12-03 08:49:18'),(3,3,12,'smit vaghasiya','2025-12-17','8541535484','smit@gmail.com',25,'test','http://localhost:5000/uploads/visa_application/1764753635327.jpg',NULL,'active',1,NULL,'2025-12-03 09:20:35','2025-12-03 09:20:35'),(4,3,12,'smit vaghasiya','2025-12-08','7865415449','smit@example.com',26,'',NULL,NULL,'active',1,NULL,'2025-12-03 09:34:38','2025-12-03 09:34:38'),(5,3,9,'smit vaghasiya','2025-12-17','8546813546','smit@gmail.com',21,'test','http://localhost:5000/uploads/visa_application/1764754568425.jpg',NULL,'active',1,NULL,'2025-12-03 09:36:08','2025-12-03 09:36:08');
+/*!40000 ALTER TABLE `tbl_visa_applications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1623,6 +1815,66 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_add_to_cart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_to_cart`(
+    IN p_user_id INT,
+    IN p_item_type ENUM('hotel','tour'),
+    IN p_item_id INT,
+    IN p_booking_date DATE,
+    IN p_adults INT,
+    IN p_children INT,
+    IN p_quantity INT,
+    IN p_addons JSON,
+    IN p_base_price DECIMAL(10,2),
+    IN p_final_price DECIMAL(10,2)
+)
+BEGIN
+    INSERT INTO tbl_cart (
+        user_id, item_type, item_id, booking_date,
+        adults, children, quantity, addons,
+        base_price, final_price
+    )
+    VALUES (
+        p_user_id, p_item_type, p_item_id, p_booking_date,
+        p_adults, p_children, p_quantity, p_addons,
+        p_base_price, p_final_price
+    );
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_clear_cart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_clear_cart`(
+    IN p_user_id INT
+)
+BEGIN
+    DELETE FROM tbl_cart WHERE user_id = p_user_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_delete_amenity` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1734,6 +1986,28 @@ BEGIN
     ELSE
         SELECT p_id AS deleted_id;
     END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_delete_guide` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_delete_guide`(
+    IN p_guide_id INT
+)
+BEGIN
+    DELETE FROM tbl_guides
+    WHERE guide_id = p_guide_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2313,6 +2587,56 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_get_cart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_cart`(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT 
+        c.cart_id,
+        c.item_type,
+        c.item_id,
+        c.booking_date,
+        c.adults,
+        c.children,
+        c.quantity,
+        c.addons,
+        c.base_price,
+        c.final_price,
+        c.created_at,
+
+        -- Hotel fields
+        h.hotel_name,
+        h.city AS hotel_city,
+        h.country AS hotel_country,
+        h.image_url AS hotel_images,
+
+        -- Tour fields
+        t.title AS tour_title,
+        t.thumbnail AS tour_thumb,
+        t.days,
+        t.nights
+
+    FROM tbl_cart c
+    LEFT JOIN tbl_hotels h ON c.item_type = 'hotel' AND c.item_id = h.hotel_id
+    LEFT JOIN tbl_tours t ON c.item_type = 'tour' AND c.item_id = t.tour_id
+    WHERE c.user_id = p_user_id
+    ORDER BY c.cart_id DESC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_get_destination_by_slug` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2349,6 +2673,83 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_experiences`()
 BEGIN
     SELECT * FROM tbl_experiences 
     ORDER BY id DESC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_get_guides` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_guides`()
+BEGIN
+    SELECT 
+        guide_id,
+        name,
+        slug,
+        title,
+        experience_years,
+        profile_img,
+        language_1,
+        language_2,
+        language_3,
+        whatsapp,
+        email,
+        status,
+        created_by,
+        created_at,
+        updated_by,
+        updated_at
+    FROM tbl_guides
+    ORDER BY guide_id DESC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_get_guide_by_slug` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_get_guide_by_slug`(
+    IN p_slug VARCHAR(255)
+)
+BEGIN
+    SELECT 
+        guide_id,
+        name,
+        slug,
+        title,
+        experience_years,
+        profile_img,
+        language_1,
+        language_2,
+        language_3,
+        whatsapp,
+        email,
+        status,
+        created_by,
+        created_at,
+        updated_by,
+        updated_at
+    FROM tbl_guides
+    WHERE slug = p_slug
+    LIMIT 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2725,6 +3126,51 @@ BEGIN
     VALUES (p_name, IFNULL(p_status, 'inactive'), p_created_by);
 
     SELECT LAST_INSERT_ID() AS id, p_name AS name;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insert_guide` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_guide`(
+    IN p_name VARCHAR(100),
+    IN p_slug VARCHAR(255),
+    IN p_title VARCHAR(100),
+    IN p_experience_years INT,
+    IN p_profile_img VARCHAR(255),
+
+    IN p_language_1 VARCHAR(50),
+    IN p_language_2 VARCHAR(50),
+    IN p_language_3 VARCHAR(50),
+
+    IN p_whatsapp VARCHAR(20),
+    IN p_email VARCHAR(100),
+
+    IN p_status ENUM('active','inactive'),
+    IN p_created_by INT
+)
+BEGIN
+    INSERT INTO tbl_guides (
+        name, slug, title, experience_years, profile_img,
+        language_1, language_2, language_3,
+        whatsapp, email,
+        status, created_by
+    ) VALUES (
+        p_name, p_slug, p_title, p_experience_years, p_profile_img,
+        p_language_1, p_language_2, p_language_3,
+        p_whatsapp, p_email,
+        p_status, p_created_by
+    );
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3203,9 +3649,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_tour_experiences`(
     IN p_tour_id INT,
-    IN p_experience_ids VARCHAR(255),
-    IN p_status ENUM('active','inactive','archived'),
-    IN p_created_by INT
+    IN p_experience_ids VARCHAR(255)
 )
 BEGIN
     DECLARE exp_id VARCHAR(10);
@@ -3216,15 +3660,13 @@ BEGIN
 
         INSERT INTO tbl_tour_experiences (
             tour_id,
-            experience_id,
-            status,
-            created_by
+            experience_id
+	
         )
         VALUES (
             p_tour_id,
-            exp_id,
-            IFNULL(p_status, 'inactive'),
-            p_created_by
+            exp_id
+    
         );
 
         SET p_experience_ids = SUBSTRING(p_experience_ids, LENGTH(exp_id) + 2);
@@ -3358,6 +3800,65 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_place_order` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_place_order`(
+    IN p_user_id INT,
+    IN p_subtotal DECIMAL(10,2),
+    IN p_tax DECIMAL(10,2),
+    IN p_service_fee DECIMAL(10,2),
+    IN p_discount DECIMAL(10,2),
+    IN p_total_amount DECIMAL(10,2),
+    IN p_payment_method ENUM('cod','razorpay','stripe','paypal'),
+    IN p_payment_status ENUM('pending','paid','failed'),
+    OUT p_order_id INT
+)
+BEGIN
+    INSERT INTO tbl_orders (
+        user_id, subtotal, tax, service_fee, discount,
+        total_amount, payment_method, payment_status
+    ) VALUES (
+        p_user_id, p_subtotal, p_tax, p_service_fee, p_discount,
+        p_total_amount, p_payment_method, p_payment_status
+    );
+
+    SET p_order_id = LAST_INSERT_ID();
+
+
+    INSERT INTO tbl_order_items (
+        order_id, item_type, item_id, booking_date,
+        adults, children, quantity, addons, final_price
+    )
+    SELECT
+        p_order_id,
+        c.item_type,
+        c.item_id,
+        c.booking_date,
+        c.adults,
+        c.children,
+        c.quantity,
+        c.addons,
+        c.final_price
+    FROM tbl_cart c
+    WHERE c.user_id = p_user_id;
+
+
+    DELETE FROM tbl_cart WHERE user_id = p_user_id;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_register_user` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -3376,6 +3877,27 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_register_user`(
 BEGIN
     INSERT INTO tbl_users (name, email, password)
     VALUES (p_name, p_email, p_password);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_remove_cart_item` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_remove_cart_item`(
+    IN p_cart_id INT
+)
+BEGIN
+    DELETE FROM tbl_cart WHERE cart_id = p_cart_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3655,6 +4177,54 @@ BEGIN
         question = p_question,
         answer = p_answer
     WHERE id = p_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_update_guide` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_guide`(
+    IN p_guide_id INT,
+    IN p_name VARCHAR(100),
+    IN p_slug VARCHAR(255),
+    IN p_title VARCHAR(100),
+    IN p_experience_years INT,
+    IN p_profile_img VARCHAR(255),
+    IN p_language_1 VARCHAR(50),
+    IN p_language_2 VARCHAR(50),
+    IN p_language_3 VARCHAR(50),
+    IN p_whatsapp VARCHAR(20),
+    IN p_email VARCHAR(100),
+    IN p_status ENUM('active', 'inactive'),
+    IN p_updated_by INT
+)
+BEGIN
+    UPDATE tbl_guides 
+    SET 
+        name = p_name,
+        slug = p_slug,
+        title = p_title,
+        experience_years = p_experience_years,
+        profile_img = p_profile_img,
+        language_1 = p_language_1,
+        language_2 = p_language_2,
+        language_3 = p_language_3,
+        whatsapp = p_whatsapp,
+        email = p_email,
+        status = p_status,
+        updated_by = p_updated_by,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE guide_id = p_guide_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -3947,6 +4517,57 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_update_tour` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_tour`(
+    IN p_tour_id INT,
+    IN p_title VARCHAR(255),
+    IN p_slug VARCHAR(255),
+    IN p_description TEXT,
+    IN p_thumbnail VARCHAR(255),
+    IN p_region_id INT,
+    IN p_days INT,
+    IN p_nights INT,
+    IN p_price DECIMAL(10,2),
+    IN p_discount_price DECIMAL(10,2),
+    IN p_tour_type_id INT,
+    IN p_is_featured BOOLEAN,
+    IN p_status ENUM('active','inactive','archived'),
+    IN p_updated_by INT
+)
+BEGIN
+    UPDATE tbl_tours
+    SET 
+        title = p_title,
+        slug = p_slug,
+        description = p_description,
+        thumbnail = COALESCE(p_thumbnail, thumbnail),
+        region_id = p_region_id,
+        days = p_days,
+        nights = p_nights,
+        price = p_price,
+        discount_price = p_discount_price,
+        tour_type_id = p_tour_type_id,
+        is_featured = p_is_featured,
+        status = IFNULL(p_status,status),
+        updated_by = p_updated_by
+    WHERE tour_id = p_tour_id;
+
+    SELECT * FROM tbl_tours WHERE tour_id = p_tour_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_update_tour_destinations` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -4155,6 +4776,61 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_visa_application_add` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_visa_application_add`(
+    IN p_country_id INT,
+    IN p_type_id INT,
+    IN p_name VARCHAR(255),
+    IN p_dob DATE,
+    IN p_phone VARCHAR(50),
+    IN p_email VARCHAR(255),
+    IN p_age INT,
+    IN p_notes TEXT,
+    IN p_file VARCHAR(255),
+    IN p_visa_criteria VARCHAR(255),
+    IN p_created_by INT
+)
+BEGIN
+    INSERT INTO tbl_visa_applications (
+        country_id,
+        type_id,
+        name,
+        dob,
+        phone,
+        email,
+        age,
+        notes,
+        file,
+        visa_criteria,
+        created_by
+    ) VALUES (
+        p_country_id,
+        p_type_id,
+        p_name,
+        p_dob,
+        p_phone,
+        p_email,
+        p_age,
+        p_notes,
+        p_file,
+        p_visa_criteria,
+        p_created_by
+    );
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `update_faq` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -4192,4 +4868,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-24 11:38:52
+-- Dump completed on 2025-12-08  9:31:30

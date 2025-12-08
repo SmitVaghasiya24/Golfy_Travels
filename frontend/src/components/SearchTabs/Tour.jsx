@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Tour() {
+    const navigate = useNavigate();
+
     const [destinations, setDestinations] = useState([]);
     const [tourTypes, setTourTypes] = useState([]);
     const [selectedDestination, setSelectedDestination] = useState("");
@@ -16,7 +18,6 @@ export default function Tour() {
     const [openDest, setOpenDest] = useState(false);
     const [open, setOpen] = useState(false);
     const [openTour, setOpenTour] = useState(false);
-
 
     const [range, setRange] = useState([
         {
@@ -36,6 +37,16 @@ export default function Tour() {
             .then((res) => setTourTypes(res.data.data));
     }, []);
 
+
+    const handleSearch = () => {
+        const query = new URLSearchParams();
+
+        if (selectedDestination) query.append("destination", selectedDestination);
+        if (selectedTourType) query.append("tour_type", selectedTourType);
+
+        navigate(`/tour?${query.toString()}`);
+    };
+
     return (
         <div className="bg-white rounded-xl shadow-lg px-6 pt-12 pb-7 flex flex-col relative z-50 -mt-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-5">
@@ -54,7 +65,6 @@ export default function Tour() {
                         </p>
                     </div>
 
-                    
                     <AnimatePresence>
                         {openDest && (
                             <motion.ul
@@ -135,7 +145,6 @@ export default function Tour() {
                             </motion.div>
                         )}
                     </AnimatePresence>
-
                 </div>
 
                 {/* tour type */}
@@ -182,9 +191,11 @@ export default function Tour() {
                     </AnimatePresence>
                 </div>
 
-
                 {/* search button */}
-                <button className="bg-[#1881FE] text-white flex items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16">
+                <button
+                    onClick={handleSearch}
+                    className="bg-[#1881FE] text-white flex cursor-pointer items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16"
+                >
                     <FiSearch size={20} /> SEARCH
                 </button>
             </div>
@@ -195,14 +206,13 @@ export default function Tour() {
                     to="/contact"
                     className="text-blue-600 cursor-pointer relative inline-block
                    after:content-[''] after:absolute after:left-0 after:bottom-0
-                   after:w-0 after:h-[2px] after:bg-blue-600
+                   after:w-0 after:h-0.5 after:bg-blue-600
                    after:transition-all after:duration-600
                    hover:after:w-full"
                 >
                     Custom Itinerary
                 </Link>
             </p>
-
         </div>
     );
 }

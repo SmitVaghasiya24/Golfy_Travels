@@ -82,7 +82,7 @@ function Home() {
 
       <Faq
         type="home"
-        title="General Questions"
+        title="General Questions"  align="center"
         subtitle="We're committed to offering more than just products—we provide exceptional experiences."
       />
 

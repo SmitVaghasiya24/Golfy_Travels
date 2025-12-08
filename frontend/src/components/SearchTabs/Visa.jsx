@@ -6,7 +6,7 @@ import "react-date-range/dist/theme/default.css";
 import { MdOutlineAssignmentInd } from "react-icons/md";
 import { FaGlobeAmericas } from "react-icons/fa";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Hotel() {
 
@@ -26,6 +26,8 @@ export default function Hotel() {
     const [openLocation, setOpenLocation] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("");
     const [locationSearch, setLocationSearch] = useState("");
+
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -324,7 +326,9 @@ export default function Hotel() {
 
 
                 {/* search button */}
-                <button className="bg-[#1881FE] text-white flex items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16">
+                <button
+                    onClick={() => navigate(`/visa`)}
+                    className="bg-[#1881FE] text-white cursor-pointer flex items-center justify-center gap-2 rounded-lg text-lg font-semibold h-16">
                     <FiSearch size={20} /> SEARCH
                 </button>
             </div>

@@ -28,6 +28,11 @@ import Destinations from "./pages/page/Destinations";
 import Visa from "./pages/Visa";
 import VisaDetails from "./pages/VisaDetails";
 import Tour from './pages/Tour/Tour';
+import TourDetails from './pages/Tour/TourDetails';
+import Hotel from './pages/Hotel/Hotel';
+import HotelDetails from './pages/Hotel/HotelDetails';
+import Cart from './pages/Cart';
+import Checkout from "./pages/Checkout";
 
 
 function App() {
@@ -63,6 +68,11 @@ function App() {
         <Route path="/visa" element={<Visa />} />
         <Route path="/visa/:slug" element={<VisaDetails />} />
         <Route path="/tour" element={<Tour />} />
+        <Route path="/tour/:slug" element={<TourDetails />} />
+        <Route path="/pages/hotel" element={<Hotel />} />
+        <Route path="/pages/hotel/:slug" element={<HotelDetails />} />
+        <Route path="/pages/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
 
 
 

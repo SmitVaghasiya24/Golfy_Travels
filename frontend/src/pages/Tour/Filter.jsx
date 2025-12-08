@@ -4,6 +4,9 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 function Filter({ filters, setFilters }) {
     const [regions, setRegions] = useState([]);
     const [openRegions, setOpenRegions] = useState([]);
+    const [tourTypes, setTourTypes] = useState([]);
+    const [experiences, setExperiences] = useState([]);
+
 
 
     useEffect(() => {
@@ -18,6 +21,37 @@ function Filter({ filters, setFilters }) {
         };
         fetchRegions();
     }, []);
+
+
+    useEffect(() => {
+        const fetchTourTypes = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/get_tour_types");
+                const data = await res.json();
+                if (data.success) setTourTypes(data.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchTourTypes();
+    }, []);
+
+    useEffect(() => {
+        const fetchExperiences = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/get_experience");
+                const data = await res.json();
+                if (data.success) setExperiences(data.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchExperiences();
+    }, []);
+
+
 
     // check region
     const handleRegionCheckbox = (region) => {
@@ -204,6 +238,72 @@ function Filter({ filters, setFilters }) {
                         </div>
                     </div>
                 </div>
+
+                <div className="mt-8">
+                    <h3 className="font-semibold text-xl mb-3">Tour Type</h3>
+
+                    <div className="flex flex-wrap gap-3">
+                        {tourTypes.map((type) => {
+                            const active = filters.tour_type === type.name;
+
+                            return (
+                                <button
+                                    key={type.id}
+                                    onClick={() =>
+                                        setFilters({
+                                            ...filters,
+                                            tour_type: active ? "" : type.name,
+                                        })
+                                    }
+                                    className={`px-4 py-2 rounded-full text-sm border transition
+            ${active
+                                            ? "bg-blue-600 text-white border-blue-600"
+                                            : "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200"
+                                        }
+          `}
+                                >
+                                    {type.name}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <div className="mt-8">
+                    <h3 className="font-semibold text-xl mb-4">Experiences</h3>
+
+                    <div className="space-y-4">
+                        {experiences.map((exp) => (
+                            <div
+                                key={exp.id}
+                                className="flex items-center justify-between text-gray-700"
+                            >
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        className="w-4 h-4 cursor-pointer"
+                                        checked={filters.experience.includes(exp.name)}
+                                        onChange={() => {
+                                            let updated = [...filters.experience];
+
+                                            if (updated.includes(exp.name)) {
+                                                updated = updated.filter((e) => e !== exp.name);
+                                            } else {
+                                                updated.push(exp.name);
+                                            }
+
+                                            setFilters({ ...filters, experience: updated });
+                                        }}
+                                    />
+                                    {exp.name}
+                                </label>
+
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
 
             </div>
         </>

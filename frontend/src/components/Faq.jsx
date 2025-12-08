@@ -3,7 +3,7 @@ import axios from "axios";
 import { FiChevronDown } from "react-icons/fi";
 import { motion } from "framer-motion";
 
-function Faq({ type = "home", title, subtitle }) {
+function Faq({ type = "home", title,align = "left", subtitle }) {
     const [faqs, setFaqs] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -61,7 +61,13 @@ function Faq({ type = "home", title, subtitle }) {
 
     return (
         <div className="py-16 max-w-4xl mx-auto px-4">
-            <h2 className="text-4xl font-bold text-center mb-2">{title}</h2>
+<h2
+  className={`text-4xl font-bold mb-2 ${
+    align === "left" ? "text-left" : "text-center"
+  }`}
+>
+  {title}
+</h2>
             <p className="text-gray-600 text-center max-w-xl mx-auto mb-10">
                 {subtitle}
             </p>
