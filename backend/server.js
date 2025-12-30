@@ -75,16 +75,16 @@ app.use('/uploads', express.static('uploads'));
 
 app.use(errorHandler);
 
-
 const port = process.env.PORT || 5000;
 
-app.listen(port, async () => {
+app.listen(port, "0.0.0.0", async () => {
   try {
-    const [rows] = await db.query('SELECT 1');
-    console.log(`✅ MySQL Connected! Test Result: ${rows[0]['1']}`);
+    const [rows] = await db.query("SELECT 1");
+    console.log(`✅ MySQL Connected! Test Result: ${rows[0]["1"]}`);
   } catch (err) {
-    console.error('❌ MySQL Connection Failed:', err.message);
+    console.error("❌ MySQL Connection Failed:", err.message);
   }
 
-  console.log(`🚀 Server running on: http://localhost:${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
+  
