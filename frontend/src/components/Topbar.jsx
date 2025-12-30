@@ -4,6 +4,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
+import API from "../services/api";
 
 function Topbar() {
     const [open, setOpen] = useState(false);
@@ -23,23 +24,23 @@ function Topbar() {
         }
 
         try {
-            const tourRes = await fetch(`http://localhost:5000/api/tours/filter?title=${value}`);
-            const hotelRes = await fetch(`http://localhost:5000/api/hotels/filter?hotel_name=${value}`);
-
-            const tourData = await tourRes.json();
-            const hotelData = await hotelRes.json();
+            const [tourRes, hotelRes] = await Promise.all([
+                API.get(`/api/tours/filter?title=${value}`),
+                API.get(`/api/hotels/filter?hotel_name=${value}`)
+            ]);
 
             setResults({
-                hotels: hotelData.hotels || [],
-                tours: tourData.tours || [],
+                hotels: hotelRes.data.hotels || [],
+                tours: tourRes.data.tours || [],
             });
 
             setShowResults(true);
 
         } catch (err) {
-            console.log("Search Error:", err);
+            console.error("Search Error:", err);
         }
     };
+
 
     const languages = [
         { code: "EN", label: "English", flag: "/language/eng.png" },
@@ -170,8 +171,8 @@ function Topbar() {
 
                     <div className="flex items-center gap-4 md:gap-6">
                         <a
-                        onClick={()=>navigate(`/contact`)}
-                         className="cursor-hide text-blue-600 cursor-pointer font-medium hover:text-blue-700 hidden sm:block">
+                            onClick={() => navigate(`/contact`)}
+                            className="cursor-hide text-blue-600 cursor-pointer font-medium hover:text-blue-700 hidden sm:block">
                             Need Help?
                         </a>
 

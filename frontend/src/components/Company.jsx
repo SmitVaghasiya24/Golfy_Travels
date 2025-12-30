@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import API from "../services/api";
 
 function Company() {
     const [companies, setCompanies] = useState([]);
@@ -7,7 +8,7 @@ function Company() {
     useEffect(() => {
         const loadCompanies = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_all_companies");
+                const res = await API.get("/api/get_all_companies");
 
                 if (res.data.success) {
                     setCompanies(res.data.data);
@@ -23,7 +24,7 @@ function Company() {
 
     return (
         <div className="px-10 mt-20">
-            <p className="text-xl md:text-2xl font-semibold text-center">Those Company You Can Easily Trust!</p>   
+            <p className="text-xl md:text-2xl font-semibold text-center">Those Company You Can Easily Trust!</p>
 
             <div className="container mx-auto overflow-hidden">
 

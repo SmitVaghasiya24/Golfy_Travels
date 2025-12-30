@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FaCheck } from "react-icons/fa";
 import { MdMyLocation } from "react-icons/md";
+import API from "../services/api";
 
 
 function TravelPackage() {
@@ -15,7 +15,7 @@ function TravelPackage() {
 
     const loadDestinations = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/get_all_destination");
+            const res = await API.get("/api/get_all_destination");
             if (res.data.success) {
                 setDestinations(res.data.destinations);
             }

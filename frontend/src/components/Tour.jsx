@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FiMapPin } from "react-icons/fi";
 import { MdArrowOutward } from "react-icons/md";
 
@@ -10,6 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 function Tour({
   title = "Travel Packages",
@@ -25,7 +25,7 @@ function Tour({
       try {
         setLoading(true);
 
-        const res = await axios.get("http://localhost:5000/api/get_tours");
+        const res = await API.get("/api/get_tours");
         setTours(res.data.data);
 
       } catch (err) {

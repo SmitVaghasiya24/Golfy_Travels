@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FiMapPin } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,6 +8,7 @@ import "swiper/css/autoplay";
 import { Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 
 function Destination({ type }) {
@@ -19,7 +19,7 @@ function Destination({ type }) {
     useEffect(() => {
         const loadRegions = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_region");
+                const res = await API.get("/api/get_region");
                 const regionData = res.data.data;
 
                 setRegions(regionData);

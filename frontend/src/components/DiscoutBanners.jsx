@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
+import API from "../services/api";
 
 import { Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
@@ -14,7 +14,7 @@ function DiscoutBanners() {
     useEffect(() => {
         const loadBanners = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_all_discount");
+                const res = await API.get("api/get_all_discount");
                 if (res.data.success) {
                     setBanners(res.data.data);
                 }

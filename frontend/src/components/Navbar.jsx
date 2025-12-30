@@ -1,10 +1,10 @@
 import { FaWhatsapp } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
-import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NavItems from "./NavItems";
+import API from "../services/api";
 
 export default function Navbar() {
     const [whatsapp, setWhatsapp] = useState("");
@@ -25,7 +25,7 @@ export default function Navbar() {
     ];
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_contact_info")
+        API.get("/api/get_contact_info")
             .then(res => {
                 setWhatsapp(res.data.data.whatsapp_number);
                 setEmail(res.data.data.email);

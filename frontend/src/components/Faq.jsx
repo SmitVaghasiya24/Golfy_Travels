@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FiChevronDown } from "react-icons/fi";
 import { motion } from "framer-motion";
+import API from "../services/api";
 
 function Faq({ type = "home", title,align = "left", subtitle }) {
     const [faqs, setFaqs] = useState([]);
@@ -10,7 +10,7 @@ function Faq({ type = "home", title,align = "left", subtitle }) {
     useEffect(() => {
         const fetchFaqs = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/faq");
+                const res = await API.get("/api/faq");
 
                 let data = res.data.FAQs;
 

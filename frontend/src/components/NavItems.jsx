@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { motion } from 'framer-motion'
+import API from "../services/api";
 
 export default function NavItems() {
     const [regions, setRegions] = useState([]);
@@ -9,7 +9,7 @@ export default function NavItems() {
     useEffect(() => {
         const fetchRegions = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_region");
+                const res = await API.get("/api/get_region");
                 setRegions(res.data.data);
             } catch (err) {
                 console.log("Region Fetch Error:", err);

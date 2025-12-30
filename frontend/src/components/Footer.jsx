@@ -2,8 +2,8 @@ import React from "react";
 import { FiMail, FiPhoneCall, FiMessageCircle } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaFacebookF, FaTwitter, FaYoutube, FaLinkedinIn } from "react-icons/fa";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import API from "../services/api";
 
 function Footer() {
     const [whatsapp, setWhatsapp] = useState("");
@@ -12,7 +12,7 @@ function Footer() {
     useEffect(() => {
         const fetchContactInfo = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_contact_info");
+                const res = await API.get("/api/get_contact_info");
                 setWhatsapp(res.data.data.whatsapp_number);
                 setEmail(res.data.data.email);
             } catch (err) {
