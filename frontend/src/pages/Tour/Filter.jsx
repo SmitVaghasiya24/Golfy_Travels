@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import API from "../../services/api";
 
 function Filter({ filters, setFilters }) {
     const [regions, setRegions] = useState([]);
@@ -8,47 +9,53 @@ function Filter({ filters, setFilters }) {
     const [experiences, setExperiences] = useState([]);
 
 
-
     useEffect(() => {
-        const fetchRegions = async () => {
+        const fetchData = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/get_region");
-                const data = await res.json();
-                if (data.success) setRegions(data.data);
+                const results = await Promise.allSettled([
+                    API.get("/api/get_region"),
+                    API.get("/api/get_tour_types"),
+                    API.get("/api/get_experience"),
+                ]);
+
+                const [regionsRes, typesRes, expRes] = results;
+
+                if (
+                    regionsRes.status === "fulfilled" &&
+                    regionsRes.value.data?.success
+                ) {
+                    setRegions(regionsRes.value.data.data);
+                }
+
+                if (
+                    typesRes.status === "fulfilled" &&
+                    typesRes.value.data?.success
+                ) {
+                    setTourTypes(typesRes.value.data.data);
+                }
+
+                if (
+                    expRes.status === "fulfilled" &&
+                    expRes.value.data?.success
+                ) {
+                    setExperiences(expRes.value.data.data);
+                }
+
+                if (regionsRes.status === "rejected") {
+                    console.log("Region API failed:", regionsRes.reason);
+                }
+                if (typesRes.status === "rejected") {
+                    console.log("Tour types API failed:", typesRes.reason);
+                }
+                if (expRes.status === "rejected") {
+                    console.log("Experience API failed:", expRes.reason);
+                }
             } catch (err) {
-                console.log(err);
+                console.log("Unexpected fetch error:", err);
             }
         };
-        fetchRegions();
-    }, []);
 
-
-    useEffect(() => {
-        const fetchTourTypes = async () => {
-            try {
-                const res = await fetch("http://localhost:5000/api/get_tour_types");
-                const data = await res.json();
-                if (data.success) setTourTypes(data.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        fetchTourTypes();
-    }, []);
-
-    useEffect(() => {
-        const fetchExperiences = async () => {
-            try {
-                const res = await fetch("http://localhost:5000/api/get_experience");
-                const data = await res.json();
-                if (data.success) setExperiences(data.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        fetchExperiences();
+        fetchData();
     }, []);
 
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BreadcrumbHero from "../../components/Breadcrumb";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import InspirationRight from "./InspirationRight";
 import { GiTempleGate, GiGreekTemple, GiWaveSurfer, GiPalmTree, GiMountainCave, GiIsland, GiBoatFishing } from "react-icons/gi"
 import { FaFacebookF, FaTimes, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import Footer from "../../components/Footer";
+import API from "../../services/api";
 
 function InspirationDetails() {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ function InspirationDetails() {
         }
 
         try {
-            await axios.post("http://localhost:5000/api/add_comment", {
+            await API.post("/api/add_comment", {
                 blog_id: blog?.blog_id,
                 name: user.name,
                 email: user.email,
@@ -57,7 +57,7 @@ function InspirationDetails() {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/get_blog/${slug}`);
+                const res = await API.get(`/api/get_blog/${slug}`);
                 setBlog(res.data.blog);
             } catch (err) {
                 console.log(err);

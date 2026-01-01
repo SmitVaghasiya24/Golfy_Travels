@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
+
 
 function Cart() {
     const [cart, setCart] = useState([]);
@@ -15,26 +17,29 @@ function Cart() {
     useEffect(() => {
         const fetchCart = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/${user_id}`);
-                const data = await res.json();
+                const res = await API.get(
+                    `/api/${user_id}`
+                );
 
-                if (data.success) {
-                    setCart(data.cart);
+                if (res.data?.success) {
+                    setCart(res.data.cart);
                 }
             } catch (err) {
                 console.log("Cart Fetch Error:", err);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
-        fetchCart();
+        if (user_id) {
+            fetchCart();
+        }
     }, [user_id]);
 
     const handleRemove = async (cart_id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/item/${cart_id}`, {
-                method: "DELETE"
-            });
+            const res = await API.delete(`/api/item/${cart_id}`);
+
 
             const data = await res.json();
 

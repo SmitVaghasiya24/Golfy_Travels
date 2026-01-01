@@ -6,6 +6,8 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
+import API from "../services/api";
+
 
 function Contact() {
     const [open, setOpen] = useState(false);
@@ -68,7 +70,7 @@ function Contact() {
 
 
         try {
-            await axios.post("http://localhost:5000/api/create_contact", payload);
+            await API.post("/api/create_contact", payload);
 
             toast.success("Your message has been sent!");
 

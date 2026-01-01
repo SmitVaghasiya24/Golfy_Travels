@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import API from "../../services/api";
 
 function Accountdetails() {
 
@@ -24,7 +23,7 @@ function Accountdetails() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/profile/${user_id}`);
+        const res = await API.get(`/api/profile/${user_id}`);
         const data = res.data.user;
 
         setFormData(prev => ({
@@ -48,8 +47,8 @@ function Accountdetails() {
     e.preventDefault();
 
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/update_profile/${user_id}`,
+      const res = await API.put(
+        `/api/update_profile/${user_id}`,
         {
           name: formData.name,
           current_password: formData.current_password,

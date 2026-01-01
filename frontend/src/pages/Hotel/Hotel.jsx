@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import BreadcrumbHero from "../../components/Breadcrumb";
 import Filter from "./Filter";
 import { useNavigate } from "react-router-dom";
+import API from "../../services/api";
+
 
 function Hotel() {
     const [hotels, setHotels] = useState([]);
@@ -18,47 +20,49 @@ function Hotel() {
     }, [page, sortOption, filters]);
 
 
+
     const fetchHotels = async (pageNum = 1, sort = sortOption) => {
         try {
-            let url = `http://localhost:5000/api/hotels/filter?page=${pageNum}&limit=6`;
+            const params = {
+                page: pageNum,
+                limit: 6,
+            };
 
             if (filters.category) {
-                url += `&category=${encodeURIComponent(filters.category)}`;
+                params.category = filters.category;
             }
+
             if (filters.tag) {
-                url += `&tag_name=${encodeURIComponent(filters.tag)}`;
+                params.tag_name = filters.tag;
             }
 
             if (filters.min_price !== undefined) {
-                url += `&min_price=${filters.min_price}`;
+                params.min_price = filters.min_price;
             }
 
             if (filters.max_price !== undefined) {
-                url += `&max_price=${filters.max_price}`;
+                params.max_price = filters.max_price;
             }
-
 
             if (filters.amenities) {
-                url += `&amenities=${encodeURIComponent(filters.amenities)}`;
+                params.amenities = filters.amenities;
             }
-
 
             if (sort !== "default") {
-                url += `&sort=${sort}`;
+                params.sort = sort;
             }
 
-            const res = await fetch(url);
-            const data = await res.json();
+            const res = await API.get("/api/hotels/filter", { params });
 
-            if (data.success) {
-                setHotels(data.hotels);
-                setTotalPages(data.totalPages || 1);
+            if (res.data?.success) {
+                setHotels(res.data.hotels);
+                setTotalPages(res.data.totalPages || 1);
             }
-
         } catch (err) {
             console.log("Hotel fetch error:", err);
         }
     };
+
 
 
     const handleFilterChange = (newFilter) => {

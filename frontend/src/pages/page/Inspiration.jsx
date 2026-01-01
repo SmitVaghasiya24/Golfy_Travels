@@ -1,10 +1,10 @@
 import BreadcrumbHero from "../../components/Breadcrumb";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FiMapPin } from "react-icons/fi";
 import { BsCalendarDate } from "react-icons/bs";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
+import API from "../../services/api";
 
 
 function Inspiration() {
@@ -17,7 +17,7 @@ function Inspiration() {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/all_blogs?page=${page}`);
+                const res = await API.get(`/api/all_blogs?page=${page}`);
 
                 setBlogs(res.data.blogs);
                 setTotalPages(res.data.totalPages);

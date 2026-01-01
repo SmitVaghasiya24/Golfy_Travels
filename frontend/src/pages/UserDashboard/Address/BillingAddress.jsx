@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import API from "../../../services/api";
 
 function BillingAddress({ onClose, editData }) {
 
@@ -37,8 +37,8 @@ function BillingAddress({ onClose, editData }) {
                 return;
             }
 
-            await axios.post(
-                `http://localhost:5000/api/insert_billing_address/${userId}`,
+            await API.post(
+                `/api/insert_billing_address/${userId}`,
                 formData
             );
 

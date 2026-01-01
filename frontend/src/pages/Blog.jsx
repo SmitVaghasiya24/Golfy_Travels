@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Navigation, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -9,6 +8,8 @@ import { BsCalendarDate } from "react-icons/bs";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { MdArrowOutward } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
+
 
 function Blog() {
     const [blogs, setBlogs] = useState([]);
@@ -18,7 +19,7 @@ function Blog() {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/all_blogs");
+                const res = await API.get("/api/all_blogs");
                 setBlogs(res.data.blogs);
                 setLoading(false);
             } catch (error) {

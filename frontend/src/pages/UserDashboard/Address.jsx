@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BillingAddress from "./Address/BillingAddress";
 import ShippingAddress from "./Address/ShippingAddress";
 import axios from "axios";
-
+import API from "../../services/api";
 function Address() {
   const [showBillingForm, setShowBillingForm] = useState(false);
   const [billingData, setBillingData] = useState(null);
@@ -17,7 +17,7 @@ function Address() {
     if (!userId) return;
 
     axios
-      .get(`http://localhost:5000/api/get_billing_address/${userId}`)
+      .API(`/api/get_billing_address/${userId}`)
       .then((res) => {
         console.log("Billing Response:", res.data);
         if (res.data && res.data.billingAddress) {
@@ -30,8 +30,8 @@ function Address() {
   useEffect(() => {
     if (!userId) return;
 
-    axios
-      .get(`http://localhost:5000/api/get_shipping_address/${userId}`)
+    API
+      .get(`/api/get_shipping_address/${userId}`)
       .then((res) => {
         console.log("Shipping Response:", res.data);
         if (res.data && res.data.shippingAddress) {

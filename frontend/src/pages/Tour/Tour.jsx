@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Filter from "./Filter";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
+import API from "../../services/api";
 
 function Tour() {
     const [tours, setTours] = useState([]);
@@ -31,40 +31,51 @@ function Tour() {
     });
 
 
+
+
     useEffect(() => {
-        if (!paramsLoaded) return; 
+        if (!paramsLoaded) return;
 
         const fetchTours = async () => {
-            let url = `http://localhost:5000/api/tours/filter?page=${page}&limit=6&sort=${sortOption}`;
-
-            if (filters.region.length > 0)
-                url += `&region=${filters.region.join(",")}`;
-
-            if (filters.destination.length > 0)
-                url += `&destination=${filters.destination.join(",")}`;
-
-            if (filters.min_price !== undefined)
-                url += `&min_price=${filters.min_price}`;
-
-            if (filters.max_price !== undefined)
-                url += `&max_price=${filters.max_price}`;
-
-            if (filters.tour_type)
-                url += `&tour_type=${filters.tour_type}`;
-
-            if (filters.experience.length > 0)
-                url += `&experience=${filters.experience.join(",")}`;
-
             try {
-                const res = await fetch(url);
-                const data = await res.json();
+                const params = {
+                    page,
+                    limit: 6,
+                    sort: sortOption,
+                };
 
-                if (data.success) {
-                    setTours(data.tours);
-                    setTotalPages(data.totalPages);
+                if (filters.region.length > 0) {
+                    params.region = filters.region.join(",");
+                }
+
+                if (filters.destination.length > 0) {
+                    params.destination = filters.destination.join(",");
+                }
+
+                if (filters.min_price !== undefined) {
+                    params.min_price = filters.min_price;
+                }
+
+                if (filters.max_price !== undefined) {
+                    params.max_price = filters.max_price;
+                }
+
+                if (filters.tour_type) {
+                    params.tour_type = filters.tour_type;
+                }
+
+                if (filters.experience.length > 0) {
+                    params.experience = filters.experience.join(",");
+                }
+
+                const res = await API.get("/api/tours/filter", { params });
+
+                if (res.data?.success) {
+                    setTours(res.data.tours);
+                    setTotalPages(res.data.totalPages);
                 }
             } catch (err) {
-                console.log(err);
+                console.log("Fetch tours error:", err);
             }
         };
 

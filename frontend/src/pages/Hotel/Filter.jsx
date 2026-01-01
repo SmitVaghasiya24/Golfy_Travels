@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import API from "../../services/api";
 
 function Filter({ onFilterChange, clearSignal }) {
     const [categories, setCategories] = useState([]);
@@ -36,29 +37,43 @@ function Filter({ onFilterChange, clearSignal }) {
         });
     }, [clearSignal]);
 
+
     const fetchCategories = async () => {
-        const res = await fetch("http://localhost:5000/api/get_hotel_category");
-        const data = await res.json();
-        if (data.success) {
-            setCategories(data.data[0]);
+        try {
+            const res = await API.get("/api/get_hotel_category");
+
+            if (res.data?.success) {
+                setCategories(res.data.data[0]);
+            }
+        } catch (error) {
+            console.error("Fetch Categories Error:", error);
         }
     };
 
     const fetchTags = async () => {
-        const res = await fetch("http://localhost:5000/api/get_hotel_tag");
-        const data = await res.json();
-        if (data.success) {
-            setTags(data.data);
+        try {
+            const res = await API.get("/api/get_hotel_tag");
+
+            if (res.data?.success) {
+                setTags(res.data.data);
+            }
+        } catch (error) {
+            console.error("Fetch Tags Error:", error);
         }
     };
 
     const fetchAmenities = async () => {
-        const res = await fetch("http://localhost:5000/api/get_hotel_aminity");
-        const data = await res.json();
-        if (data.success) {
-            setAmenities(data.data);
+        try {
+            const res = await API.get("/api/get_hotel_aminity");
+
+            if (res.data?.success) {
+                setAmenities(res.data.data);
+            }
+        } catch (error) {
+            console.error("Fetch Amenities Error:", error);
         }
     };
+
 
     const handleCategoryToggle = (name) => {
         let updated;

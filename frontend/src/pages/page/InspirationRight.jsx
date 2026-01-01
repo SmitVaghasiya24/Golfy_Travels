@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../../services/api";
 
 function InspirationRight() {
     const [categories, setCategories] = useState([]);
@@ -8,7 +8,7 @@ function InspirationRight() {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/get_all_category");
+            const res = await API.get("/api/get_all_category");
             setCategories(res.data.categories);
         } catch (err) {
             console.log("Category fetch error:", err);
@@ -18,7 +18,7 @@ function InspirationRight() {
 
     const fetchTags = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/get_all_tag");
+            const res = await API.get("/api/get_all_tag");
             setTags(res.data.tags);
         } catch (err) {
             console.log("Tag fetch error:", err);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaFacebookF, FaLinkedinIn, FaPinterestP, FaInstagram } from "react-icons/fa";
 import BreadcrumbHero from "../../components/Breadcrumb";
@@ -15,6 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import API from "../../services/api";
 
 
 function GuideDetails() {
@@ -26,7 +26,7 @@ function GuideDetails() {
     useEffect(() => {
         const fetchGuide = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_all_guide");
+                const res = await API.get("/api/get_all_guide");
                 setAllGuides(res.data.data);
 
                 const single = res.data.data.find((g) => g.slug === slug);

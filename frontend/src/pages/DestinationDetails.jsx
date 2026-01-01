@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
@@ -13,6 +12,7 @@ import { FaCheck } from "react-icons/fa";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
 import Tour from '../components/Tour'
+import API from "../services/api";
 
 
 function DestinationDetails() {
@@ -54,8 +54,8 @@ function DestinationDetails() {
     useEffect(() => {
         const fetchDestination = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/get_destination/${slug}`
+                const res = await API.get(
+                    `/api/get_destination/${slug}`
                 );
 
                 setDestination(res.data.destination);

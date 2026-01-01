@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import API from "../services/api";
+
 
 function Checkout() {
     const location = useLocation();
@@ -13,52 +15,56 @@ function Checkout() {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const user_id = userData?.id;
 
-    useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                const res = await fetch(`http://localhost:5000/api/${user_id}`);
-                const data = await res.json();
-                if (data.success) {
-                    setCart(data.cart);
-                }
-            } catch (err) {
-                console.log("Checkout Cart Error:", err);
-            }
-            setLoading(false);
-        };
-
-        fetchCart();
-    }, [user_id]);
-
-    const handlePlaceOrder = async () => {
-        const payload = {
-            user_id,
-            subtotal,
-            tax: 0,
-            service_fee: flatRate,
-            discount: 0,
-            total_amount: total,
-            payment_method: "bank",
-            payment_status: "pending",
-        };
-
+   useEffect(() => {
+    const fetchCart = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/place-order", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+            const res = await API.get(
+                `/api/${user_id}`
+            );
 
-            const data = await res.json();
-
-            if (data.success) {
-                alert("Order placed! Order ID: " + data.order_id);
-                navigate("/order-success/" + data.order_id);
+            if (res.data?.success) {
+                setCart(res.data.cart);
             }
-        } catch (error) {
-            console.log("Place Order Error:", error);
+        } catch (err) {
+            console.log("Checkout Cart Error:", err);
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (user_id) {
+        fetchCart();
+    }
+}, [user_id]);
+
+
+ const handlePlaceOrder = async () => {
+    const payload = {
+        user_id,
+        subtotal,
+        tax: 0,
+        service_fee: flatRate,
+        discount: 0,
+        total_amount: total,
+        payment_method: "bank",
+        payment_status: "pending",
+    };
+
+    try {
+        const res = await API.post(
+            "/api/place-order",
+            payload
+        );
+
+        if (res.data?.success) {
+            alert("Order placed! Order ID: " + res.data.order_id);
+            navigate("/order-success/" + res.data.order_id);
+        }
+    } catch (error) {
+        console.log("Place Order Error:", error);
+    }
+};
+
 
     if (loading) return <p className="text-center mt-10">Loading checkout...</p>;
 

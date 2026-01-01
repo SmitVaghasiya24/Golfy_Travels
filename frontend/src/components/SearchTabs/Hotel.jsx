@@ -6,7 +6,7 @@ import { Calendar } from "react-date-range";
 import "react-date-range/dist/theme/default.css";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
-
+import API from "../../services/api";
 
 export default function Hotel() {
   const [regions, setRegions] = useState([]);
@@ -27,7 +27,7 @@ export default function Hotel() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/get_region")
+      .API("/api/get_region")
       .then((res) => setRegions(res.data.data))
       .catch((err) => console.log(err));
   }, []);

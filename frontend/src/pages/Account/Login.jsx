@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import API from "../../services/api";
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -31,7 +31,7 @@ function Login() {
         }
 
         try {
-            const res = await axios.post("http://localhost:5000/api/login", formData);
+            const res = await API.post("/api/login", formData);
             const { user, token, message } = res.data;
 
             if (!token || !user) {

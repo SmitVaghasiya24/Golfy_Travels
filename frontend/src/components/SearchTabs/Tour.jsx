@@ -6,7 +6,7 @@ import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Link, useNavigate } from "react-router-dom";
-
+import API from "../../services/api";
 export default function Tour() {
     const navigate = useNavigate();
 
@@ -28,12 +28,12 @@ export default function Tour() {
     ]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_all_destination")
+        API.get("/api/get_all_destination")
             .then((res) => setDestinations(res.data.destinations));
     }, []);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_tour_types")
+        API.get("/api/get_tour_types")
             .then((res) => setTourTypes(res.data.data));
     }, []);
 

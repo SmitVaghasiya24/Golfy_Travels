@@ -13,7 +13,6 @@ export default function CheckoutModal({ onClose, tour }) {
     const user = JSON.parse(localStorage.getItem("userData"));
     const user_id = user?.id;
 
-    // FINAL PRICE CALCULATION
     const tourPrice =
         Number(tour.discount_price) > 0 ? Number(tour.discount_price) : Number(tour.price);
 
@@ -21,7 +20,6 @@ export default function CheckoutModal({ onClose, tour }) {
 
     const final_price = tourPrice * adults + addonsTotal;
 
-    // MAIN FUNCTION - ADD TO CART
     const handleBookNow = async () => {
         if (!user_id) {
             alert("Please login to continue");
@@ -72,7 +70,6 @@ export default function CheckoutModal({ onClose, tour }) {
         <AnimatePresence>
             <div className="fixed inset-0 bg-black/40 flex items-start justify-center z-50">
 
-                {/* BACKDROP */}
                 <motion.div
                     className="absolute inset-0 bg-black/40"
                     initial={{ opacity: 0 }}
@@ -80,7 +77,6 @@ export default function CheckoutModal({ onClose, tour }) {
                     exit={{ opacity: 0 }}
                 />
 
-                {/* MODAL BOX */}
                 <motion.div
                     initial={{ y: -80, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -88,7 +84,6 @@ export default function CheckoutModal({ onClose, tour }) {
                     transition={{ duration: 0.35, ease: "easeOut" }}
                     className="bg-white rounded-xl w-full max-w-3xl mt-10 p-8 relative z-50"
                 >
-                    {/* CLOSE BUTTON */}
                     <button
                         onClick={onClose}
                         className="absolute top-4 right-4 bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-300"
@@ -96,13 +91,10 @@ export default function CheckoutModal({ onClose, tour }) {
                         <IoClose size={18} />
                     </button>
 
-                    {/* TITLE */}
                     <h2 className="text-3xl font-bold text-center">Dates & Availability</h2>
 
-                    {/* DATE + TRAVELERS */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-6">
                         
-                        {/* DATE PICKER */}
                         <div className="border rounded-xl p-4">
                             <p className="text-sm text-gray-500 mb-1">Select Date</p>
                             <input
@@ -113,7 +105,6 @@ export default function CheckoutModal({ onClose, tour }) {
                             />
                         </div>
 
-                        {/* TRAVELERS SELECT */}
                         <div className="border rounded-xl p-4">
                             <p className="text-sm text-gray-500 mb-1">Travelers</p>
 
@@ -158,7 +149,6 @@ export default function CheckoutModal({ onClose, tour }) {
                         </div>
                     </div>
 
-                    {/* TOUR DETAILS */}
                     <div className="mt-8 border rounded-xl p-6">
                         <div className="flex justify-between items-start">
                             <div>
@@ -186,7 +176,6 @@ export default function CheckoutModal({ onClose, tour }) {
                             </div>
                         </div>
 
-                        {/* ADDON SERVICES */}
                         <div className="mt-6">
                             <p className="font-semibold">Additional Services -</p>
 
@@ -232,7 +221,6 @@ export default function CheckoutModal({ onClose, tour }) {
                             </div>
                         </div>
 
-                        {/* BOOK NOW BUTTON */}
                         <div className="mt-8 flex justify-start">
                             <button
                                 onClick={handleBookNow}

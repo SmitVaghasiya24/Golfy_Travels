@@ -10,6 +10,7 @@ import { Autoplay } from "swiper/modules";
 import { Pagination } from "swiper/modules";
 
 import "swiper/css";
+import API from "../../services/api";
 
 
 
@@ -24,31 +25,33 @@ function HotelDetails() {
   const navigate = useNavigate();
 
 
+
   useEffect(() => {
     const fetchHotel = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/get_hotel/${slug}`);
-        const data = await res.json();
+        const res = await API.get(`/api/get_hotel/${slug}`);
+        const hotelData = res.data?.hotel;
 
-        setHotel(data.hotel);
+        setHotel(hotelData);
 
-        if (data.hotel.rooms?.length > 0) {
-          setOpenRoom(data.hotel.rooms[0].room_id);
+        if (hotelData?.rooms?.length > 0) {
+          setOpenRoom(hotelData.rooms[0].room_id);
         }
 
-        const allRes = await fetch("http://localhost:5000/api/get_hotels");
-        const allData = await allRes.json();
-
-        const filtered = allData.hotels.filter(h => h.slug !== slug);
+        const allRes = await API.get("/api/get_hotels");
+        const filtered = (allRes.data?.hotels || []).filter(
+          (h) => h.slug !== slug
+        );
 
         setOtherHotels(filtered);
-
       } catch (error) {
         console.error("Hotel fetch error:", error);
       }
     };
 
-    fetchHotel();
+    if (slug) {
+      fetchHotel();
+    }
   }, [slug]);
 
 

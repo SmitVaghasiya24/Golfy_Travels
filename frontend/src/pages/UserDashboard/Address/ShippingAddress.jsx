@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import API from "../../../services/api";
 
 function ShippingAddressForm({ user_id, onSuccess, onClose, editData }) {
 
@@ -24,8 +24,8 @@ function ShippingAddressForm({ user_id, onSuccess, onClose, editData }) {
         e.preventDefault();
 
         try {
-            await axios.post(
-                `http://localhost:5000/api/insert_shipping_address/${user_id}`,
+            await API.post(
+                `/api/insert_shipping_address/${user_id}`,
                 formData
             );
 

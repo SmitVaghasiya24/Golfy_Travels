@@ -15,6 +15,7 @@ import { MdArrowOutward } from "react-icons/md";
 import Footer from '../../components/Footer'
 import EnquiryModal from "./EnquiryModal";
 import CheckoutModal from "./CheckoutModal";
+import API from "../../services/api";
 
 
 const touristPlaceImages = [
@@ -108,41 +109,49 @@ function TourDetails() {
 
     const navigate = useNavigate();
 
-    // FETCH SINGLE TOUR
+
     useEffect(() => {
         const fetchTour = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/get_tour/${slug}`);
-                const data = await res.json();
-                if (data.success) setTour(data.data);
+                const res = await API.get(`/api/get_tour/${slug}`);
+
+                if (res.data?.success) {
+                    setTour(res.data.data);
+                }
             } catch (err) {
-                console.log(err);
+                console.log("Fetch tour error:", err);
             }
         };
-        fetchTour();
+
+        if (slug) {
+            fetchTour();
+        }
     }, [slug]);
 
-    // FETCH OTHER TOURS
     useEffect(() => {
         const fetchOtherTours = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/tours/filter");
-                const data = await res.json();
+                const res = await API.get("/api/tours/filter");
 
-                if (data.success) {
-                    const filtered = data.tours.filter(t => t.slug !== slug);
+                if (res.data?.success) {
+                    const filtered = res.data.tours.filter(
+                        (t) => t.slug !== slug
+                    );
                     setOtherTours(filtered);
                 }
             } catch (err) {
-                console.log(err);
+                console.log("Fetch other tours error:", err);
             }
         };
-        fetchOtherTours();
+
+        if (slug) {
+            fetchOtherTours();
+        }
     }, [slug]);
 
-    // FIXED MODAL OPEN FUNCTION
+
     const openModal = () => {
-        setSelectedTour(tour); // send API tour data into modal
+        setSelectedTour(tour);
         setShowCheckout(true);
     };
 

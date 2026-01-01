@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import BreadcrumbHero from "../../components/Breadcrumb";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
+import API from "../../services/api";
 
 function Guide() {
     const [guides, setGuides] = useState([]);
@@ -12,7 +12,7 @@ function Guide() {
     useEffect(() => {
         const fetchGuides = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/get_all_guide");
+                const res = await API.get("/api/get_all_guide");
                 setGuides(res.data.data);
             } catch (error) {
                 console.log(error);

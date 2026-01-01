@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import API from "../../services/api";
 
 function Register() {
     const [showPass, setShowPass] = useState(false);
@@ -21,7 +21,7 @@ function Register() {
         }
 
         try {
-            const response = await axios.post("http://localhost:5000/api/register", {
+            const response = await API.post("/api/register", {
                 name,
                 email,
                 password,

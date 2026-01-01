@@ -1,12 +1,12 @@
 import { FiMapPin, FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import "react-date-range/dist/theme/default.css";
 import { MdOutlineAssignmentInd } from "react-icons/md";
 import { FaGlobeAmericas } from "react-icons/fa";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../../services/api";
 
 export default function Hotel() {
 
@@ -31,14 +31,14 @@ export default function Hotel() {
 
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/api/get_visa_country")
+        API
+            .get("/api/get_visa_country")
             .then((res) => setVisaCountries(res.data.data))
             .catch((err) => console.log(err));
     }, []);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_all_visa_types")
+        API.get("/api/get_all_visa_types")
             .then((res) => {
                 const all = res.data.data;
 

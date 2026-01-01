@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import axios from "axios";
+import API from "../services/api";
 
 
 const visaIcons = {
@@ -35,7 +36,7 @@ function VisaDetails() {
     useEffect(() => {
         const fetchCountry = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/get_visa_country_slug/${slug}`);
+                const res = await API.get(`/api/get_visa_country_slug/${slug}`);
                 const data = await res.json();
 
                 if (data.success) {

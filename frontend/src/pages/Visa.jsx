@@ -7,6 +7,7 @@ import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
+import API from "../services/api";
 
 
 function Visa() {

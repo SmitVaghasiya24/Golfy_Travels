@@ -1,12 +1,12 @@
 import { FiMapPin, FiCalendar, FiList, FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { Link } from "react-router-dom";
 import { LuSparkles } from "react-icons/lu";
+import API from "../../services/api";
 
 
 export default function Experience() {
@@ -31,14 +31,14 @@ export default function Experience() {
     ]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_all_destination")
+        API.get("/api/get_all_destination")
             .then((res) => setDestinations(res.data.destinations));
     }, []);
 
 
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/get_experience")
+        API.get("/api/get_experience")
             .then(res => setExperiences(res.data.data))
             .catch(err => console.log(err));
     }, []);
