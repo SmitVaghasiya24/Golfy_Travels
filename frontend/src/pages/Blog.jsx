@@ -9,17 +9,20 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { MdArrowOutward } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import axios from "axios";
 
 
 function Blog() {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
                 const res = await API.get("/api/all_blogs");
+
                 setBlogs(res.data.blogs);
                 setLoading(false);
             } catch (error) {
@@ -80,7 +83,11 @@ function Blog() {
 
                                         <div className="w-full md:w-1/2 h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden">
                                             <img
-                                                src={blog.thumbnail}
+                                                src={
+                                                    blog.thumbnail?.startsWith("http")
+                                                        ? blog.thumbnail.replace("http://localhost:5000", BASE_URL)
+                                                        : `${BASE_URL}/${blog.thumbnail}`
+                                                }
                                                 alt={blog.title}
                                                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                                             />
